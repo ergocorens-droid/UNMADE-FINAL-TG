@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <rect width="1200" height="1600" fill="#efefef"/>
+  <g transform="translate(120 110)">
+    <path d="M220 100c52-42 133-64 260-64s208 22 260 64l170 210-118 90-95-120v980H293V280l-95 120-118-90z" fill="#111"/>
+    <path d="M428 36c11 41 42 62 92 62s81-21 92-62" fill="none" stroke="#2a2a2a" stroke-width="20" stroke-linecap="round"/>
+    <rect x="430" y="352" width="260" height="110" rx="16" fill="#1d1d1d"/>
+    <text x="560" y="424" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="700" letter-spacing="2" fill="#f4f4f4" text-anchor="middle">DRIFT</text>
+  </g>
+</svg>

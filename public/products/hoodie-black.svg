@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <rect width="1200" height="1600" fill="#efefef"/>
+  <g transform="translate(120 120)">
+    <path d="M560 70c92 0 172 42 210 116l38 74 98 56-98 102-76-68v920H388V350l-76 68-98-102 98-56 38-74c38-74 118-116 210-116z" fill="#141414"/>
+    <path d="M560 70c58 0 104 22 130 62-32 28-78 42-130 42s-98-14-130-42c26-40 72-62 130-62z" fill="#1f1f1f"/>
+    <rect x="435" y="444" width="250" height="118" rx="16" fill="#1f1f1f"/>
+    <text x="560" y="518" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" letter-spacing="2" fill="#f5f5f5" text-anchor="middle">SHIFT</text>
+  </g>
+</svg>
