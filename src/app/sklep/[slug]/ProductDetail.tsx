@@ -139,8 +139,8 @@ export function ProductDetail({
     <>
       <section className="bg-[#f4f1ec] pb-24 lg:pb-28">
         <div className="mx-auto w-full max-w-[1340px] px-4 py-7 lg:px-8 lg:py-10">
-          <div className="grid items-start gap-7 min-[920px]:grid-cols-[minmax(0,1.2fr)_minmax(420px,510px)]">
-            <div className="space-y-4">
+          <div className="flex flex-col gap-7 min-[760px]:flex-row min-[760px]:items-start">
+            <div className="min-w-0 space-y-4 min-[760px]:w-[min(62%,760px)] min-[760px]:flex-1">
               <div className="relative h-[58vh] min-h-[420px] w-full overflow-hidden rounded-[18px] bg-[#e9e3db] lg:h-[74vh] lg:min-h-[620px]">
                 <Image src={activeImg} alt={product.name} fill priority className="object-contain p-8 lg:p-14" unoptimized sizes="(max-width:1024px) 100vw, 60vw" />
               </div>
@@ -159,7 +159,7 @@ export function ProductDetail({
               </div>
             </div>
 
-            <div className="sticky top-24 h-fit rounded-[18px] border border-black/10 bg-[#f9f7f4]/95 p-5 backdrop-blur md:top-28 lg:top-32 lg:p-7">
+            <div className="min-w-0 rounded-[18px] border border-black/10 bg-[#f9f7f4]/95 p-5 backdrop-blur min-[760px]:sticky min-[760px]:top-24 min-[760px]:w-[min(38%,510px)] md:top-28 lg:top-32 lg:p-7">
               <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--unmade-accent-deep)]">{t("pdp_promo_strip_title")}</p>
               <h1 className="mt-3 text-[2.1rem] font-bold uppercase leading-[0.95] tracking-[0.01em] text-neutral-950 lg:text-[2.45rem]">{product.name}</h1>
               <div className="mt-5 flex flex-wrap items-end gap-3">
@@ -237,7 +237,6 @@ export function ProductDetail({
                 <p className="mt-1 text-[13px] font-semibold tabular-nums text-[var(--unmade-accent-deep)]">Oszczędzasz: {formatTierMoney(totalSavedVsRegularPln)}</p>
               </div>
 
-              <p className="mt-3 text-[12px] leading-relaxed text-neutral-600">{t("pdp_mix_variants_hint")}</p>
               <button type="button" onClick={handleAdd} disabled={addDisabled} className="mt-4 flex h-[56px] w-full items-center justify-center gap-3 rounded-full bg-neutral-950 px-6 text-[12px] font-bold uppercase tracking-[0.16em] text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40">
                 <BagIcon className="h-5 w-5 shrink-0" aria-hidden />
                 {t("pdp_add_cart")}
