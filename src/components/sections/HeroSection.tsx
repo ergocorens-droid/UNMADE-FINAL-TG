@@ -9,9 +9,8 @@ export function HeroSection() {
         className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)]"
         aria-label="Przejdź do sklepu — 2026 Collection"
       >
-        {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
         <Image
-          src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=85"
+          src="/baner.png"
           alt="UNMADE — car culture streetwear"
           fill
           priority

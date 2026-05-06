@@ -1,10 +1,5 @@
 import { CollectionGrid2026 } from "@/components/sections/CollectionGrid2026";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { InstagramCta } from "@/components/sections/InstagramCta";
-import { JoinCustomersSection } from "@/components/sections/JoinCustomersSection";
-import { NewsletterSection } from "@/components/sections/NewsletterSection";
-import { ShopByCollectionSection } from "@/components/sections/ShopByCollectionSection";
-import { TrustBadges } from "@/components/sections/TrustBadges";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,11 +21,6 @@ export default function HomePage() {
     <>
       <HeroSection />
       <CollectionGrid2026 />
-      <ShopByCollectionSection />
-      <JoinCustomersSection />
-      <InstagramCta />
-      <NewsletterSection />
-      <TrustBadges />
     </>
   );
 }
