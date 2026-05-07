@@ -49,6 +49,7 @@ export function Header({
   const navLinks = useMemo(
     () =>
       NAV_SPEC.map((item) => ({
+        id: item.key,
         href: item.href,
         label: translate(locale, item.key),
       })),
@@ -137,7 +138,7 @@ export function Header({
             aria-label="Główna nawigacja"
           >
             {navLinks.map((l) => (
-              <Link key={l.href} href={l.href} className={navCls}>
+              <Link key={l.id} href={l.href} className={navCls}>
                 {l.label}
               </Link>
             ))}
@@ -279,7 +280,7 @@ function MobileDrawer({
 }: {
   open: boolean;
   onClose: () => void;
-  navLinks: { href: string; label: string }[];
+  navLinks: { id: string; href: string; label: string }[];
   collectionsHeading: string;
 }) {
   useEffect(() => {
@@ -314,7 +315,7 @@ function MobileDrawer({
         </button>
         {navLinks.map((l) => (
           <Link
-            key={l.href}
+            key={l.id}
             href={l.href}
             className="border-b border-neutral-200 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-900"
             onClick={onClose}
