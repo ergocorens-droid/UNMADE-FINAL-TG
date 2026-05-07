@@ -40,7 +40,6 @@ type GQLVariantNode = {
   id: string;
   title: string;
   availableForSale: boolean;
-  quantityAvailable?: number | null;
   price: GQLMoney;
   compareAtPrice: GQLMoney | null;
   selectedOptions: GQLSelectedOption[];
@@ -134,7 +133,8 @@ function mapVariant(node: GQLVariantNode): ProductVariant {
     id: node.id,
     title: node.title,
     availableForSale: node.availableForSale,
-    quantityAvailable: node.quantityAvailable ?? null,
+    /** Wymaga scope `unauthenticated_read_product_inventory` — nie pobieramy. */
+    quantityAvailable: null,
     price: mapMoney(node.price),
     compareAtPrice: node.compareAtPrice ? mapMoney(node.compareAtPrice) : null,
     selectedOptions: node.selectedOptions.map((o) => ({

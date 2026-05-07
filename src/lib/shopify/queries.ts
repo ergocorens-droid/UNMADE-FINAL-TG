@@ -112,7 +112,6 @@ const PRODUCT_LIST_BODY = `
               id
               title
               availableForSale
-              quantityAvailable
               price {
                 amount
                 currencyCode
@@ -224,7 +223,6 @@ query ProductByHandle($handle: String!) {
           id
           title
           availableForSale
-          quantityAvailable
           price {
             amount
             currencyCode
