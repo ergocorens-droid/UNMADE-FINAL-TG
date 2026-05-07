@@ -4,11 +4,19 @@ export const HERO_PHOTO_PATHS = Array.from(
   (_, i) => `/photo1 (${i + 1}).png`,
 );
 
-/** Hero strony głównej — tylko telefon: (1)–(3) */
-export const HERO_PHOTO_PATHS_MOBILE = HERO_PHOTO_PATHS.slice(0, 3);
+/** Tylko telefon w hero: photo1 (1), (2), (12) */
+const HERO_MAIN_MOBILE_IDX = [0, 1, 11] as const;
+const HERO_MAIN_MOBILE_SET = new Set<number>(HERO_MAIN_MOBILE_IDX);
 
-/** Hero strony głównej — tylko desktop: rotacja (4)–(15) */
-export const HERO_PHOTO_PATHS_DESKTOP = HERO_PHOTO_PATHS.slice(3);
+/** Hero strony głównej — tylko telefon */
+export const HERO_PHOTO_PATHS_MOBILE = HERO_MAIN_MOBILE_IDX.map(
+  (i) => HERO_PHOTO_PATHS[i] ?? HERO_PHOTO_PATHS[0],
+);
+
+/** Hero — desktop: m.in. (3), bez (1), (2), (12) */
+export const HERO_PHOTO_PATHS_DESKTOP = HERO_PHOTO_PATHS.filter(
+  (_, i) => !HERO_MAIN_MOBILE_SET.has(i),
+);
 
 export function pickRandomMobileHeroPhoto(): string {
   const pool = HERO_PHOTO_PATHS_MOBILE;
