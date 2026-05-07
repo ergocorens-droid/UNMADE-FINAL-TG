@@ -3,15 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { HERO_PHOTO_PATHS, pickRandomHeroPhoto } from "@/lib/heroPhotos";
+import { HERO_PHOTO_PATHS_DESKTOP, pickRandomMobileHeroPhoto } from "@/lib/heroPhotos";
 
 export function HeroSection() {
-  const [mobileSrc] = useState(() => pickRandomHeroPhoto());
+  const [mobileSrc] = useState(() => pickRandomMobileHeroPhoto());
   const [desktopIndex, setDesktopIndex] = useState(0);
 
   useEffect(() => {
+    const n = HERO_PHOTO_PATHS_DESKTOP.length;
+    if (n === 0) return;
     const id = window.setInterval(() => {
-      setDesktopIndex((i) => (i + 1) % HERO_PHOTO_PATHS.length);
+      setDesktopIndex((i) => (i + 1) % n);
     }, 3000);
     return () => clearInterval(id);
   }, []);
@@ -35,7 +37,7 @@ export function HeroSection() {
         </div>
 
         <div className="absolute inset-0 hidden md:block">
-          {HERO_PHOTO_PATHS.map((src, i) => (
+          {HERO_PHOTO_PATHS_DESKTOP.map((src, i) => (
             <Image
               key={src}
               src={src}
