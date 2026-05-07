@@ -2,41 +2,26 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
-import type { CollectionSlug } from "@/data/products";
-import { PRODUCTS } from "@/data/products";
+import { getCollectionByHandle } from "@/lib/shopify/api";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const SLUGS: CollectionSlug[] = ["porsche", "jdm", "drift"];
-
-export async function generateStaticParams() {
-  return SLUGS.map((slug) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  if (!SLUGS.includes(slug as CollectionSlug))
-    return { title: "Kolekcja" };
-
-  const label =
-    slug === "porsche" ? "PORSCHE" : slug === "jdm" ? "JDM" : "DRIFT";
-
+  const col = await getCollectionByHandle(slug, 1);
+  if (!col) return { title: "Kolekcja" };
   return {
-    title: `Kolekcja ${label}`,
-    description: `Produkty z kolekcji ${label} — UNMADE streetwear.`,
+    title: col.title,
+    description:
+      col.description.replace(/<[^>]+>/g, "").trim().slice(0, 160) ||
+      `Kolekcja ${col.title} — UNMADE`,
   };
 }
 
 export default async function CollectionSlugPage({ params }: Props) {
   const { slug } = await params;
-  if (!SLUGS.includes(slug as CollectionSlug)) notFound();
-
-  const comingSoon = slug === "jdm" || slug === "drift";
-
-  const list = PRODUCTS.filter((p) => p.collection === slug);
-
-  const heading =
-    slug === "porsche" ? "PORSCHE" : slug === "jdm" ? "JDM" : "DRIFT";
+  const col = await getCollectionByHandle(slug, 48);
+  if (!col) notFound();
 
   return (
     <div className="bg-white pb-24 pt-10 md:pt-14">
@@ -46,36 +31,26 @@ export default async function CollectionSlugPage({ params }: Props) {
             Kolekcje
           </Link>
           <span className="mx-2 text-neutral-300">/</span>
-          <span className="text-neutral-900">{heading}</span>
+          <span className="text-neutral-900">{col.title}</span>
         </nav>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl font-bold uppercase tracking-[0.18em] text-neutral-900 md:text-3xl">
-            {heading}
-          </h1>
-          {comingSoon && (
-            <span className="bg-[var(--unmade-accent)] px-3 py-1 text-[10px] font-bold uppercase text-white">
-              WKRÓTCE
-            </span>
-          )}
-        </div>
-        <p className="mt-4 max-w-2xl text-sm text-neutral-600">
-          🔥 Drop z kodem IGNITION -15% na wybrane pozycje. Nie przegap limitowanych serii.
-        </p>
+        <h1 className="mt-6 text-2xl font-bold uppercase tracking-[0.18em] text-neutral-900 md:text-3xl">
+          {col.title}
+        </h1>
+        {col.description ? (
+          <div
+            className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-600 [&_p]:mb-2"
+            dangerouslySetInnerHTML={{ __html: col.description }}
+          />
+        ) : null}
 
-        {comingSoon && (
-          <p className="mt-10 rounded border border-neutral-200 bg-neutral-50 p-8 text-center text-sm text-neutral-600">
-            Kolekcja {heading} w przygotowaniu — zapisz się na newsletter i bądź pierwszy.
-            {" "}
-            <Link href="/#newsletter" className="font-semibold text-neutral-900 underline">
-              Newsletter
-            </Link>
+        {col.products.length === 0 ? (
+          <p className="mt-12 text-center text-sm text-neutral-600">
+            Brak produktów w tej kolekcji.
           </p>
-        )}
-
-        {!comingSoon && (
-          <div className="mt-12 grid grid-cols-2 gap-x-3 gap-y-10 lg:grid-cols-4 lg:gap-x-6">
-            {list.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+        ) : (
+          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
+            {col.products.map((p) => (
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         )}

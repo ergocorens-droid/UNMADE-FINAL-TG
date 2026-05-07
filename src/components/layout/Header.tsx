@@ -10,9 +10,9 @@ import { translate, type MsgKey } from "@/i18n/strings";
 
 const NAV_SPEC: { href: string; key: MsgKey }[] = [
   { href: "/", key: "nav_home" },
-  { href: "/sklep?sort=newest", key: "nav_new" },
-  { href: "/sklep?category=koszulki", key: "nav_tees" },
-  { href: "/sklep?category=bluzy", key: "nav_hoodies" },
+  { href: "/sklep?sort=najnowsze", key: "nav_new" },
+  { href: "/sklep", key: "nav_tees" },
+  { href: "/sklep", key: "nav_hoodies" },
   { href: "/sklep", key: "nav_shop" },
   { href: "/wysylka", key: "nav_shipping" },
   { href: "/kontakt", key: "nav_contact" },
@@ -39,14 +39,12 @@ const COLLECTION_PREVIEW = [
 export function Header({
   promoHeight,
   onOpenSearch,
-  onOpenCart,
 }: {
   promoHeight: number;
   onOpenSearch: () => void;
-  onOpenCart: () => void;
 }) {
   const pathname = usePathname();
-  const { itemCount } = useCart();
+  const { totalQuantity, toggleCart } = useCart();
   const { locale, t } = useRegion();
   const navLinks = useMemo(
     () =>
@@ -77,7 +75,8 @@ export function Header({
   }, []);
 
   useEffect(() => {
-    setScrollY(window.scrollY);
+    const id = requestAnimationFrame(() => setScrollY(window.scrollY));
+    return () => cancelAnimationFrame(id);
   }, [pathname]);
 
   useEffect(() => {
@@ -234,16 +233,16 @@ export function Header({
 
             <button
               type="button"
-              onClick={onOpenCart}
+              onClick={toggleCart}
               className={`relative ${iconBtn}`}
-              aria-label={`Koszyk, ${itemCount} pozycji`}
+              aria-label={`Koszyk, ${totalQuantity} szt.`}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z" />
               </svg>
-              {itemCount > 0 && (
+              {totalQuantity > 0 && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-[var(--unmade-accent)] px-1 text-[10px] font-bold text-white">
-                  {itemCount > 99 ? "99+" : itemCount}
+                  {totalQuantity > 99 ? "99+" : totalQuantity}
                 </span>
               )}
             </button>

@@ -1,118 +1,73 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import type { Product } from "@/data/products";
-import {
-  defaultCartColor,
-  getFomoStock,
-  type Size,
-} from "@/data/products";
-import { useCart } from "@/context/CartContext";
-import { useRegion } from "@/context/RegionContext";
+import { formatPrice } from "@/lib/format";
+import type { Product } from "@/lib/shopify/types";
 
-const DEFAULT_ADD_SIZE: Size = "M";
+function shouldShowCompare(product: Product): boolean {
+  const price = Number.parseFloat(product.priceRange.minVariantPrice.amount);
+  const compare = Number.parseFloat(
+    product.compareAtPriceRange.minVariantPrice.amount,
+  );
+  return Number.isFinite(compare) && Number.isFinite(price) && compare > price;
+}
+
+const SIZES =
+  "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { addLine } = useCart();
-  const { formatMoney, formatColorLabel, t } = useRegion();
-  const [toast, setToast] = useState<string | null>(null);
-  const stock = getFomoStock(product.slug);
-
-  function handleAdd(e: React.MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (product.soldOut) return;
-    const color = defaultCartColor(product);
-    addLine({
-      productSlug: product.slug,
-      name: product.name,
-      image: product.img1,
-      price: product.price,
-      compareAt: product.compareAt,
-      size: DEFAULT_ADD_SIZE,
-      color,
-      quantity: 1,
-    });
-    const detail = [
-      color ? formatColorLabel(color) : null,
-      `${t("cart_size")} ${DEFAULT_ADD_SIZE}`,
-    ]
-      .filter(Boolean)
-      .join(", ");
-    setToast(t("toast_added", { detail }));
-    window.setTimeout(() => setToast(null), 1800);
-  }
+  const img = product.featuredImage?.url;
+  const price = product.priceRange.minVariantPrice;
+  const compare = product.compareAtPriceRange.minVariantPrice;
+  const showCompare = shouldShowCompare(product);
 
   return (
-    <div className="group relative flex flex-col">
-      <Link href={`/sklep/${product.slug}`} className="relative block overflow-hidden bg-neutral-100">
-        <div className="relative aspect-[3/4]">
+    <Link
+      href={`/produkt/${product.handle}`}
+      className="group block outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+    >
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
+        {img ? (
           <Image
-            src={product.img1}
-            alt={`${product.name} — widok 1`}
+            src={img}
+            alt={product.title}
             fill
-            className="object-cover transition duration-500 group-hover:opacity-0"
-            unoptimized
-            sizes="(max-width:768px) 50vw, 25vw"
+            sizes={SIZES}
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02]"
           />
-          <Image
-            src={product.img2}
-            alt={`${product.name} — widok 2`}
-            fill
-            className="absolute inset-0 object-cover opacity-0 transition duration-500 group-hover:opacity-100"
-            unoptimized
-            sizes="(max-width:768px) 50vw, 25vw"
-          />
-          {product.soldOut ? (
-            <span className="absolute left-2 top-2 bg-[var(--unmade-accent)] px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-              SOLD OUT
+        ) : (
+          <div className="flex h-full items-center justify-center text-xs text-neutral-400">
+            Brak zdjęcia
+          </div>
+        )}
+        {!product.availableForSale ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/65 backdrop-blur-[1px]">
+            <span className="rounded bg-neutral-900 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white">
+              WYPRZEDANE
             </span>
+          </div>
+        ) : null}
+      </div>
+      <div className="mt-3 px-0.5">
+        <p className="text-sm font-medium uppercase tracking-wide text-black line-clamp-2">
+          {product.title}
+        </p>
+        <div className="mt-1 flex flex-wrap items-baseline gap-2">
+          {showCompare ? (
+            <>
+              <span className="text-sm text-neutral-500 line-through">
+                {formatPrice(compare)}
+              </span>
+              <span className="text-sm font-semibold text-black">
+                {formatPrice(price)}
+              </span>
+            </>
           ) : (
-            <span className="absolute left-2 top-2 bg-[var(--unmade-accent)] px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
-              -15%
+            <span className="text-sm font-semibold text-black">
+              {formatPrice(price)}
             </span>
           )}
         </div>
-      </Link>
-      <div className="mt-3 flex flex-col gap-1">
-        <Link
-          href={`/sklep/${product.slug}`}
-          className="line-clamp-2 text-[11px] font-bold uppercase leading-snug tracking-wide text-neutral-900 hover:text-[var(--unmade-accent)] md:text-xs"
-        >
-          {product.name}
-        </Link>
-        <div className="flex flex-wrap items-baseline gap-2">
-          <span className="text-xs text-[#666] line-through">
-            {formatMoney(product.compareAt)}
-          </span>
-          <span className="text-sm font-medium text-neutral-900">
-            {formatMoney(product.price)}
-          </span>
-        </div>
-        {!product.soldOut && (
-          <p className="text-[11px] font-medium text-neutral-700">
-            🔥 {t("pdp_fomo", { n: stock })}
-          </p>
-        )}
-        <button
-          type="button"
-          onClick={handleAdd}
-          disabled={product.soldOut}
-          className="mt-2 self-start border border-neutral-400 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-900 transition hover:border-neutral-900 hover:bg-neutral-900 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          {t("quick_add")}
-        </button>
       </div>
-      {toast && (
-        <p
-          className="pointer-events-none absolute bottom-20 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded bg-white px-3 py-1 text-[10px] font-bold uppercase text-black shadow-lg"
-          role="status"
-        >
-          {toast}
-        </p>
-      )}
-    </div>
+    </Link>
   );
 }

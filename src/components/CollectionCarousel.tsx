@@ -6,28 +6,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
-const ITEMS = [
+export type CollectionCarouselItem = {
+  title: string;
+  sub: string;
+  href: string;
+  img: string;
+};
+
+const FALLBACK: CollectionCarouselItem[] = [
   {
-    title: "KOSZULKI",
-    sub: "T-SHIRTS",
-    href: "/sklep?category=koszulki",
+    title: "SKLEP",
+    sub: "WSZYSTKIE",
+    href: "/sklep",
     img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=80",
-  },
-  {
-    title: "BLUZY",
-    sub: "HOODIES",
-    href: "/sklep?category=bluzy",
-    img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&q=80",
-  },
-  {
-    title: "NOWE",
-    sub: "NEW RELEASES",
-    href: "/sklep?sort=newest",
-    img: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1200&q=80",
   },
 ];
 
-export function CollectionCarousel() {
+export function CollectionCarousel({
+  items,
+}: {
+  items?: CollectionCarouselItem[];
+}) {
+  const slidesSource = items?.length ? items : FALLBACK;
+
   const plugins = useMemo(
     () => [
       Autoplay({
@@ -49,7 +50,7 @@ export function CollectionCarousel() {
     plugins,
   );
 
-  const slides = [...ITEMS, ...ITEMS];
+  const slides = [...slidesSource, ...slidesSource];
 
   return (
     <div className="overflow-hidden px-1" ref={emblaRef}>
@@ -63,7 +64,6 @@ export function CollectionCarousel() {
               href={item.href}
               className="group relative block aspect-[16/10] overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm"
             >
-              {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
               <Image
                 src={item.img}
                 alt={item.title}

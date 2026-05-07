@@ -12,7 +12,6 @@ import { useRegion } from "@/context/RegionContext";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [introDone, setIntroDone] = useState(false);
   const [promoHeight, setPromoHeight] = useState(0);
@@ -47,10 +46,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       </div>
       <Header
         promoHeight={promoHeight}
-        onOpenCart={() => setCartOpen(true)}
         onOpenSearch={() => setSearchOpen(true)}
       />
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
+      <CartDrawer />
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
       <div className={`flex min-h-0 flex-1 flex-col ${mainExtraClass}`}>
         {children}

@@ -9,207 +9,175 @@ import {
   useState,
 } from "react";
 import {
-  PRODUCT_BY_SLUG,
-  type ProductColorSlug,
-  type Size,
-  SIZES,
-} from "@/data/products";
+  cartCreate,
+  cartLinesAdd,
+  cartLinesRemove,
+  cartLinesUpdate,
+  getCart,
+} from "@/lib/shopify/api";
+import type { Cart } from "@/lib/shopify/types";
 
-const STORAGE_KEY = "unmade_cart";
+const CART_ID_KEY = "unmade_cart_id";
 
-export interface CartLine {
-  id: string;
-  productSlug: string;
-  name: string;
-  image: string;
-  price: number;
-  compareAt: number;
-  size: Size;
-  /** undefined = bluza lub legacy wpis */
-  color?: ProductColorSlug;
-  quantity: number;
+function readStoredCartId(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(CART_ID_KEY);
 }
 
-function cartLineId(
-  slug: string,
-  size: Size,
-  color?: ProductColorSlug,
-): string {
-  if (color) return `${slug}__${size}__${color}`;
-  return `${slug}__${size}`;
-}
-
-function migrateCartLine(line: CartLine): CartLine {
-  if (line.color !== undefined) return line;
-  const parts = line.id.split("__");
-  if (parts.length !== 2) return line;
-  const [slug, sizeStr] = parts;
-  if (!SIZES.includes(sizeStr as Size)) return line;
-  const size = sizeStr as Size;
-  const p = PRODUCT_BY_SLUG[slug];
-  const color =
-    p && p.category !== "bluzy" ? ("black" as ProductColorSlug) : undefined;
-  return {
-    ...line,
-    id: cartLineId(slug, size, color),
-    color,
-  };
+function writeStoredCartId(id: string | null) {
+  if (typeof window === "undefined") return;
+  if (id) localStorage.setItem(CART_ID_KEY, id);
+  else localStorage.removeItem(CART_ID_KEY);
 }
 
 interface CartContextValue {
-  lines: CartLine[];
-  hydrated: boolean;
-  itemCount: number;
-  subtotal: number;
-  compareSubtotal: number;
-  addLine: (input: {
-    productSlug: string;
-    name: string;
-    image: string;
-    price: number;
-    compareAt: number;
-    size: Size;
-    color?: ProductColorSlug;
-    quantity?: number;
-  }) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  removeLine: (id: string) => void;
-  clear: () => void;
+  cart: Cart | null;
+  isOpen: boolean;
+  isLoading: boolean;
+  totalQuantity: number;
+  addItem: (variantId: string, quantity: number) => Promise<void>;
+  updateItem: (lineId: string, quantity: number) => Promise<void>;
+  removeItem: (lineId: string) => Promise<void>;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-function loadFromStorage(): CartLine[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as CartLine[];
-    if (!Array.isArray(parsed)) return [];
-    return parsed.map((line) => migrateCartLine(line));
-  } catch {
-    return [];
-  }
-}
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const [cart, setCart] = useState<Cart | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    let hydratedTimer: number | undefined;
+    let cancelled = false;
 
-    const raf = requestAnimationFrame(() => {
-      setLines(loadFromStorage());
-      hydratedTimer = window.setTimeout(() => setHydrated(true), 0);
-    });
+    async function hydrate() {
+      const id = readStoredCartId();
+      if (!id) return;
 
+      setIsLoading(true);
+      try {
+        const next = await getCart(id);
+        if (cancelled) return;
+        if (!next) {
+          writeStoredCartId(null);
+          setCart(null);
+        } else {
+          setCart(next);
+        }
+      } catch {
+        if (!cancelled) {
+          writeStoredCartId(null);
+          setCart(null);
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    }
+
+    void hydrate();
     return () => {
-      cancelAnimationFrame(raf);
-      if (hydratedTimer !== undefined) window.clearTimeout(hydratedTimer);
+      cancelled = true;
     };
   }, []);
 
-  useEffect(() => {
-    if (!hydrated) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
-  }, [lines, hydrated]);
+  const resolveCartId = useCallback(() => {
+    return cart?.id ?? readStoredCartId();
+  }, [cart?.id]);
 
-  const addLine = useCallback(
-    (input: {
-      productSlug: string;
-      name: string;
-      image: string;
-      price: number;
-      compareAt: number;
-      size: Size;
-      color?: ProductColorSlug;
-      quantity?: number;
-    }) => {
-      const qty = input.quantity ?? 1;
-      const id = cartLineId(input.productSlug, input.size, input.color);
-      setLines((prev) => {
-        const idx = prev.findIndex((l) => l.id === id);
-        if (idx >= 0) {
-          const next = [...prev];
-          next[idx] = {
-            ...next[idx],
-            quantity: next[idx].quantity + qty,
-          };
-          return next;
+  const addItem = useCallback(
+    async (variantId: string, quantity: number) => {
+      setIsLoading(true);
+      try {
+        const cid = resolveCartId();
+        if (!cid) {
+          const newCart = await cartCreate([
+            { merchandiseId: variantId, quantity },
+          ]);
+          setCart(newCart);
+          writeStoredCartId(newCart.id);
+          return;
         }
-        return [
-          ...prev,
-          {
-            id,
-            productSlug: input.productSlug,
-            name: input.name,
-            image: input.image,
-            price: input.price,
-            compareAt: input.compareAt,
-            size: input.size,
-            color: input.color,
-            quantity: qty,
-          },
-        ];
-      });
+        const next = await cartLinesAdd(cid, [
+          { merchandiseId: variantId, quantity },
+        ]);
+        setCart(next);
+      } finally {
+        setIsLoading(false);
+      }
     },
-    [],
+    [resolveCartId],
   );
 
-  const updateQuantity = useCallback((id: string, quantity: number) => {
-    if (quantity < 1) {
-      setLines((prev) => prev.filter((l) => l.id !== id));
-      return;
-    }
-    setLines((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, quantity } : l)),
-    );
-  }, []);
+  const updateItem = useCallback(
+    async (lineId: string, quantity: number) => {
+      const cid = resolveCartId();
+      if (!cid) return;
 
-  const removeLine = useCallback((id: string) => {
-    setLines((prev) => prev.filter((l) => l.id !== id));
-  }, []);
-
-  const clear = useCallback(() => setLines([]), []);
-
-  const itemCount = useMemo(
-    () => lines.reduce((acc, l) => acc + l.quantity, 0),
-    [lines],
+      setIsLoading(true);
+      try {
+        if (quantity < 1) {
+          const next = await cartLinesRemove(cid, [lineId]);
+          setCart(next);
+          return;
+        }
+        const next = await cartLinesUpdate(cid, [{ id: lineId, quantity }]);
+        setCart(next);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [resolveCartId],
   );
 
-  const subtotal = useMemo(
-    () => lines.reduce((acc, l) => acc + l.price * l.quantity, 0),
-    [lines],
+  const removeItem = useCallback(
+    async (lineId: string) => {
+      const cid = resolveCartId();
+      if (!cid) return;
+
+      setIsLoading(true);
+      try {
+        const next = await cartLinesRemove(cid, [lineId]);
+        setCart(next);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [resolveCartId],
   );
 
-  const compareSubtotal = useMemo(
-    () => lines.reduce((acc, l) => acc + l.compareAt * l.quantity, 0),
-    [lines],
-  );
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
+  const toggleCart = useCallback(() => setIsOpen((o) => !o), []);
+
+  const totalQuantity = cart?.totalQuantity ?? 0;
 
   const value = useMemo(
     () => ({
-      lines,
-      hydrated,
-      itemCount,
-      subtotal,
-      compareSubtotal,
-      addLine,
-      updateQuantity,
-      removeLine,
-      clear,
+      cart,
+      isOpen,
+      isLoading,
+      totalQuantity,
+      addItem,
+      updateItem,
+      removeItem,
+      openCart,
+      closeCart,
+      toggleCart,
     }),
     [
-      lines,
-      hydrated,
-      itemCount,
-      subtotal,
-      compareSubtotal,
-      addLine,
-      updateQuantity,
-      removeLine,
-      clear,
+      cart,
+      isOpen,
+      isLoading,
+      totalQuantity,
+      addItem,
+      updateItem,
+      removeItem,
+      openCart,
+      closeCart,
+      toggleCart,
     ],
   );
 

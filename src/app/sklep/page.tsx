@@ -1,10 +1,15 @@
-import Image from "next/image";
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import { ShopToolbar } from "@/components/shop/ShopToolbar";
-import { filterProducts } from "@/lib/filterProducts";
-import { parseShopSearchParams } from "@/lib/shopQuery";
+import { SortSelect } from "@/components/shop/SortSelect";
+import {
+  getCollectionByHandle,
+  getCollections,
+  getProducts,
+  shopSortFromParam,
+} from "@/lib/shopify/api";
 
 export const metadata: Metadata = {
   title: "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
@@ -19,18 +24,46 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  searchParams: Promise<{ kolekcja?: string; sort?: string; q?: string }>;
 };
 
 export default async function ShopPage({ searchParams }: Props) {
-  const raw = await searchParams;
-  const parsed = parseShopSearchParams(raw);
-  const list = filterProducts(parsed);
+  const sp = await searchParams;
+  const kolekcja = sp.kolekcja;
+  const sortParam = sp.sort ?? "najnowsze";
+  const searchQuery = typeof sp.q === "string" ? sp.q : undefined;
+
+  const collections = await getCollections();
+
+  let products;
+  if (kolekcja) {
+    const col = await getCollectionByHandle(kolekcja, 48, sortParam);
+    products = col?.products ?? [];
+  } else {
+    const { sortKey, reverse } = shopSortFromParam(sortParam);
+    products = await getProducts({
+      first: 48,
+      sortKey,
+      reverse,
+      query: searchQuery,
+    });
+  }
+
+  const sortQuery =
+    sortParam && sortParam !== "najnowsze"
+      ? `sort=${encodeURIComponent(sortParam)}`
+      : "";
+
+  function shopHref(k?: string) {
+    const parts: string[] = [];
+    if (k) parts.push(`kolekcja=${encodeURIComponent(k)}`);
+    if (sortQuery) parts.push(sortQuery);
+    return parts.length ? `/sklep?${parts.join("&")}` : "/sklep";
+  }
 
   return (
     <div className="bg-white pb-20 pt-0">
       <div className="relative aspect-[21/9] min-h-[220px] w-full md:min-h-[320px]">
-        {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
         <Image
           src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=85"
           alt="Sklep UNMADE — baner"
@@ -52,37 +85,87 @@ export default async function ShopPage({ searchParams }: Props) {
 
       <section className="mx-auto max-w-[1400px] px-4 py-10 md:px-6 md:py-14">
         <div className="relative mb-10 overflow-hidden border border-neutral-200 bg-neutral-50">
-          <div className="aspect-video flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-neutral-100 to-neutral-200">
+          <div className="flex aspect-video flex-col items-center justify-center gap-2 bg-gradient-to-br from-neutral-100 to-neutral-200">
             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500">
               Video placeholder
             </p>
             <p className="max-w-md px-6 text-center text-xs text-neutral-600">
-              {/* TODO: podmienić na własne wideo jak apexero */}
               Tutaj trafi teaser kolekcji / lookbook (własne media).
             </p>
           </div>
         </div>
 
-        <Suspense
-          fallback={
-            <div className="mb-10 h-40 animate-pulse rounded bg-neutral-100" />
-          }
-        >
-          <ShopToolbar />
-        </Suspense>
+        <div className="flex flex-col gap-10 lg:flex-row">
+          <aside className="lg:w-56 lg:shrink-0">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+              Kolekcje
+            </p>
+            <nav className="flex flex-col gap-1">
+              <CollectionLink
+                href={shopHref()}
+                label="Wszystkie"
+                active={!kolekcja}
+              />
+              {collections.map((c) => (
+                <CollectionLink
+                  key={c.id}
+                  href={shopHref(c.handle)}
+                  label={c.title}
+                  active={kolekcja === c.handle}
+                />
+              ))}
+            </nav>
+          </aside>
 
-        {list.length === 0 ? (
-          <p className="mt-12 text-center text-sm text-neutral-600">
-            Brak produktów dla wybranych filtrów.
-          </p>
-        ) : (
-          <div className="mt-12 grid grid-cols-2 gap-x-3 gap-y-10 lg:grid-cols-4 lg:gap-x-6">
-            {list.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
+          <div className="min-w-0 flex-1">
+            <Suspense
+              fallback={
+                <div className="mb-8 h-10 animate-pulse rounded bg-neutral-100" />
+              }
+            >
+              <div className="mb-10 flex justify-end">
+                <SortSelect />
+              </div>
+            </Suspense>
+
+            {products.length === 0 ? (
+              <p className="mt-12 text-center text-sm text-neutral-600">
+                Brak produktów w tej kategorii
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
+                {products.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
     </div>
+  );
+}
+
+function CollectionLink({
+  href,
+  label,
+  active,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      scroll={false}
+      className={`rounded border px-3 py-2 text-left text-[11px] font-bold uppercase tracking-wide transition ${
+        active
+          ? "border-neutral-900 bg-neutral-900 text-white"
+          : "border-neutral-300 text-neutral-800 hover:border-neutral-900"
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
