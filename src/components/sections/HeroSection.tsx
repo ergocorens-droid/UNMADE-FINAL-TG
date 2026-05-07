@@ -25,7 +25,7 @@ export function HeroSection() {
         className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)]"
         aria-label="Przejdź do sklepu — 2026 Collection"
       >
-        <div className="absolute inset-0 md:hidden">
+        <div className="absolute inset-0 z-0 md:hidden">
           <Image
             src={mobileSrc}
             alt="UNMADE — car culture streetwear"
@@ -36,7 +36,7 @@ export function HeroSection() {
           />
         </div>
 
-        <div className="absolute inset-0 hidden md:block">
+        <div className="absolute inset-0 z-0 hidden md:block">
           {HERO_PHOTO_PATHS_DESKTOP.map((src, i) => (
             <Image
               key={src}
@@ -46,15 +46,15 @@ export function HeroSection() {
               sizes="100vw"
               loading={i === 0 ? "eager" : "lazy"}
               className={`object-cover transition-opacity duration-700 ease-in-out ${
-                i === desktopIndex ? "z-10 opacity-100" : "z-0 opacity-0"
+                i === desktopIndex ? "z-[1] opacity-100" : "z-0 opacity-0"
               }`}
               aria-hidden={i !== desktopIndex}
             />
           ))}
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
-        <div className="relative flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
+        <div className="relative z-[2] flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
           <span className="text-5xl font-bold tracking-[0.35em] text-white md:text-7xl lg:text-8xl">
             UNMADE
           </span>
@@ -62,7 +62,7 @@ export function HeroSection() {
             2026 COLLECTION
           </p>
         </div>
-        <div className="pointer-events-none absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+        <div className="pointer-events-none absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-2">
           <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
             Scroll
           </span>
