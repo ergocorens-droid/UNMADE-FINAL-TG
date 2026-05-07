@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { translate, type MsgKey } from "@/i18n/strings";
+import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 const NAV_SPEC: { href: string; key: MsgKey }[] = [
   { href: "/", key: "nav_home" },
@@ -22,17 +23,17 @@ const COLLECTION_PREVIEW = [
   {
     href: "/kolekcje/porsche",
     title: "PORSCHE",
-    img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80",
+    img: pickHeroPhotoByIndex(1),
   },
   {
     href: "/kolekcje/jdm",
     title: "JDM",
-    img: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&q=80",
+    img: pickHeroPhotoByIndex(4),
   },
   {
     href: "/kolekcje/drift",
     title: "DRIFT",
-    img: "https://images.unsplash.com/photo-1542362567-b07e54358753?w=400&q=80",
+    img: pickHeroPhotoByIndex(7),
   },
 ];
 

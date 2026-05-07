@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
+import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 export type CollectionCarouselItem = {
   title: string;
@@ -18,7 +19,7 @@ const FALLBACK: CollectionCarouselItem[] = [
     title: "SKLEP",
     sub: "WSZYSTKIE",
     href: "/sklep",
-    img: "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1200&q=80",
+    img: pickHeroPhotoByIndex(2),
   },
 ];
 

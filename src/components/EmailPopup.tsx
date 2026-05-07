@@ -4,16 +4,10 @@ import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "popup_dismissed";
 
-export function EmailPopup({
-  introDone,
-}: {
-  /** false while loading overlay visible */
-  introDone: boolean;
-}) {
+export function EmailPopup() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!introDone) return;
     try {
       if (localStorage.getItem(STORAGE_KEY) === "true") return;
     } catch {
@@ -21,8 +15,8 @@ export function EmailPopup({
     }
 
     const t = window.setTimeout(() => setVisible(true), 5000);
-    return () => window.clearTimeout(t);
-  }, [introDone]);
+    return () => clearTimeout(t);
+  }, []);
 
   function dismiss() {
     try {

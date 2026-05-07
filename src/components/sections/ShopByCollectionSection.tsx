@@ -1,16 +1,14 @@
 import { CollectionCarousel } from "@/components/CollectionCarousel";
 import { getCollections } from "@/lib/shopify/api";
-
-const PLACEHOLDER_IMG =
-  "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1200&q=80";
+import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 export async function ShopByCollectionSection() {
   const collections = await getCollections();
-  const items = collections.slice(0, 12).map((c) => ({
+  const items = collections.slice(0, 12).map((c, i) => ({
     title: c.title.toUpperCase(),
     sub: c.handle.toUpperCase(),
     href: `/sklep?kolekcja=${encodeURIComponent(c.handle)}`,
-    img: c.image?.url ?? PLACEHOLDER_IMG,
+    img: c.image?.url ?? pickHeroPhotoByIndex(i * 11 + c.handle.length),
   }));
 
   return (

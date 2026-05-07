@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getCollections } from "@/lib/shopify/api";
+import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 export const metadata: Metadata = {
   title: "Kolekcje | UNMADE — Streetwear",
@@ -26,10 +27,10 @@ export default async function KolekcjePage() {
           KOLEKCJE
         </h1>
         <div className="mt-12 grid gap-8 md:grid-cols-3">
-          {collections.map((c) => {
+          {collections.map((c, index) => {
             const img =
               c.image?.url ??
-              "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1200&q=80";
+              pickHeroPhotoByIndex(index * 13 + c.handle.length);
             return (
               <Link
                 key={c.id}

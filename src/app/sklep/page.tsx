@@ -10,6 +10,7 @@ import {
   getProducts,
   shopSortFromParam,
 } from "@/lib/shopify/api";
+import { pickRandomHeroPhoto } from "@/lib/heroPhotos";
 
 export const metadata: Metadata = {
   title: "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
@@ -61,11 +62,13 @@ export default async function ShopPage({ searchParams }: Props) {
     return parts.length ? `/sklep?${parts.join("&")}` : "/sklep";
   }
 
+  const bannerImage = pickRandomHeroPhoto();
+
   return (
     <div className="bg-white pb-20 pt-0">
       <div className="relative aspect-[21/9] min-h-[220px] w-full md:min-h-[320px]">
         <Image
-          src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=85"
+          src={bannerImage}
           alt="Sklep UNMADE — baner"
           fill
           priority
@@ -84,17 +87,6 @@ export default async function ShopPage({ searchParams }: Props) {
       </div>
 
       <section className="mx-auto max-w-[1400px] px-4 py-10 md:px-6 md:py-14">
-        <div className="relative mb-10 overflow-hidden border border-neutral-200 bg-neutral-50">
-          <div className="flex aspect-video flex-col items-center justify-center gap-2 bg-gradient-to-br from-neutral-100 to-neutral-200">
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-500">
-              Video placeholder
-            </p>
-            <p className="max-w-md px-6 text-center text-xs text-neutral-600">
-              Tutaj trafi teaser kolekcji / lookbook (własne media).
-            </p>
-          </div>
-        </div>
-
         <div className="flex flex-col gap-10 lg:flex-row">
           <aside className="lg:w-56 lg:shrink-0">
             <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
