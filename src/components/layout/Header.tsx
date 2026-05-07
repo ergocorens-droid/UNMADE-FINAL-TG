@@ -12,8 +12,8 @@ import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 const NAV_SPEC: { href: string; key: MsgKey }[] = [
   { href: "/", key: "nav_home" },
   { href: "/sklep?sort=najnowsze", key: "nav_new" },
-  { href: "/sklep", key: "nav_tees" },
-  { href: "/sklep", key: "nav_hoodies" },
+  { href: "/sklep?typ=t-shirts", key: "nav_tees" },
+  { href: "/sklep?typ=blueprint", key: "nav_hoodies" },
   { href: "/sklep", key: "nav_shop" },
   { href: "/wysylka", key: "nav_shipping" },
   { href: "/kontakt", key: "nav_contact" },

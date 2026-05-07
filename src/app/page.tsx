@@ -1,6 +1,8 @@
-import { CollectionGrid2026 } from "@/components/sections/CollectionGrid2026";
-import { HeroSection } from "@/components/sections/HeroSection";
 import type { Metadata } from "next";
+import { CollectionSection } from "@/components/sections/CollectionSection";
+import { HeroSection } from "@/components/sections/HeroSection";
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title:
@@ -20,7 +22,8 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <CollectionGrid2026 />
+      <CollectionSection handle="black" />
+      <CollectionSection handle="white" />
     </>
   );
 }

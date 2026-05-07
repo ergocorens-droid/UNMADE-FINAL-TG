@@ -1,4 +1,5 @@
 import { shopifyClientFetch, shopifyFetch } from "./client";
+import { SIDEBAR_COLLECTION_HANDLES } from "./collection-labels";
 import {
   CART_CREATE_MUTATION,
   CART_LINES_ADD_MUTATION,
@@ -293,6 +294,87 @@ export function collectionSortFromParam(sort: string | undefined): {
     default:
       return { sortKey: "CREATED", reverse: true };
   }
+}
+
+/** Sortuje listę produktów po wyborze użytkownika (np. po przecięciu kolekcji). */
+export function sortProductsInMemory(
+  products: Product[],
+  sort: string | undefined,
+): Product[] {
+  const { sortKey, reverse } = shopSortFromParam(sort);
+  const arr = [...products];
+  arr.sort((a, b) => {
+    if (sortKey === "PRICE") {
+      const pa = parseFloat(a.priceRange.minVariantPrice.amount);
+      const pb = parseFloat(b.priceRange.minVariantPrice.amount);
+      const cmp = pa - pb;
+      return reverse ? -cmp : cmp;
+    }
+    if (sortKey === "BEST_SELLING") {
+      return 0;
+    }
+    // CREATED_AT — brak pola w typie; stabilnie po gid
+    return reverse ? b.id.localeCompare(a.id) : a.id.localeCompare(b.id);
+  });
+  return arr;
+}
+
+/**
+ * Liczniki produktów dla sidebaru (do 250 / kolekcja).
+ */
+export async function getSidebarCollectionCounts(): Promise<
+  Record<string, number>
+> {
+  const entries = await Promise.all(
+    SIDEBAR_COLLECTION_HANDLES.map(async (handle) => {
+      const col = await getCollectionByHandle(handle, 250);
+      return [handle, col?.products.length ?? 0] as const;
+    }),
+  );
+  return Object.fromEntries(entries);
+}
+
+const SHOP_COLLECTION_FETCH = 250;
+
+export async function getShopPageProducts(opts: {
+  kolor?: string;
+  typ?: string;
+  sort?: string;
+  q?: string;
+}): Promise<Product[]> {
+  const { sortKey, reverse } = shopSortFromParam(opts.sort);
+  const pools: Product[][] = [];
+
+  if (opts.kolor) {
+    const c = await getCollectionByHandle(opts.kolor, SHOP_COLLECTION_FETCH, opts.sort);
+    if (c?.products.length) pools.push(c.products);
+    else return [];
+  }
+  if (opts.typ) {
+    const c = await getCollectionByHandle(opts.typ, SHOP_COLLECTION_FETCH, opts.sort);
+    if (c?.products.length) pools.push(c.products);
+    else return [];
+  }
+
+  if (pools.length === 0) {
+    return getProducts({
+      first: 48,
+      sortKey,
+      reverse,
+      query: opts.q,
+    });
+  }
+
+  if (pools.length === 1) {
+    return sortProductsInMemory(pools[0], opts.sort);
+  }
+
+  const [a, b] = pools;
+  const map = new Map(a.map((p) => [p.id, p] as const));
+  const intersection = b
+    .filter((p) => map.has(p.id))
+    .map((p) => map.get(p.id)!);
+  return sortProductsInMemory(intersection, opts.sort);
 }
 
 export async function getProducts({

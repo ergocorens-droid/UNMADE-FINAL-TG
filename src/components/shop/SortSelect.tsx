@@ -7,10 +7,15 @@ const OPTIONS: { value: string; label: string }[] = [
   { value: "najnowsze", label: "Najnowsze" },
   { value: "cena-rosnaco", label: "Cena rosnąco" },
   { value: "cena-malejaco", label: "Cena malejąco" },
-  { value: "popularne", label: "Popularne" },
+  { value: "popularne", label: "Najpopularniejsze" },
 ];
 
-export function SortSelect() {
+export type SortSelectProps = {
+  /** Pełna ścieżka bez query, np. `/sklep` lub `/kolekcja/czarne`. */
+  basePath?: string;
+};
+
+export function SortSelect({ basePath = "/sklep" }: SortSelectProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [pending, startTransition] = useTransition();
@@ -35,7 +40,7 @@ export function SortSelect() {
           }
           const q = next.toString();
           startTransition(() => {
-            router.push(q ? `/sklep?${q}` : "/sklep", { scroll: false });
+            router.push(q ? `${basePath}?${q}` : basePath, { scroll: false });
           });
         }}
         className="border border-neutral-300 bg-white px-3 py-2 text-xs uppercase tracking-wide text-neutral-900"
