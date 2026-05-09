@@ -16,7 +16,7 @@ const NAV_SPEC: { href: string; key: TranslationKey }[] = [
   { href: "/sklep?typ=t-shirts", key: "nav.tshirts" },
   { href: "/sklep?typ=blueprint", key: "nav.hoodies" },
   { href: "/sklep", key: "nav.shop" },
-  { href: "/wysylka", key: "nav.shipping" },
+  { href: "/dostawa-i-platnosc", key: "nav.shipping" },
   { href: "/kontakt", key: "nav.contact" },
 ];
 

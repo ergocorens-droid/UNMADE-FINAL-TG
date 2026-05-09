@@ -58,11 +58,19 @@
     "aboutPageTitle": "O nas",
     "aboutPageDescription": "UNMADE — streetwear z duszą car culture. Poznaj naszą historię, filozofię i dlaczego robimy to co robimy.",
     "termsDocTitle": "Regulamin",
-    "termsDocDescription": "Regulamin UNMADE — warunki korzystania ze sklepu (placeholder).",
+    "termsDocDescription": "Regulamin sklepu internetowego UNMADE — MMN sp. z o.o.",
     "privacyDocTitle": "Polityka prywatności",
-    "privacyDocDescription": "Polityka prywatności UNMADE — RODO i cookies (placeholder).",
+    "privacyDocDescription": "Zasady przetwarzania danych osobowych przy zakupach w UNMADE.",
     "tosDocTitle": "Warunki usługi",
-    "tosDocDescription": "Warunki świadczenia usługi UNMADE (placeholder)."
+    "tosDocDescription": "Warunki świadczenia usługi elektronicznej przez sklep UNMADE.",
+    "cookiesDocTitle": "Polityka cookies",
+    "cookiesDocDescription": "Informacje o plikach cookies w sklepie UNMADE.",
+    "withdrawalsDocTitle": "Zwroty i odstąpienie",
+    "withdrawalsDocDescription": "Zasady zwrotów i odstąpienia od umowy przy zakupach w UNMADE.",
+    "deliveryPaymentDocTitle": "Dostawa i płatności",
+    "deliveryPaymentDocDescription": "Koszty dostawy, czas realizacji i metody płatności w UNMADE.",
+    "faqDocTitle": "FAQ",
+    "faqDocDescription": "Najczęściej zadawane pytania dotyczące zakupów, wysyłki i zwrotów."
   },
   "shop": {
     "title": "SKLEP",
@@ -133,11 +141,17 @@
     "terms": "Regulamin",
     "privacy": "Polityka prywatności",
     "termsOfService": "Warunki usługi",
-    "shipping": "Wysyłka",
+    "shipping": "Dostawa i płatności",
+    "cookies": "Polityka cookies",
+    "withdrawals": "Zwroty",
+    "faq": "FAQ",
+    "complaints": "Reklamacje",
+    "sizeGuide": "Tabela rozmiarów",
     "contact": "Kontakt",
     "about": "O nas",
     "instagramAria": "Instagram UNMADE",
-    "tiktokAria": "TikTok UNMADE"
+    "tiktokAria": "TikTok UNMADE",
+    "legalLinksAria": "Informacje prawne"
   },
   "header": {
     "mainNavAria": "Główna nawigacja",

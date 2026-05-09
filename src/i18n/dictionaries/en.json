@@ -58,11 +58,19 @@
     "aboutPageTitle": "About",
     "aboutPageDescription": "UNMADE — streetwear with real car culture soul. Learn our story, philosophy, and why we build what we build.",
     "termsDocTitle": "Terms",
-    "termsDocDescription": "UNMADE terms — store usage conditions (placeholder).",
+    "termsDocDescription": "UNMADE web store terms — MMN LLC operating UNMADE.",
     "privacyDocTitle": "Privacy policy",
-    "privacyDocDescription": "UNMADE privacy policy — GDPR and cookies (placeholder).",
+    "privacyDocDescription": "How we process personal data when you shop at UNMADE.",
     "tosDocTitle": "Terms of service",
-    "tosDocDescription": "UNMADE service terms (placeholder)."
+    "tosDocDescription": "Terms of electronic service for UNMADE customers.",
+    "cookiesDocTitle": "Cookie policy",
+    "cookiesDocDescription": "Information about cookie files used on UNMADE.",
+    "withdrawalsDocTitle": "Returns & withdrawals",
+    "withdrawalsDocDescription": "Returns and statutory withdrawal rules for UNMADE orders.",
+    "deliveryPaymentDocTitle": "Shipping & payments",
+    "deliveryPaymentDocDescription": "Delivery times, costs and payment methods for UNMADE.",
+    "faqDocTitle": "FAQ",
+    "faqDocDescription": "Answers about shipping, returns, sizing and product care."
   },
   "shop": {
     "title": "SHOP",
@@ -133,11 +141,17 @@
     "terms": "Terms",
     "privacy": "Privacy policy",
     "termsOfService": "Terms of service",
-    "shipping": "Shipping",
+    "shipping": "Shipping & payments",
+    "cookies": "Cookie policy",
+    "withdrawals": "Returns",
+    "faq": "FAQ",
+    "complaints": "Complaints",
+    "sizeGuide": "Size guide",
     "contact": "Contact",
     "about": "About us",
     "instagramAria": "UNMADE on Instagram",
-    "tiktokAria": "UNMADE on TikTok"
+    "tiktokAria": "UNMADE on TikTok",
+    "legalLinksAria": "Legal links"
   },
   "header": {
     "mainNavAria": "Main navigation",
