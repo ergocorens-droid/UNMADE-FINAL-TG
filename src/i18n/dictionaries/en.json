@@ -23,6 +23,15 @@
   "announcement": {
     "firstDrop": "FIRST DROP — UP TO -15% OFF WITH CODE IGNITION"
   },
+  "promo": {
+    "label": "FIRST DROP — SALE",
+    "discount": "{percent}% OFF",
+    "endsIn": "ENDS IN",
+    "days": "d",
+    "hours": "h",
+    "minutes": "m",
+    "seconds": "s"
+  },
   "home": {
     "viewCollection": "VIEW FULL COLLECTION",
     "heroCtaAria": "Go to shop — 2026 Collection",

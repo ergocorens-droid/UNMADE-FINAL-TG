@@ -23,6 +23,15 @@
   "announcement": {
     "firstDrop": "PIERWSZY DROP — DO -15% Z KODEM IGNITION"
   },
+  "promo": {
+    "label": "PIERWSZY DROP — PROMOCJA",
+    "discount": "-{percent}%",
+    "endsIn": "KOŃCZY SIĘ ZA",
+    "days": "d",
+    "hours": "h",
+    "minutes": "m",
+    "seconds": "s"
+  },
   "home": {
     "viewCollection": "ZOBACZ CAŁĄ KOLEKCJĘ",
     "heroCtaAria": "Przejdź do sklepu — 2026 Collection",

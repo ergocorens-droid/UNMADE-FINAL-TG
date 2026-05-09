@@ -4,17 +4,16 @@ import { usePathname } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
 import { CartDrawer } from "@/components/CartDrawer";
 import { EmailPopup } from "@/components/EmailPopup";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SearchOverlay } from "@/components/SearchOverlay";
-import { useT } from "@/i18n/I18nContext";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
   const [promoHeight, setPromoHeight] = useState(0);
   const promoRef = useRef<HTMLDivElement>(null);
-  const { t } = useT();
 
   const mainExtraClass =
     pathname === "/" ? "" : "pt-14 md:pt-[3.75rem]";
@@ -32,12 +31,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <EmailPopup />
-      <div ref={promoRef} className="relative z-0 shrink-0">
-        <div className="bg-[linear-gradient(90deg,var(--unmade-accent-deep),var(--unmade-accent))]">
-          <p className="px-4 py-2 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-white/95 sm:text-[11px]">
-            {t("announcement.firstDrop")}
-          </p>
-        </div>
+      <div ref={promoRef} className="relative z-[60] w-full shrink-0">
+        <AnnouncementBar />
       </div>
       <Header
         promoHeight={promoHeight}
