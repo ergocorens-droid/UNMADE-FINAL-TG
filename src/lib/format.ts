@@ -1,9 +1,17 @@
-/** Formatuje kwotę z Shopify Money (Storefront API) po polsku. */
+const LOCALE_BY_CURRENCY: Record<string, string> = {
+  PLN: "pl-PL",
+  EUR: "de-DE",
+  GBP: "en-GB",
+  USD: "en-US",
+};
+
+/** Formatuje kwotę z Shopify Money (Storefront API) wg waluty. */
 export function formatPrice(money: {
   amount: string;
   currencyCode: string;
 }): string {
-  return new Intl.NumberFormat("pl-PL", {
+  const locale = LOCALE_BY_CURRENCY[money.currencyCode] ?? "en-US";
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: money.currencyCode,
   }).format(Number.parseFloat(money.amount));

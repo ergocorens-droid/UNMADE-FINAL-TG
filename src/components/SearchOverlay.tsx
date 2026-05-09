@@ -9,8 +9,10 @@ import {
   useState,
 } from "react";
 import { useRegion } from "@/context/RegionContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import { formatPrice } from "@/lib/format";
-import { clientSearchProducts } from "@/lib/shopify/api";
+import { clientSearchProducts } from "@/lib/shopify/search-products-client";
+import { currencyToCountryCode } from "@/lib/shopify/markets";
 import type { Product } from "@/lib/shopify/types";
 
 export function SearchOverlay({
@@ -21,6 +23,8 @@ export function SearchOverlay({
   onClose: () => void;
 }) {
   const { t } = useRegion();
+  const { currency } = useCurrency();
+  const country = currencyToCountryCode(currency);
   const [q, setQ] = useState("");
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +62,7 @@ export function SearchOverlay({
     const tmr = window.setTimeout(async () => {
       setLoading(true);
       try {
-        const list = await clientSearchProducts(q, 12);
+        const list = await clientSearchProducts(q, country, 12);
         if (!cancelled) setResults(list);
       } catch {
         if (!cancelled) setResults([]);
@@ -70,7 +74,7 @@ export function SearchOverlay({
       cancelled = true;
       window.clearTimeout(tmr);
     };
-  }, [q, open]);
+  }, [q, open, country]);
 
   if (!open) return null;
 
@@ -152,7 +156,9 @@ export function SearchOverlay({
                       {p.title}
                     </p>
                     <p className="mt-1 text-xs text-neutral-600">
-                      {formatPrice(price)}
+                      {price
+                        ? formatPrice(price)
+                        : "Niedostępne w Twoim regionie"}
                     </p>
                   </div>
                 </Link>

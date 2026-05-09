@@ -37,8 +37,8 @@ export type ProductOption = {
 };
 
 export type PriceRange = {
-  minVariantPrice: Money;
-  maxVariantPrice: Money;
+  minVariantPrice: Money | null;
+  maxVariantPrice: Money | null;
 };
 
 export type ProductCollectionRef = {

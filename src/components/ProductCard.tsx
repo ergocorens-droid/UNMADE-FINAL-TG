@@ -4,11 +4,12 @@ import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/shopify/types";
 
 function shouldShowCompare(product: Product): boolean {
-  const price = Number.parseFloat(product.priceRange.minVariantPrice.amount);
-  const compare = Number.parseFloat(
-    product.compareAtPriceRange.minVariantPrice.amount,
-  );
-  return Number.isFinite(compare) && Number.isFinite(price) && compare > price;
+  const price = product.priceRange.minVariantPrice;
+  const compare = product.compareAtPriceRange.minVariantPrice;
+  if (!price || !compare) return false;
+  const p = Number.parseFloat(price.amount);
+  const c = Number.parseFloat(compare.amount);
+  return Number.isFinite(c) && Number.isFinite(p) && c > p;
 }
 
 const SIZES =
@@ -19,6 +20,7 @@ export function ProductCard({ product }: { product: Product }) {
   const price = product.priceRange.minVariantPrice;
   const compare = product.compareAtPriceRange.minVariantPrice;
   const showCompare = shouldShowCompare(product);
+  const showPrice = Boolean(price);
 
   return (
     <Link
@@ -52,7 +54,11 @@ export function ProductCard({ product }: { product: Product }) {
           {product.title}
         </p>
         <div className="mt-1 flex flex-wrap items-baseline gap-2">
-          {showCompare ? (
+          {!showPrice ? (
+            <span className="text-sm font-medium text-neutral-500">
+              Niedostępne w Twoim regionie
+            </span>
+          ) : showCompare && compare && price ? (
             <>
               <span className="text-sm text-neutral-500 line-through">
                 {formatPrice(compare)}
@@ -63,7 +69,7 @@ export function ProductCard({ product }: { product: Product }) {
             </>
           ) : (
             <span className="text-sm font-semibold text-black">
-              {formatPrice(price)}
+              {formatPrice(price!)}
             </span>
           )}
         </div>

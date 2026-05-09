@@ -27,6 +27,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function buildJsonLd(product: ShopifyProduct) {
   const price = product.priceRange.minVariantPrice;
+  const availability = product.availableForSale
+    ? ("https://schema.org/InStock" as const)
+    : ("https://schema.org/OutOfStock" as const);
+  const offers = price
+    ? {
+        "@type": "Offer" as const,
+        url: `https://unmade.pl/produkt/${product.handle}`,
+        priceCurrency: price.currencyCode,
+        price: price.amount,
+        availability,
+      }
+    : {
+        "@type": "Offer" as const,
+        url: `https://unmade.pl/produkt/${product.handle}`,
+        availability,
+      };
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -34,15 +50,7 @@ function buildJsonLd(product: ShopifyProduct) {
     image: product.images.map((i) => i.url).filter(Boolean),
     description: product.description,
     brand: { "@type": "Brand", name: "UNMADE" },
-    offers: {
-      "@type": "Offer",
-      url: `https://unmade.pl/produkt/${product.handle}`,
-      priceCurrency: price.currencyCode,
-      price: price.amount,
-      availability: product.availableForSale
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock",
-    },
+    offers,
   };
 }
 

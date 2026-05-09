@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -14,7 +15,10 @@ import {
   cartLinesRemove,
   cartLinesUpdate,
   getCart,
-} from "@/lib/shopify/api";
+} from "@/lib/shopify/storefront-cart-client";
+import { registerCurrencyCartBridge } from "@/context/currency-cart-bridge";
+import { useCurrency } from "@/context/CurrencyContext";
+import { CURRENCIES, currencyToCountryCode } from "@/lib/shopify/markets";
 import type { Cart } from "@/lib/shopify/types";
 
 const CART_ID_KEY = "unmade_cart_id";
@@ -38,6 +42,7 @@ interface CartContextValue {
   addItem: (variantId: string, quantity: number) => Promise<void>;
   updateItem: (lineId: string, quantity: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
+  clear: () => void;
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
@@ -46,27 +51,56 @@ interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { currency } = useCurrency();
+  const country = currencyToCountryCode(currency);
+
   const [cart, setCart] = useState<Cart | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const clear = useCallback(() => {
+    writeStoredCartId(null);
+    setCart(null);
+  }, []);
+
+  const bridgeApi = useRef({
+    totalQuantity: 0,
+    clear: () => {},
+  });
+  bridgeApi.current.totalQuantity = cart?.totalQuantity ?? 0;
+  bridgeApi.current.clear = clear;
+
+  useEffect(() => {
+    registerCurrencyCartBridge(bridgeApi.current);
+    return () => registerCurrencyCartBridge(null);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
 
     async function hydrate() {
       const id = readStoredCartId();
-      if (!id) return;
+      if (!id) {
+        if (!cancelled) setCart(null);
+        return;
+      }
 
       setIsLoading(true);
       try {
-        const next = await getCart(id);
+        const next = await getCart(id, country);
         if (cancelled) return;
         if (!next) {
           writeStoredCartId(null);
           setCart(null);
-        } else {
-          setCart(next);
+          return;
         }
+        const expectedCode = CURRENCIES[currency].code;
+        if (next.cost.totalAmount.currencyCode !== expectedCode) {
+          writeStoredCartId(null);
+          setCart(null);
+          return;
+        }
+        setCart(next);
       } catch {
         if (!cancelled) {
           writeStoredCartId(null);
@@ -81,7 +115,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [currency, country]);
 
   const resolveCartId = useCallback(() => {
     return cart?.id ?? readStoredCartId();
@@ -93,22 +127,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       try {
         const cid = resolveCartId();
         if (!cid) {
-          const newCart = await cartCreate([
+          const newCart = await cartCreate(country, [
             { merchandiseId: variantId, quantity },
           ]);
           setCart(newCart);
           writeStoredCartId(newCart.id);
           return;
         }
-        const next = await cartLinesAdd(cid, [
-          { merchandiseId: variantId, quantity },
-        ]);
+        const next = await cartLinesAdd(
+          cid,
+          [{ merchandiseId: variantId, quantity }],
+          country,
+        );
         setCart(next);
       } finally {
         setIsLoading(false);
       }
     },
-    [resolveCartId],
+    [resolveCartId, country],
   );
 
   const updateItem = useCallback(
@@ -119,17 +155,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       try {
         if (quantity < 1) {
-          const next = await cartLinesRemove(cid, [lineId]);
+          const next = await cartLinesRemove(cid, [lineId], country);
           setCart(next);
           return;
         }
-        const next = await cartLinesUpdate(cid, [{ id: lineId, quantity }]);
+        const next = await cartLinesUpdate(
+          cid,
+          [{ id: lineId, quantity }],
+          country,
+        );
         setCart(next);
       } finally {
         setIsLoading(false);
       }
     },
-    [resolveCartId],
+    [resolveCartId, country],
   );
 
   const removeItem = useCallback(
@@ -139,13 +179,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       setIsLoading(true);
       try {
-        const next = await cartLinesRemove(cid, [lineId]);
+        const next = await cartLinesRemove(cid, [lineId], country);
         setCart(next);
       } finally {
         setIsLoading(false);
       }
     },
-    [resolveCartId],
+    [resolveCartId, country],
   );
 
   const openCart = useCallback(() => setIsOpen(true), []);
@@ -163,6 +203,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       addItem,
       updateItem,
       removeItem,
+      clear,
       openCart,
       closeCart,
       toggleCart,
@@ -175,6 +216,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       addItem,
       updateItem,
       removeItem,
+      clear,
       openCart,
       closeCart,
       toggleCart,

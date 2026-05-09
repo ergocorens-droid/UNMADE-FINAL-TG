@@ -150,7 +150,8 @@ query Products(
   $sortKey: ProductSortKeys
   $reverse: Boolean
   $query: String
-) {
+  $country: CountryCode!
+) @inContext(country: $country) {
   products(first: $first, after: $after, sortKey: $sortKey, reverse: $reverse, query: $query) {
     edges {
       cursor
@@ -167,7 +168,8 @@ ${PRODUCT_LIST_BODY}
 `;
 
 export const PRODUCT_BY_HANDLE_QUERY = `
-query ProductByHandle($handle: String!) {
+query ProductByHandle($handle: String!, $country: CountryCode!)
+  @inContext(country: $country) {
   product(handle: $handle) {
     id
     handle
@@ -257,7 +259,8 @@ query ProductByHandle($handle: String!) {
 `;
 
 export const COLLECTIONS_QUERY = `
-query Collections($first: Int!) {
+query Collections($first: Int!, $country: CountryCode!)
+  @inContext(country: $country) {
   collections(first: $first) {
     edges {
       node {
@@ -283,7 +286,8 @@ query CollectionByHandle(
   $productsFirst: Int!
   $sortKey: ProductCollectionSortKeys
   $reverse: Boolean
-) {
+  $country: CountryCode!
+) @inContext(country: $country) {
   collection(handle: $handle) {
     id
     handle
@@ -308,7 +312,8 @@ ${PRODUCT_LIST_BODY}
 
 export const CART_QUERY = `
 ${CART_FRAGMENT}
-query CartQuery($cartId: ID!) {
+query CartQuery($cartId: ID!, $country: CountryCode!)
+  @inContext(country: $country) {
   cart(id: $cartId) {
     ...CartFragment
   }
@@ -317,7 +322,8 @@ query CartQuery($cartId: ID!) {
 
 export const CART_CREATE_MUTATION = `
 ${CART_FRAGMENT}
-mutation CartCreate($input: CartInput!) {
+mutation CartCreate($input: CartInput!, $country: CountryCode!)
+  @inContext(country: $country) {
   cartCreate(input: $input) {
     cart {
       ...CartFragment
@@ -332,7 +338,11 @@ mutation CartCreate($input: CartInput!) {
 
 export const CART_LINES_ADD_MUTATION = `
 ${CART_FRAGMENT}
-mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+mutation CartLinesAdd(
+  $cartId: ID!
+  $lines: [CartLineInput!]!
+  $country: CountryCode!
+) @inContext(country: $country) {
   cartLinesAdd(cartId: $cartId, lines: $lines) {
     cart {
       ...CartFragment
@@ -347,7 +357,11 @@ mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
 
 export const CART_LINES_UPDATE_MUTATION = `
 ${CART_FRAGMENT}
-mutation CartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+mutation CartLinesUpdate(
+  $cartId: ID!
+  $lines: [CartLineUpdateInput!]!
+  $country: CountryCode!
+) @inContext(country: $country) {
   cartLinesUpdate(cartId: $cartId, lines: $lines) {
     cart {
       ...CartFragment
@@ -362,7 +376,11 @@ mutation CartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
 
 export const CART_LINES_REMOVE_MUTATION = `
 ${CART_FRAGMENT}
-mutation CartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+mutation CartLinesRemove(
+  $cartId: ID!
+  $lineIds: [ID!]!
+  $country: CountryCode!
+) @inContext(country: $country) {
   cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
     cart {
       ...CartFragment

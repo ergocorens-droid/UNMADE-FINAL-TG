@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import { RegionProvider } from "@/context/RegionContext";
 import { SiteChrome } from "@/components/SiteChrome";
+import { getServerCurrency } from "@/lib/shopify/get-currency";
 import { resolveRegion } from "@/lib/regions";
 
 const inter = Inter({
@@ -62,6 +64,7 @@ export default async function RootLayout({
   const countryCode =
     h.get("x-vercel-ip-country") ?? h.get("cf-ipcountry") ?? "PL";
   const region = resolveRegion(countryCode);
+  const initialCurrency = await getServerCurrency();
 
   return (
     <html
@@ -71,15 +74,17 @@ export default async function RootLayout({
       <body
         className={`${inter.className} min-h-full flex flex-col bg-white text-neutral-900`}
       >
-        <CartProvider>
-          <RegionProvider
-            locale={region.locale}
-            currency={region.currency}
-            country={region.country}
-          >
-            <SiteChrome>{children}</SiteChrome>
-          </RegionProvider>
-        </CartProvider>
+        <CurrencyProvider initialCurrency={initialCurrency}>
+          <CartProvider>
+            <RegionProvider
+              locale={region.locale}
+              currency={region.currency}
+              country={region.country}
+            >
+              <SiteChrome>{children}</SiteChrome>
+            </RegionProvider>
+          </CartProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

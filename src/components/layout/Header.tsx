@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useCart } from "@/context/CartContext";
 import { useRegion } from "@/context/RegionContext";
 import { translate, type MsgKey } from "@/i18n/strings";
@@ -190,6 +191,9 @@ export function Header({
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
+            <div className="hidden shrink-0 md:block">
+              <CurrencySwitcher variant={transparent ? "light" : "dark"} />
+            </div>
             <button
               type="button"
               onClick={onOpenSearch}
@@ -314,6 +318,9 @@ function MobileDrawer({
         >
           ✕
         </button>
+        <div className="-mt-2 mb-4 flex justify-end border-b border-neutral-200 pb-4">
+          <CurrencySwitcher variant="dark" onPicked={onClose} />
+        </div>
         {navLinks.map((l) => (
           <Link
             key={l.id}
