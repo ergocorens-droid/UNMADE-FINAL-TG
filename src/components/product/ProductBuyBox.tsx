@@ -2,11 +2,13 @@
 
 import { useCallback, useState } from "react";
 import { VariantSelector } from "@/components/product/VariantSelector";
+import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 export function ProductBuyBox({ product }: { product: Product }) {
+  const { t } = useT();
   const { addItem, openCart, isLoading } = useCart();
 
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
@@ -53,7 +55,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
         ) : null}
         {lowStock ? (
           <p className="mt-2 text-sm font-medium text-[var(--unmade-accent)]">
-            Zostało {qtyAvail} szt.
+            {t("product.lowStock", { count: qtyAvail })}
           </p>
         ) : null}
       </div>
@@ -78,7 +80,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
         }}
         className="w-full bg-neutral-900 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        DODAJ DO KOSZYKA
+        {t("product.addToCart")}
       </button>
     </div>
   );

@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 import { HERO_PHOTO_PATHS_DESKTOP, pickRandomMobileHeroPhoto } from "@/lib/heroPhotos";
 
 export function HeroSection() {
+  const { t } = useT();
   const [mobileSrc] = useState(() => pickRandomMobileHeroPhoto());
   const [desktopIndex, setDesktopIndex] = useState(0);
 
@@ -15,7 +17,7 @@ export function HeroSection() {
     const id = window.setInterval(() => {
       setDesktopIndex((i) => (i + 1) % n);
     }, 3000);
-    return () => clearInterval(id);
+    return () => window.clearInterval(id);
   }, []);
 
   return (
@@ -23,12 +25,12 @@ export function HeroSection() {
       <Link
         href="/sklep"
         className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)]"
-        aria-label="Przejdź do sklepu — 2026 Collection"
+        aria-label={t("home.heroCtaAria")}
       >
         <div className="absolute inset-0 z-0 md:hidden">
           <Image
             src={mobileSrc}
-            alt="UNMADE — car culture streetwear"
+            alt={t("home.heroImageAlt")}
             fill
             priority
             className="object-cover"
@@ -64,7 +66,7 @@ export function HeroSection() {
         </div>
         <div className="pointer-events-none absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-2">
           <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-            Scroll
+            {t("home.scrollHint")}
           </span>
           <span
             className="block h-8 w-px animate-pulse bg-white/40"

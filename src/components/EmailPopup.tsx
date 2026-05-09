@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 
 const STORAGE_KEY = "popup_dismissed";
 
 export function EmailPopup() {
+  const { t } = useT();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -14,8 +16,8 @@ export function EmailPopup() {
       return;
     }
 
-    const t = window.setTimeout(() => setVisible(true), 5000);
-    return () => clearTimeout(t);
+    const timer = window.setTimeout(() => setVisible(true), 5000);
+    return () => clearTimeout(timer);
   }, []);
 
   function dismiss() {
@@ -46,7 +48,7 @@ export function EmailPopup() {
           type="button"
           onClick={dismiss}
           className="absolute right-3 top-3 rounded p-2 text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--unmade-accent)]"
-          aria-label="Zamknij"
+          aria-label={t("common.close")}
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
@@ -56,33 +58,28 @@ export function EmailPopup() {
           id="email-popup-title"
           className="pr-8 text-lg font-bold uppercase tracking-wide text-neutral-900 sm:text-xl"
         >
-          ODBIERZ -10% NA PIERWSZY ZAKUP
+          {t("emailPopup.title")}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-          Zapisz się do newslettera i odbierz kod rabatowy na maila. Dołącz do 500+
-          osób, które nie przegapiają dropów.
-        </p>
+        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t("emailPopup.body")}</p>
         <form onSubmit={handleSubmit} className="mt-6 space-y-3">
           <label htmlFor="popup-email" className="sr-only">
-            Twój adres e-mail
+            {t("emailPopup.emailLabel")}
           </label>
           <input
             id="popup-email"
             type="email"
             required
-            placeholder="Twój adres e-mail"
+            placeholder={t("emailPopup.placeholder")}
             className="w-full border border-neutral-300 bg-neutral-50 px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-[var(--unmade-accent)] focus:outline-none"
           />
           <button
             type="submit"
             className="w-full bg-neutral-900 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[var(--unmade-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--unmade-accent)]"
           >
-            CHCĘ RABAT
+            {t("emailPopup.submit")}
           </button>
         </form>
-        <p className="mt-4 text-center text-xs text-neutral-500">
-          Brak spamu. Tylko dropy i kody rabatowe.
-        </p>
+        <p className="mt-4 text-center text-xs text-neutral-500">{t("emailPopup.footer")}</p>
       </div>
     </div>
   );

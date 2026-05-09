@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 const LOCALE_BY_CURRENCY: Record<string, string> = {
   PLN: "pl-PL",
   EUR: "de-DE",
@@ -15,6 +17,12 @@ export function formatPrice(money: {
     style: "currency",
     currency: money.currencyCode,
   }).format(Number.parseFloat(money.amount));
+}
+
+/** Liczba produktów w UI wg języka (lista / nagłówki kolekcji). */
+export function formatProductCount(locale: Locale, n: number): string {
+  if (locale === "en") return `${n} ${n === 1 ? "product" : "products"}`;
+  return formatProductCountPl(n);
 }
 
 /** Liczba produktów po polsku (21 produktów). */

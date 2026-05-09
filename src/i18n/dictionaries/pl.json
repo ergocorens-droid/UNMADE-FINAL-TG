@@ -1,0 +1,238 @@
+{
+  "common": {
+    "loading": "Ładowanie...",
+    "error": "Wystąpił błąd",
+    "tryAgain": "Spróbuj ponownie",
+    "back": "Wstecz",
+    "close": "Zamknij",
+    "noPhoto": "Brak zdjęcia"
+  },
+  "nav": {
+    "home": "HOME",
+    "new": "NOWE",
+    "tshirts": "KOSZULKI",
+    "hoodies": "BLUZY",
+    "shop": "SKLEP",
+    "shipping": "WYSYŁKA",
+    "contact": "KONTAKT",
+    "collections": "KOLEKCJE",
+    "search": "Szukaj",
+    "account": "Konto",
+    "cart": "Koszyk"
+  },
+  "announcement": {
+    "firstDrop": "PIERWSZY DROP — DO -15% Z KODEM IGNITION"
+  },
+  "home": {
+    "viewCollection": "ZOBACZ CAŁĄ KOLEKCJĘ",
+    "heroCtaAria": "Przejdź do sklepu — 2026 Collection",
+    "heroImageAlt": "UNMADE — streetwear car culture",
+    "scrollHint": "Przewijaj"
+  },
+  "carousel": {
+    "all": "WSZYSTKIE"
+  },
+  "metadata": {
+    "homeTitle": "UNMADE — Car Culture Streetwear | Koszulki i Bluzy z Grafikami Aut",
+    "homeDescription": "Streetwear inspirowany car culture. Koszulki, bluzy i longsleeve'y z autorskimi grafikami aut — Porsche, JDM, drift. Limitowane dropy. Darmowa dostawa od 300 zł.",
+    "shopTitle": "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
+    "shopDescription": "Wszystkie produkty UNMADE — koszulki, bluzy i longsleeve'y z grafikami aut. Limitowane serie, autorskie projekty.",
+    "collectionFallback": "Kolekcja — UNMADE",
+    "productFallback": "Produkt",
+    "kontaktTitle": "Kontakt",
+    "kontaktDescription": "Skontaktuj się z UNMADE — email, social media i formularz.",
+    "wysylkaTitle": "Wysyłka",
+    "wysylkaDescription": "Wysyłka UNMADE — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
+    "kolekcjeListTitle": "Kolekcje",
+    "kolekcjeListDescription": "Kolekcje UNMADE — streetwear inspirowany motoryzacją.",
+    "kolekcjeFallbackDescription": "Kolekcje UNMADE.",
+    "aboutPageTitle": "O nas",
+    "aboutPageDescription": "UNMADE — streetwear z duszą car culture. Poznaj naszą historię, filozofię i dlaczego robimy to co robimy.",
+    "termsDocTitle": "Regulamin",
+    "termsDocDescription": "Regulamin UNMADE — warunki korzystania ze sklepu (placeholder).",
+    "privacyDocTitle": "Polityka prywatności",
+    "privacyDocDescription": "Polityka prywatności UNMADE — RODO i cookies (placeholder).",
+    "tosDocTitle": "Warunki usługi",
+    "tosDocDescription": "Warunki świadczenia usługi UNMADE (placeholder)."
+  },
+  "shop": {
+    "title": "SKLEP",
+    "subtitle": "Wszystkie produkty UNMADE",
+    "filters": "FILTRY",
+    "filtersHeading": "Filtry",
+    "filtersAria": "Filtry sklepu",
+    "clearFilters": "× Wyczyść filtry",
+    "color": "KOLOR",
+    "type": "TYP",
+    "black": "Czarne",
+    "white": "Białe",
+    "tshirtsLabel": "T-Shirty",
+    "hoodiesLabel": "Bluzy",
+    "blueprintLabel": "Blueprint",
+    "sortNewest": "Najnowsze",
+    "sortPriceAsc": "Cena rosnąco",
+    "sortPriceDesc": "Cena malejąco",
+    "sortPopular": "Najpopularniejsze",
+    "noProducts": "Brak produktów w tej kategorii",
+    "noProductsFiltered": "Brak produktów dla wybranych filtrów.",
+    "productsCount": "{count} produktów",
+    "goToShop": "Przejdź do sklepu",
+    "breadcrumbShop": "Sklep"
+  },
+  "collection": {
+    "viewAll": "ZOBACZ CAŁĄ KOLEKCJĘ →",
+    "empty": "Brak produktów w tej kolekcji.",
+    "emptySlug": "Brak produktów w tej kolekcji.",
+    "storeEmpty": "Brak kolekcji w sklepie."
+  },
+  "product": {
+    "addToCart": "DODAJ DO KOSZYKA",
+    "outOfStock": "WYPRZEDANE",
+    "lowStock": "Zostało {count} szt.",
+    "size": "Rozmiar",
+    "color": "Kolor",
+    "unavailable": "Niedostępne",
+    "description": "Opis",
+    "tagsLabel": "Tagi:",
+    "collectionsLabel": "Kolekcje:",
+    "unavailableInRegion": "Niedostępne w Twoim regionie"
+  },
+  "cart": {
+    "title": "Koszyk",
+    "closeDrawer": "Zamknij koszyk",
+    "empty": "Twój koszyk jest pusty",
+    "backToShop": "WRÓĆ DO SKLEPU",
+    "checkout": "PRZEJDŹ DO KASY",
+    "subtotal": "Suma częściowa",
+    "totalShort": "Suma",
+    "remove": "Usuń",
+    "qtyDecrease": "Zmniejsz ilość",
+    "qtyIncrease": "Zwiększ ilość",
+    "currencyChangeWarning": "Zmiana waluty wyczyści koszyk. Kontynuować?",
+    "units": "szt."
+  },
+  "search": {
+    "dialogAria": "Wyszukiwarka",
+    "placeholder": "Szukaj...",
+    "productsHeading": "Produkty",
+    "label": "Szukaj produktów",
+    "viewAll": "Zobacz wszystkie",
+    "closeAria": "Zamknij wyszukiwarkę"
+  },
+  "footer": {
+    "copyright": "© {year} UNMADE. Wszelkie prawa zastrzeżone.",
+    "terms": "Regulamin",
+    "privacy": "Polityka prywatności",
+    "termsOfService": "Warunki usługi",
+    "shipping": "Wysyłka",
+    "contact": "Kontakt",
+    "about": "O nas",
+    "instagramAria": "Instagram UNMADE",
+    "tiktokAria": "TikTok UNMADE"
+  },
+  "header": {
+    "mainNavAria": "Główna nawigacja",
+    "mainNavMobileAria": "Menu mobilne",
+    "menu": "Menu",
+    "cartCountAria": "Koszyk, {count} szt.",
+    "closeMenu": "Zamknij menu",
+    "login": "Logowanie",
+    "register": "Rejestracja",
+    "backToShopShort": "Wróć do sklepu",
+    "accountMenu": "Konto"
+  },
+  "pages": {
+    "backToShop": "Wróć do sklepu",
+    "checkoutPlaceholder": "Kasa Shopify",
+    "checkoutHint": "Zamówienia realizujemy przez Shopify Checkout. Wróć do sklepu, dodaj produkty i przejdź do kasy.",
+    "limitedSeries": "Limitowane serie",
+    "loginSubtitle": "Panel klienta — wkrótce.",
+    "registerSubtitle": "Rejestracja — wkrótce.",
+    "checkoutSubtitle": "Placeholder kasy — podłącz bramkę płatności.",
+    "continueShopping": "Kontynuuj zakupy",
+    "checkoutTitle": "Kasa"
+  },
+  "sortSelect": {
+    "label": "Sortowanie"
+  },
+  "contactPage": {
+    "tagline": "🔥 Odpowiadamy w 24h w dni robocze",
+    "title": "KONTAKT",
+    "emailLabel": "Email:",
+    "instagramLabel": "Instagram:",
+    "tiktokLabel": "TikTok:"
+  },
+  "wysylkaPage": {
+    "tagline": "🔥 Darmowa dostawa od 300 zł",
+    "title": "WYSYŁKA",
+    "bulletFreeShipping": "Darmowa wysyłka od 300 zł",
+    "bulletDispatched24h": "Wysyłka w 24h po złożeniu zamówienia",
+    "bulletDeliveryTime": "Czas dostawy: 2–4 dni robocze (Polska)",
+    "bulletCourier": "Kurier: InPost / DPD",
+    "bulletPaczkomaty": "Paczkomaty InPost dostępne",
+    "bulletCostBelowFree": "Koszt wysyłki poniżej 300 zł: 14,99 zł",
+    "bulletInternationalPrefix": "Wysyłka międzynarodowa: na zapytanie (",
+    "bulletInternationalSuffix": ")"
+  },
+  "staticPages": {
+    "about": {
+      "tagline": "🔥 Nowy drop w drodze",
+      "heading": "O NAS",
+      "lead": "UNMADE to streetwear z sercem car culture — grafiki aut, nocne przejazdy i limitowane serie. Łączymy jakość materiałów z energią motoryzacji.",
+      "note": "Ta strona to front-end demo — treść „O nas” możesz tu rozwinąć pod SEO i markę."
+    },
+    "terms": {
+      "heading": "Regulamin",
+      "body": "Treść regulaminu — placeholder (uzupełnij prawnie)."
+    },
+    "privacy": {
+      "heading": "Polityka prywatności",
+      "body": "Treść polityki — placeholder (RODO / cookies)."
+    },
+    "tos": {
+      "heading": "Warunki usługi",
+      "body": "Treść warunków — placeholder."
+    }
+  },
+  "contactForm": {
+    "name": "Imię",
+    "email": "Email",
+    "subject": "Temat",
+    "message": "Wiadomość",
+    "submit": "WYŚLIJ",
+    "demoSent": "Wiadomość wysłana (demo front-end — bez backendu)."
+  },
+  "emailPopup": {
+    "title": "ODBIERZ -10% NA PIERWSZY ZAKUP",
+    "body": "Zapisz się do newslettera i odbierz kod rabatowy na maila. Dołącz do 500+ osób, które nie przegapiają dropów.",
+    "emailLabel": "Twój adres e-mail",
+    "placeholder": "Twój adres e-mail",
+    "submit": "CHCĘ RABAT",
+    "footer": "Brak spamu. Tylko dropy i kody rabatowe."
+  },
+  "trustBadges": {
+    "nationwideTitle": "WYSYŁKA W CAŁEJ POLSCE",
+    "nationwideSub": "DOSTARCZYMY POD TWOJE DRZWI",
+    "freeTitle": "DARMOWA DOSTAWA OD 300 ZŁ",
+    "freeSub": "BEZ UKRYTYCH KOSZTÓW",
+    "returnsTitle": "14 DNI NA ZWROT",
+    "returnsSub": "SKONTAKTUJ SIĘ Z NAMI LUB ZWRÓĆ PRZEZ KONTO"
+  },
+  "newsletterSection": {
+    "title": "ZAPISZ SIĘ NA NEWSLETTER",
+    "subtitle": "BĄDŹ PIERWSZY — NOWE DROPY, KODY RABATOWE I LIMITOWANE SERIE PROSTO NA MAILA",
+    "emailLabel": "Adres e-mail",
+    "placeholder": "Twój e-mail",
+    "submit": "ZAPISZ SIĘ",
+    "thanks": "Dzięki! Sprawdź skrzynkę (demo front-end)."
+  },
+  "joinCustomers": {
+    "title": "DOŁĄCZ DO 500+ ZADOWOLONYCH KLIENTÓW"
+  },
+  "collectionGrid": {
+    "viewCollection": "ZOBACZ KOLEKCJĘ"
+  },
+  "socialProof": {
+    "slideAlt": "Zdjęcie społeczności UNMADE"
+  }
+}

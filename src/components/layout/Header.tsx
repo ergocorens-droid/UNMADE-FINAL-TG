@@ -6,18 +6,18 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useCart } from "@/context/CartContext";
-import { useRegion } from "@/context/RegionContext";
-import { translate, type MsgKey } from "@/i18n/strings";
+import { useT } from "@/i18n/I18nContext";
+import type { TranslationKey } from "@/i18n/translate";
 import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
-const NAV_SPEC: { href: string; key: MsgKey }[] = [
-  { href: "/", key: "nav_home" },
-  { href: "/sklep?sort=najnowsze", key: "nav_new" },
-  { href: "/sklep?typ=t-shirts", key: "nav_tees" },
-  { href: "/sklep?typ=blueprint", key: "nav_hoodies" },
-  { href: "/sklep", key: "nav_shop" },
-  { href: "/wysylka", key: "nav_shipping" },
-  { href: "/kontakt", key: "nav_contact" },
+const NAV_SPEC: { href: string; key: TranslationKey }[] = [
+  { href: "/", key: "nav.home" },
+  { href: "/sklep?sort=najnowsze", key: "nav.new" },
+  { href: "/sklep?typ=t-shirts", key: "nav.tshirts" },
+  { href: "/sklep?typ=blueprint", key: "nav.hoodies" },
+  { href: "/sklep", key: "nav.shop" },
+  { href: "/wysylka", key: "nav.shipping" },
+  { href: "/kontakt", key: "nav.contact" },
 ];
 
 const COLLECTION_PREVIEW = [
@@ -47,15 +47,15 @@ export function Header({
 }) {
   const pathname = usePathname();
   const { totalQuantity, toggleCart } = useCart();
-  const { locale, t } = useRegion();
+  const { t } = useT();
   const navLinks = useMemo(
     () =>
       NAV_SPEC.map((item) => ({
         id: item.key,
         href: item.href,
-        label: translate(locale, item.key),
+        label: t(item.key),
       })),
-    [locale],
+    [t],
   );
   const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -137,7 +137,7 @@ export function Header({
 
           <nav
             className="hidden items-center gap-6 lg:flex"
-            aria-label="Główna nawigacja"
+            aria-label={t("header.mainNavAria")}
           >
             {navLinks.map((l) => (
               <Link key={l.id} href={l.href} className={navCls}>
@@ -153,7 +153,7 @@ export function Header({
                 aria-expanded={collectionsOpen}
                 aria-haspopup="true"
               >
-                {t("nav_collections")}
+                {t("nav.collections")}
                 <span className="text-[10px]">▾</span>
               </button>
               {collectionsOpen && (
@@ -198,7 +198,7 @@ export function Header({
               type="button"
               onClick={onOpenSearch}
               className={iconBtn}
-              aria-label="Szukaj"
+              aria-label={t("nav.search")}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
@@ -210,7 +210,7 @@ export function Header({
                 type="button"
                 onClick={() => setAccountOpen((v) => !v)}
                 className={iconBtn}
-                aria-label="Konto"
+                aria-label={t("header.accountMenu")}
                 aria-expanded={accountOpen}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,14 +224,14 @@ export function Header({
                     className="block px-4 py-2 text-xs uppercase tracking-wide text-neutral-800 hover:bg-neutral-100"
                     onClick={() => setAccountOpen(false)}
                   >
-                    Logowanie
+                    {t("header.login")}
                   </Link>
                   <Link
                     href="/rejestracja"
                     className="block px-4 py-2 text-xs uppercase tracking-wide text-neutral-800 hover:bg-neutral-100"
                     onClick={() => setAccountOpen(false)}
                   >
-                    Rejestracja
+                    {t("header.register")}
                   </Link>
                 </div>
               )}
@@ -241,7 +241,9 @@ export function Header({
               type="button"
               onClick={toggleCart}
               className={`relative ${iconBtn}`}
-              aria-label={`Koszyk, ${totalQuantity} szt.`}
+              aria-label={t("header.cartCountAria", {
+                count: totalQuantity > 99 ? "99+" : totalQuantity,
+              })}
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z" />
@@ -257,10 +259,15 @@ export function Header({
               type="button"
               className={burgerCls}
               onClick={() => setMobileOpen(true)}
-              aria-label="Menu"
+              aria-label={t("header.menu")}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>
@@ -271,7 +278,7 @@ export function Header({
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         navLinks={navLinks}
-        collectionsHeading={t("nav_collections")}
+        collectionsHeading={t("nav.collections")}
       />
     </>
   );
@@ -288,6 +295,7 @@ function MobileDrawer({
   navLinks: { id: string; href: string; label: string }[];
   collectionsHeading: string;
 }) {
+  const { t } = useT();
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -303,18 +311,18 @@ function MobileDrawer({
       <button
         type="button"
         className="absolute inset-0 bg-black/40"
-        aria-label="Zamknij menu"
+        aria-label={t("header.closeMenu")}
         onClick={onClose}
       />
       <nav
         className="absolute right-0 top-0 flex h-full w-[min(88vw,320px)] flex-col border-l border-neutral-200 bg-white p-6 shadow-2xl"
-        aria-label="Menu mobilne"
+        aria-label={t("header.mainNavMobileAria")}
       >
         <button
           type="button"
           className="mb-6 self-end text-neutral-500"
           onClick={onClose}
-          aria-label="Zamknij"
+          aria-label={t("common.close")}
         >
           ✕
         </button>
@@ -349,14 +357,14 @@ function MobileDrawer({
           className="mt-4 text-xs uppercase text-neutral-600"
           onClick={onClose}
         >
-          Logowanie
+          {t("header.login")}
         </Link>
         <Link
           href="/rejestracja"
           className="text-xs uppercase text-neutral-600"
           onClick={onClose}
         >
-          Rejestracja
+          {t("header.register")}
         </Link>
       </nav>
     </div>

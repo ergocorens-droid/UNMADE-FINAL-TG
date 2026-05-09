@@ -1,30 +1,42 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import { getServerLocale, getServerT } from "@/i18n/server";
 
-export const metadata: Metadata = {
-  title: "Kontakt",
-  description: "Skontaktuj się z UNMADE — email, social media i formularz.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerT();
+  const locale = await getServerLocale();
+  return {
+    title: `${t("metadata.kontaktTitle")} | UNMADE`,
+    description: t("metadata.kontaktDescription"),
+    openGraph: {
+      title: `${t("metadata.kontaktTitle")} | UNMADE`,
+      url: "https://unmade.pl/kontakt",
+      locale: locale === "pl" ? "pl_PL" : "en_US",
+    },
+  };
+}
 
-export default function KontaktPage() {
+export default async function KontaktPage() {
+  const t = await getServerT();
+
   return (
     <div className="bg-white pb-24 pt-12 md:pt-16">
       <div className="mx-auto max-w-[640px] px-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--unmade-accent)]">
-          🔥 Odpowiadamy w 24h w dni robocze
+          {t("contactPage.tagline")}
         </p>
         <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.15em] text-neutral-900">
-          KONTAKT
+          {t("contactPage.title")}
         </h1>
         <div className="mt-8 space-y-2 text-sm text-neutral-600">
           <p>
-            Email:{" "}
+            {t("contactPage.emailLabel")}{" "}
             <a href="mailto:kontakt@unmade.pl" className="text-neutral-900 underline">
               kontakt@unmade.pl
             </a>
           </p>
           <p>
-            Instagram:{" "}
+            {t("contactPage.instagramLabel")}{" "}
             <a
               href="https://instagram.com/unmade.pl"
               target="_blank"
@@ -35,7 +47,7 @@ export default function KontaktPage() {
             </a>
           </p>
           <p>
-            TikTok:{" "}
+            {t("contactPage.tiktokLabel")}{" "}
             <a
               href="https://www.tiktok.com/@unmade.pl"
               target="_blank"

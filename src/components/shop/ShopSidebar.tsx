@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { COLLECTION_LABELS } from "@/lib/shopify/collection-labels";
 import { sklepHref } from "@/lib/shop/shop-url";
+import { useT } from "@/i18n/I18nContext";
 
 export type ShopFilterState = {
   kolor?: string;
@@ -71,12 +74,14 @@ function FilterBlock({
   counts,
   kind,
   active,
+  localeIsPl,
 }: {
   title: string;
-  entries: [string, { pl: string; type: "color" | "type" }][];
+  entries: [string, { pl: string; en: string; type: "color" | "type" }][];
   counts: Record<string, number>;
   kind: "kolor" | "typ";
   active: ShopFilterState;
+  localeIsPl: boolean;
 }) {
   return (
     <div>
@@ -88,7 +93,7 @@ function FilterBlock({
           <FilterRow
             key={handle}
             href={hrefToggleKind(active, kind, handle)}
-            label={def.pl}
+            label={localeIsPl ? def.pl : def.en}
             count={counts[handle] ?? 0}
             active={
               kind === "kolor"
@@ -109,6 +114,9 @@ export function ShopSidebar({
   counts: Record<string, number>;
   active: ShopFilterState;
 }) {
+  const { t, locale } = useT();
+  const localeIsPl = locale === "pl";
+
   const colorEntries = Object.entries(COLLECTION_LABELS).filter(
     ([, v]) => v.type === "color",
   );
@@ -121,18 +129,20 @@ export function ShopSidebar({
   return (
     <div className="space-y-10">
       <FilterBlock
-        title="Kolor"
+        title={t("shop.color")}
         entries={colorEntries}
         counts={counts}
         kind="kolor"
         active={active}
+        localeIsPl={localeIsPl}
       />
       <FilterBlock
-        title="Typ"
+        title={t("shop.type")}
         entries={typeEntries}
         counts={counts}
         kind="typ"
         active={active}
+        localeIsPl={localeIsPl}
       />
       {anyFilter ? (
         <Link
@@ -140,7 +150,7 @@ export function ShopSidebar({
           scroll={false}
           className="inline-block text-sm font-medium uppercase tracking-wide text-neutral-600 underline-offset-4 hover:text-neutral-900 hover:underline"
         >
-          × Wyczyść filtry
+          {t("shop.clearFilters")}
         </Link>
       ) : null}
     </div>

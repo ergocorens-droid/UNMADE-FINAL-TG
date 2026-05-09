@@ -1,0 +1,238 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try again",
+    "back": "Back",
+    "close": "Close",
+    "noPhoto": "No photo"
+  },
+  "nav": {
+    "home": "HOME",
+    "new": "NEW",
+    "tshirts": "T-SHIRTS",
+    "hoodies": "HOODIES",
+    "shop": "SHOP",
+    "shipping": "SHIPPING",
+    "contact": "CONTACT",
+    "collections": "COLLECTIONS",
+    "search": "Search",
+    "account": "Account",
+    "cart": "Cart"
+  },
+  "announcement": {
+    "firstDrop": "FIRST DROP — UP TO -15% OFF WITH CODE IGNITION"
+  },
+  "home": {
+    "viewCollection": "VIEW FULL COLLECTION",
+    "heroCtaAria": "Go to shop — 2026 Collection",
+    "heroImageAlt": "UNMADE — car culture streetwear",
+    "scrollHint": "Scroll"
+  },
+  "carousel": {
+    "all": "ALL"
+  },
+  "metadata": {
+    "homeTitle": "UNMADE — Car Culture Streetwear | Tees & Hoodies With Car Graphics",
+    "homeDescription": "Streetwear inspired by car culture. Tees, hoodies and long sleeves with original car graphics — Porsche, JDM, drift. Limited drops. Free shipping from 300 PLN.",
+    "shopTitle": "Shop | UNMADE — Car Culture Streetwear",
+    "shopDescription": "All UNMADE products — tees, hoodies and long sleeves with car graphics. Limited runs, original designs.",
+    "collectionFallback": "Collection — UNMADE",
+    "productFallback": "Product",
+    "kontaktTitle": "Contact",
+    "kontaktDescription": "Get in touch with UNMADE — email, social media and form.",
+    "wysylkaTitle": "Shipping",
+    "wysylkaDescription": "UNMADE shipping — free from 300 PLN, InPost, DPD, delivery time and costs.",
+    "kolekcjeListTitle": "Collections",
+    "kolekcjeListDescription": "UNMADE collections — car-inspired streetwear.",
+    "kolekcjeFallbackDescription": "UNMADE collections.",
+    "aboutPageTitle": "About",
+    "aboutPageDescription": "UNMADE — streetwear with real car culture soul. Learn our story, philosophy, and why we build what we build.",
+    "termsDocTitle": "Terms",
+    "termsDocDescription": "UNMADE terms — store usage conditions (placeholder).",
+    "privacyDocTitle": "Privacy policy",
+    "privacyDocDescription": "UNMADE privacy policy — GDPR and cookies (placeholder).",
+    "tosDocTitle": "Terms of service",
+    "tosDocDescription": "UNMADE service terms (placeholder)."
+  },
+  "shop": {
+    "title": "SHOP",
+    "subtitle": "All UNMADE products",
+    "filters": "FILTERS",
+    "filtersHeading": "Filters",
+    "filtersAria": "Shop filters",
+    "clearFilters": "× Clear filters",
+    "color": "COLOR",
+    "type": "TYPE",
+    "black": "Black",
+    "white": "White",
+    "tshirtsLabel": "T-Shirts",
+    "hoodiesLabel": "Hoodies",
+    "blueprintLabel": "Blueprint",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price ascending",
+    "sortPriceDesc": "Price descending",
+    "sortPopular": "Most popular",
+    "noProducts": "No products in this category",
+    "noProductsFiltered": "No products match the selected filters.",
+    "productsCount": "{count} products",
+    "goToShop": "Go to shop",
+    "breadcrumbShop": "Shop"
+  },
+  "collection": {
+    "viewAll": "VIEW FULL COLLECTION →",
+    "empty": "No products in this collection.",
+    "emptySlug": "No products in this collection.",
+    "storeEmpty": "No collections in the store."
+  },
+  "product": {
+    "addToCart": "ADD TO CART",
+    "outOfStock": "SOLD OUT",
+    "lowStock": "Only {count} left",
+    "size": "Size",
+    "color": "Color",
+    "unavailable": "Unavailable",
+    "description": "Description",
+    "tagsLabel": "Tags:",
+    "collectionsLabel": "Collections:",
+    "unavailableInRegion": "Not available in your region"
+  },
+  "cart": {
+    "title": "Cart",
+    "closeDrawer": "Close cart",
+    "empty": "Your cart is empty",
+    "backToShop": "BACK TO SHOP",
+    "checkout": "CHECKOUT",
+    "subtotal": "Subtotal",
+    "totalShort": "Total",
+    "remove": "Remove",
+    "qtyDecrease": "Decrease quantity",
+    "qtyIncrease": "Increase quantity",
+    "currencyChangeWarning": "Changing currency will empty your cart. Continue?",
+    "units": "pcs"
+  },
+  "search": {
+    "dialogAria": "Search",
+    "placeholder": "Search...",
+    "productsHeading": "Products",
+    "label": "Search products",
+    "viewAll": "View all",
+    "closeAria": "Close search"
+  },
+  "footer": {
+    "copyright": "© {year} UNMADE. All rights reserved.",
+    "terms": "Terms",
+    "privacy": "Privacy policy",
+    "termsOfService": "Terms of service",
+    "shipping": "Shipping",
+    "contact": "Contact",
+    "about": "About us",
+    "instagramAria": "UNMADE on Instagram",
+    "tiktokAria": "UNMADE on TikTok"
+  },
+  "header": {
+    "mainNavAria": "Main navigation",
+    "mainNavMobileAria": "Mobile menu",
+    "menu": "Menu",
+    "cartCountAria": "Cart, {count} pcs",
+    "closeMenu": "Close menu",
+    "login": "Login",
+    "register": "Sign up",
+    "backToShopShort": "Back to shop",
+    "accountMenu": "Account"
+  },
+  "pages": {
+    "backToShop": "Back to shop",
+    "checkoutPlaceholder": "Shopify Checkout",
+    "checkoutHint": "Orders are processed via Shopify Checkout. Return to the shop, add items and proceed to checkout.",
+    "limitedSeries": "Limited series",
+    "loginSubtitle": "Customer area — coming soon.",
+    "registerSubtitle": "Sign up — coming soon.",
+    "checkoutSubtitle": "Checkout placeholder — connect your payment gateway.",
+    "continueShopping": "Continue shopping",
+    "checkoutTitle": "Checkout"
+  },
+  "sortSelect": {
+    "label": "Sort by"
+  },
+  "contactPage": {
+    "tagline": "🔥 We reply within 24h on business days",
+    "title": "CONTACT",
+    "emailLabel": "Email:",
+    "instagramLabel": "Instagram:",
+    "tiktokLabel": "TikTok:"
+  },
+  "wysylkaPage": {
+    "tagline": "🔥 Free shipping from 300 PLN",
+    "title": "SHIPPING",
+    "bulletFreeShipping": "Free shipping from 300 PLN",
+    "bulletDispatched24h": "Ships within 24h after placing the order",
+    "bulletDeliveryTime": "Delivery time: 2–4 business days (Poland)",
+    "bulletCourier": "Courier: InPost / DPD",
+    "bulletPaczkomaty": "InPost parcel lockers available",
+    "bulletCostBelowFree": "Shipping below 300 PLN: 14.99 PLN",
+    "bulletInternationalPrefix": "International shipping: on request (",
+    "bulletInternationalSuffix": ")"
+  },
+  "staticPages": {
+    "about": {
+      "tagline": "🔥 Next drop underway",
+      "heading": "ABOUT US",
+      "lead": "UNMADE is streetwear with car culture at its core — car graphics, late-night drives, and limited runs. We blend quality materials with motorsport energy.",
+      "note": "This site is a front-end demo — expand “About” here for SEO and brand."
+    },
+    "terms": {
+      "heading": "Terms",
+      "body": "Terms content — placeholder (have legal draft it)."
+    },
+    "privacy": {
+      "heading": "Privacy policy",
+      "body": "Policy content — placeholder (GDPR / cookies)."
+    },
+    "tos": {
+      "heading": "Terms of service",
+      "body": "Service terms — placeholder."
+    }
+  },
+  "contactForm": {
+    "name": "First name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "submit": "SEND",
+    "demoSent": "Message sent (front-end demo — no backend)."
+  },
+  "emailPopup": {
+    "title": "GET -10% ON YOUR FIRST ORDER",
+    "body": "Sign up for our newsletter and get a discount code in your inbox. Join 500+ people who never miss a drop.",
+    "emailLabel": "Your email address",
+    "placeholder": "Your email address",
+    "submit": "I WANT THE DISCOUNT",
+    "footer": "No spam — only drops and discount codes."
+  },
+  "trustBadges": {
+    "nationwideTitle": "SHIPPING ACROSS POLAND",
+    "nationwideSub": "DELIVERED TO YOUR DOOR",
+    "freeTitle": "FREE SHIPPING FROM 300 PLN",
+    "freeSub": "NO HIDDEN COSTS",
+    "returnsTitle": "14 DAYS TO RETURN",
+    "returnsSub": "CONTACT US OR RETURN THROUGH YOUR ACCOUNT"
+  },
+  "newsletterSection": {
+    "title": "SUBSCRIBE TO THE NEWSLETTER",
+    "subtitle": "BE FIRST — NEW DROPS, DISCOUNT CODES AND LIMITED RUNS IN YOUR INBOX",
+    "emailLabel": "Email address",
+    "placeholder": "Your email",
+    "submit": "SUBSCRIBE",
+    "thanks": "Thanks — check your inbox (front-end demo)."
+  },
+  "joinCustomers": {
+    "title": "JOIN 500+ HAPPY CUSTOMERS"
+  },
+  "collectionGrid": {
+    "viewCollection": "VIEW COLLECTION"
+  },
+  "socialProof": {
+    "slideAlt": "Photo of the UNMADE community"
+  }
+}

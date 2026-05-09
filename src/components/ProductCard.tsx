@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useT } from "@/i18n/I18nContext";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/lib/shopify/types";
 
@@ -16,6 +19,7 @@ const SIZES =
   "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw";
 
 export function ProductCard({ product }: { product: Product }) {
+  const { t } = useT();
   const img = product.featuredImage?.url;
   const price = product.priceRange.minVariantPrice;
   const compare = product.compareAtPriceRange.minVariantPrice;
@@ -38,13 +42,13 @@ export function ProductCard({ product }: { product: Product }) {
           />
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-neutral-400">
-            Brak zdjęcia
+            {t("common.noPhoto")}
           </div>
         )}
         {!product.availableForSale ? (
           <div className="absolute inset-0 flex items-center justify-center bg-white/65 backdrop-blur-[1px]">
             <span className="rounded bg-neutral-900 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white">
-              WYPRZEDANE
+              {t("product.outOfStock")}
             </span>
           </div>
         ) : null}
@@ -56,7 +60,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="mt-1 flex flex-wrap items-baseline gap-2">
           {!showPrice ? (
             <span className="text-sm font-medium text-neutral-500">
-              Niedostępne w Twoim regionie
+              {t("product.unavailableInRegion")}
             </span>
           ) : showCompare && compare && price ? (
             <>

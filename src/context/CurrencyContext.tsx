@@ -11,6 +11,8 @@ import {
   type ReactNode,
 } from "react";
 import { currencyCartBridge } from "@/context/currency-cart-bridge";
+import { localeFromCurrency } from "@/i18n/config";
+import { translate } from "@/i18n/translate";
 import { CURRENCY_COOKIE, type CurrencyCode } from "@/lib/shopify/markets";
 
 type CurrencyContextValue = {
@@ -44,8 +46,9 @@ export function CurrencyProvider({
 
       const api = currencyCartBridge.current;
       if (api && api.totalQuantity > 0) {
+        const locale = localeFromCurrency(currency);
         const ok = window.confirm(
-          "Zmiana waluty wyczyści koszyk. Kontynuować?",
+          translate(locale, "cart.currencyChangeWarning"),
         );
         if (!ok) return;
         api.clear();

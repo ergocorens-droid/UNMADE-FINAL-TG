@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
+import { getServerT } from "@/i18n/server";
 import { getCollectionByHandle } from "@/lib/shopify/api";
 import { CollectionHeader } from "./CollectionHeader";
 
@@ -11,6 +12,8 @@ type Props = {
 export async function CollectionSection({ handle, productLimit = 8 }: Props) {
   const collection = await getCollectionByHandle(handle, productLimit);
   if (!collection || collection.products.length === 0) return null;
+
+  const t = await getServerT();
 
   return (
     <section className="w-full">
@@ -26,7 +29,7 @@ export async function CollectionSection({ handle, productLimit = 8 }: Props) {
             href={`/kolekcja/${handle}`}
             className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wide text-black hover:underline"
           >
-            ZOBACZ CAŁĄ KOLEKCJĘ →
+            {t("collection.viewAll")}
           </Link>
         </div>
       </div>

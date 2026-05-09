@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
+import { useT } from "@/i18n/I18nContext";
 import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 export type CollectionCarouselItem = {
@@ -14,21 +15,26 @@ export type CollectionCarouselItem = {
   img: string;
 };
 
-const FALLBACK: CollectionCarouselItem[] = [
-  {
-    title: "SKLEP",
-    sub: "WSZYSTKIE",
-    href: "/sklep",
-    img: pickHeroPhotoByIndex(2),
-  },
-];
-
 export function CollectionCarousel({
   items,
 }: {
   items?: CollectionCarouselItem[];
 }) {
-  const slidesSource = items?.length ? items : FALLBACK;
+  const { t } = useT();
+
+  const defaultItems: CollectionCarouselItem[] = useMemo(
+    () => [
+      {
+        title: t("nav.shop"),
+        sub: t("carousel.all"),
+        href: "/sklep",
+        img: pickHeroPhotoByIndex(2),
+      },
+    ],
+    [t],
+  );
+
+  const slidesSource = items?.length ? items : defaultItems;
 
   const plugins = useMemo(
     () => [

@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
+import { SiteChrome } from "@/components/SiteChrome";
 import { CartProvider } from "@/context/CartContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
-import { RegionProvider } from "@/context/RegionContext";
-import { SiteChrome } from "@/components/SiteChrome";
+import { I18nProvider } from "@/i18n/I18nContext";
+import { getServerLocale, getServerT } from "@/i18n/server";
 import { getServerCurrency } from "@/lib/shopify/get-currency";
-import { resolveRegion } from "@/lib/regions";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,7 +14,7 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+const staticIconsAndRobots = {
   metadataBase: new URL("https://unmade.pl"),
   manifest: "/site.webmanifest",
   icons: {
@@ -36,54 +35,53 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
-  title: {
-    default:
-      "UNMADE — Car Culture Streetwear | Koszulki i Bluzy z Grafikami Aut",
-    template: "%s | UNMADE",
-  },
-  description:
-    "Streetwear inspirowany car culture. Koszulki, bluzy i longsleeve'y z autorskimi grafikami aut — Porsche, JDM, drift. Limitowane dropy. Darmowa dostawa od 300 zł.",
-  openGraph: {
-    type: "website",
-    locale: "pl_PL",
-    siteName: "UNMADE",
-    title:
-      "UNMADE — Car Culture Streetwear | Koszulki i Bluzy z Grafikami Aut",
-    description:
-      "Streetwear inspirowany car culture. Limitowane dropy. Darmowa dostawa od 300 zł.",
-  },
   robots: { index: true, follow: true },
-};
+} satisfies Partial<Metadata>;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerT();
+  const locale = await getServerLocale();
+
+  const titleDefault = t("metadata.homeTitle");
+  const description = t("metadata.homeDescription");
+  const ogLocale = locale === "pl" ? "pl_PL" : "en_US";
+
+  return {
+    ...staticIconsAndRobots,
+    title: {
+      default: titleDefault,
+      template: "%s | UNMADE",
+    },
+    description,
+    openGraph: {
+      type: "website",
+      locale: ogLocale,
+      siteName: "UNMADE",
+      title: titleDefault,
+      description,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const h = await headers();
-  const countryCode =
-    h.get("x-vercel-ip-country") ?? h.get("cf-ipcountry") ?? "PL";
-  const region = resolveRegion(countryCode);
   const initialCurrency = await getServerCurrency();
+  const locale = await getServerLocale();
 
   return (
-    <html
-      lang={region.locale === "pl" ? "pl" : "en"}
-      className={`${inter.variable} h-full antialiased`}
-    >
+    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
       <body
         className={`${inter.className} min-h-full flex flex-col bg-white text-neutral-900`}
       >
         <CurrencyProvider initialCurrency={initialCurrency}>
-          <CartProvider>
-            <RegionProvider
-              locale={region.locale}
-              currency={region.currency}
-              country={region.country}
-            >
+          <I18nProvider>
+            <CartProvider>
               <SiteChrome>{children}</SiteChrome>
-            </RegionProvider>
-          </CartProvider>
+            </CartProvider>
+          </I18nProvider>
         </CurrencyProvider>
       </body>
     </html>

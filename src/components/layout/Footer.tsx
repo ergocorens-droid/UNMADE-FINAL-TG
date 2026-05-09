@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useT } from "@/i18n/I18nContext";
 
 function PayIcon({ children }: { children: React.ReactNode }) {
   return (
@@ -9,6 +12,9 @@ function PayIcon({ children }: { children: React.ReactNode }) {
 }
 
 export function Footer() {
+  const { t } = useT();
+  const year = 2026;
+
   return (
     <footer className="border-t border-neutral-200 bg-neutral-50 text-neutral-600">
       <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-6">
@@ -22,26 +28,26 @@ export function Footer() {
         </div>
         <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <p className="text-center text-xs text-neutral-700 md:text-left">
-            © 2026 UNMADE
+            {t("footer.copyright", { year })}
           </p>
           <nav className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs uppercase tracking-wide">
             <Link href="/regulamin" className="hover:text-neutral-900">
-              Regulamin
+              {t("footer.terms")}
             </Link>
             <Link href="/polityka-prywatnosci" className="hover:text-neutral-900">
-              Polityka prywatności
+              {t("footer.privacy")}
             </Link>
             <Link href="/warunki-uslugi" className="hover:text-neutral-900">
-              Warunki usługi
+              {t("footer.termsOfService")}
             </Link>
             <Link href="/wysylka" className="hover:text-neutral-900">
-              Wysyłka
+              {t("footer.shipping")}
             </Link>
             <Link href="/kontakt" className="hover:text-neutral-900">
-              Kontakt
+              {t("footer.contact")}
             </Link>
             <Link href="/o-nas" className="hover:text-neutral-900">
-              O nas
+              {t("footer.about")}
             </Link>
           </nav>
           <div className="flex justify-center gap-4 md:justify-end">
@@ -50,7 +56,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs uppercase tracking-wide hover:text-neutral-900"
-              aria-label="Instagram UNMADE"
+              aria-label={t("footer.instagramAria")}
             >
               Instagram
             </Link>
@@ -59,7 +65,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs uppercase tracking-wide hover:text-neutral-900"
-              aria-label="TikTok UNMADE"
+              aria-label={t("footer.tiktokAria")}
             >
               TikTok
             </Link>

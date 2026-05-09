@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 function matchesVariant(
@@ -38,6 +39,7 @@ export function VariantSelector({
   product: Product;
   onVariantChange: (variant: ProductVariant) => void;
 }) {
+  const { t } = useT();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
     () => initialOptionsFromProduct(product),
   );
@@ -104,7 +106,7 @@ export function VariantSelector({
       ))}
       {combinationUnavailable ? (
         <p className="text-sm font-medium text-[var(--unmade-accent)]">
-          Niedostępne
+          {t("product.unavailable")}
         </p>
       ) : null}
     </div>

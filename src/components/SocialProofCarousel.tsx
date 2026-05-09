@@ -4,6 +4,7 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useMemo } from "react";
+import { useT } from "@/i18n/I18nContext";
 
 const IMAGES = [
   "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400&q=80",
@@ -17,6 +18,7 @@ const IMAGES = [
 ];
 
 export function SocialProofCarousel() {
+  const { t } = useT();
   const plugins = useMemo(
     () => [
       Autoplay({
@@ -52,7 +54,7 @@ export function SocialProofCarousel() {
               {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
               <Image
                 src={src}
-                alt="Zdjęcie społeczności UNMADE"
+                alt={t("socialProof.slideAlt")}
                 fill
                 className="object-cover"
                 sizes="200px"

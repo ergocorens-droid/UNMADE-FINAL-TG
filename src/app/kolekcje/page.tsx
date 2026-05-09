@@ -1,30 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getServerLocale, getServerT } from "@/i18n/server";
 import { getCollections } from "@/lib/shopify/api";
 import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
-export const metadata: Metadata = {
-  title: "Kolekcje | UNMADE — Streetwear",
-  description:
-    "Przeglądaj kolekcje UNMADE — limitowane serie i autorskie grafiki.",
-  openGraph: {
-    title: "Kolekcje | UNMADE",
-    url: "https://unmade.pl/kolekcje",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerT();
+  const locale = await getServerLocale();
+  const title = `${t("metadata.kolekcjeListTitle")} | UNMADE`;
+  const description = t("metadata.kolekcjeListDescription");
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      url: "https://unmade.pl/kolekcje",
+      locale: locale === "pl" ? "pl_PL" : "en_US",
+    },
+  };
+}
 
 export default async function KolekcjePage() {
   const collections = await getCollections();
+  const t = await getServerT();
 
   return (
     <div className="bg-white pb-24 pt-12 md:pt-16">
       <div className="mx-auto max-w-[1200px] px-4 md:px-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--unmade-accent)]">
-          Limitowane serie
+          {t("pages.limitedSeries")}
         </p>
         <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.2em] text-neutral-900 md:text-4xl">
-          KOLEKCJE
+          {t("nav.collections")}
         </h1>
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           {collections.map((c, index) => {
@@ -62,7 +71,7 @@ export default async function KolekcjePage() {
         </div>
         {collections.length === 0 ? (
           <p className="mt-12 text-center text-sm text-neutral-600">
-            Brak kolekcji w sklepie.
+            {t("collection.storeEmpty")}
           </p>
         ) : null}
       </div>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 
 export function ContactForm() {
+  const { t } = useT();
   const [sent, setSent] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -15,7 +17,7 @@ export function ContactForm() {
       <form onSubmit={handleSubmit} className="mt-12 space-y-5">
         <div>
           <label htmlFor="c-name" className="text-[10px] uppercase tracking-wide text-neutral-600">
-            Imię
+            {t("contactForm.name")}
           </label>
           <input
             id="c-name"
@@ -26,7 +28,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="c-email" className="text-[10px] uppercase tracking-wide text-neutral-600">
-            Email
+            {t("contactForm.email")}
           </label>
           <input
             id="c-email"
@@ -38,7 +40,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="c-subject" className="text-[10px] uppercase tracking-wide text-neutral-600">
-            Temat
+            {t("contactForm.subject")}
           </label>
           <input
             id="c-subject"
@@ -49,7 +51,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="c-msg" className="text-[10px] uppercase tracking-wide text-neutral-600">
-            Wiadomość
+            {t("contactForm.message")}
           </label>
           <textarea
             id="c-msg"
@@ -63,12 +65,12 @@ export function ContactForm() {
           type="submit"
           className="w-full bg-neutral-900 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white transition hover:bg-[var(--unmade-accent)]"
         >
-          WYŚLIJ
+          {t("contactForm.submit")}
         </button>
       </form>
       {sent && (
         <p className="mt-6 text-sm font-semibold text-[#2e7d32]" role="status">
-          Wiadomość wysłana (demo front-end — bez backendu).
+          {t("contactForm.demoSent")}
         </p>
       )}
     </>

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
+import { getServerT } from "@/i18n/server";
 import { getFeaturedProducts } from "@/lib/products";
 
 export async function CollectionGrid2026() {
-  const products = await getFeaturedProducts(16);
+  const [products, t] = await Promise.all([getFeaturedProducts(16), getServerT()]);
 
   return (
     <section className="border-t border-neutral-200 bg-white py-16 md:py-24">
@@ -23,7 +24,7 @@ export async function CollectionGrid2026() {
             href="/sklep"
             className="rounded-none border border-neutral-900 bg-transparent px-10 py-4 text-xs font-bold uppercase tracking-[0.25em] text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
           >
-            ZOBACZ KOLEKCJĘ
+            {t("collectionGrid.viewCollection")}
           </Link>
         </div>
       </div>

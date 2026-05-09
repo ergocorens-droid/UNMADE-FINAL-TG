@@ -8,11 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { useRegion } from "@/context/RegionContext";
-import { useCurrency } from "@/context/CurrencyContext";
+import { useT } from "@/i18n/I18nContext";
 import { formatPrice } from "@/lib/format";
 import { clientSearchProducts } from "@/lib/shopify/search-products-client";
 import { currencyToCountryCode } from "@/lib/shopify/markets";
+import { useCurrency } from "@/context/CurrencyContext";
 import type { Product } from "@/lib/shopify/types";
 
 export function SearchOverlay({
@@ -22,7 +22,7 @@ export function SearchOverlay({
   open: boolean;
   onClose: () => void;
 }) {
-  const { t } = useRegion();
+  const { t } = useT();
   const { currency } = useCurrency();
   const country = currencyToCountryCode(currency);
   const [q, setQ] = useState("");
@@ -88,7 +88,7 @@ export function SearchOverlay({
       className="fixed inset-0 z-[240] flex flex-col bg-white/98 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
-      aria-label="Wyszukiwarka"
+      aria-label={t("search.dialogAria")}
     >
       <div className="flex items-center gap-3 border-b border-neutral-200 px-4 py-4">
         <svg
@@ -105,14 +105,14 @@ export function SearchOverlay({
           />
         </svg>
         <label htmlFor="site-search" className="sr-only">
-          Szukaj produktów
+          {t("search.label")}
         </label>
         <input
           ref={inputRef}
           id="site-search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Szukaj..."
+          placeholder={t("search.placeholder")}
           className="flex-1 bg-transparent text-base text-neutral-900 placeholder:text-neutral-400 focus:outline-none"
           autoComplete="off"
         />
@@ -120,14 +120,15 @@ export function SearchOverlay({
           type="button"
           onClick={closeAndClear}
           className="rounded px-3 py-2 text-sm uppercase tracking-wide text-neutral-500 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--unmade-accent)]"
-          aria-label={t("search_close")}
+          aria-label={t("search.closeAria")}
         >
           ✕
         </button>
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
-          Produkty {loading ? "…" : ""}
+          {t("search.productsHeading")}
+          {loading ? " …" : ""}
         </p>
         <ul className="mt-4 space-y-3">
           {results.map((p) => {
@@ -158,7 +159,7 @@ export function SearchOverlay({
                     <p className="mt-1 text-xs text-neutral-600">
                       {price
                         ? formatPrice(price)
-                        : "Niedostępne w Twoim regionie"}
+                        : t("product.unavailableInRegion")}
                     </p>
                   </div>
                 </Link>
@@ -171,7 +172,7 @@ export function SearchOverlay({
           onClick={closeAndClear}
           className="mt-6 inline-block text-xs font-semibold uppercase tracking-wide text-[var(--unmade-accent)] underline"
         >
-          Zobacz wszystkie
+          {t("search.viewAll")}
         </Link>
       </div>
     </div>

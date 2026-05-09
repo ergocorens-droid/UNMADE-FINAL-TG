@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 
@@ -16,6 +17,7 @@ function variantLabel(
 }
 
 export function CartDrawer() {
+  const { t } = useT();
   const {
     isOpen,
     cart,
@@ -69,7 +71,7 @@ export function CartDrawer() {
       <button
         type="button"
         className="absolute inset-0 bg-black/40"
-        aria-label="Zamknij koszyk"
+        aria-label={t("cart.closeDrawer")}
         onClick={closeCart}
       />
       <aside
@@ -85,13 +87,13 @@ export function CartDrawer() {
             id="cart-drawer-title"
             className="text-sm font-bold uppercase tracking-widest text-neutral-900"
           >
-            Koszyk
+            {t("cart.title")}
           </h2>
           <button
             type="button"
             onClick={closeCart}
             className="rounded p-2 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--unmade-accent)]"
-            aria-label="Zamknij"
+            aria-label={t("common.close")}
           >
             ✕
           </button>
@@ -99,13 +101,13 @@ export function CartDrawer() {
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 text-center">
-            <p className="text-sm text-neutral-600">Twój koszyk jest pusty</p>
+            <p className="text-sm text-neutral-600">{t("cart.empty")}</p>
             <Link
               href="/sklep"
               onClick={closeCart}
               className="border border-neutral-900 px-6 py-3 text-xs font-bold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
             >
-              WRÓĆ DO SKLEPU
+              {t("cart.backToShop")}
             </Link>
           </div>
         ) : (
@@ -155,13 +157,13 @@ export function CartDrawer() {
                         {formatPrice(line.cost.totalAmount)}
                         <span className="font-normal text-neutral-500">
                           {" "}
-                          · {line.quantity} szt.
+                          · {line.quantity} {t("cart.units")}
                         </span>
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <button
                           type="button"
-                          aria-label="Zmniejsz ilość"
+                          aria-label={t("cart.qtyDecrease")}
                           className="h-7 w-7 border border-neutral-300 text-sm text-neutral-900 hover:border-neutral-900"
                           onClick={() =>
                             void updateItem(line.id, line.quantity - 1)
@@ -174,7 +176,7 @@ export function CartDrawer() {
                         </span>
                         <button
                           type="button"
-                          aria-label="Zwiększ ilość"
+                          aria-label={t("cart.qtyIncrease")}
                           className="h-7 w-7 border border-neutral-300 text-sm text-neutral-900 hover:border-neutral-900"
                           onClick={() =>
                             void updateItem(line.id, line.quantity + 1)
@@ -186,7 +188,7 @@ export function CartDrawer() {
                           type="button"
                           className="ml-auto text-[11px] text-neutral-500 hover:text-[var(--unmade-accent)]"
                           onClick={() => void removeItem(line.id)}
-                          aria-label="Usuń"
+                          aria-label={t("cart.remove")}
                         >
                           ✕
                         </button>
@@ -199,7 +201,7 @@ export function CartDrawer() {
             <div className="border-t border-neutral-200 bg-neutral-50 px-4 py-5">
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-xs uppercase tracking-wide text-neutral-500">
-                  Suma
+                  {t("cart.totalShort")}
                 </span>
                 <p className="text-lg font-semibold text-neutral-900">
                   {cart
@@ -212,7 +214,7 @@ export function CartDrawer() {
                   href={cart.checkoutUrl}
                   className="mt-4 flex w-full justify-center bg-neutral-900 py-4 text-center text-sm font-bold uppercase tracking-wide text-white transition hover:bg-neutral-800"
                 >
-                  PRZEJDŹ DO KASY
+                  {t("cart.checkout")}
                 </a>
               ) : null}
             </div>

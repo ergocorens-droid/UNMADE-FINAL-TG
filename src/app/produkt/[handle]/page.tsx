@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductBuyBox } from "@/components/product/ProductBuyBox";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { getServerT } from "@/i18n/server";
 import { getProductByHandle } from "@/lib/shopify/api";
 import type { Product as ShopifyProduct } from "@/lib/shopify/types";
 
@@ -10,9 +11,10 @@ type Props = { params: Promise<{ handle: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params;
+  const t = await getServerT();
   const product = await getProductByHandle(handle);
   if (!product) {
-    return { title: "Produkt" };
+    return { title: `${t("metadata.productFallback")} | UNMADE` };
   }
   return {
     title: product.title,
@@ -59,6 +61,7 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProductByHandle(handle);
   if (!product) notFound();
 
+  const t = await getServerT();
   const jsonLd = buildJsonLd(product);
 
   return (
@@ -69,7 +72,7 @@ export default async function ProductPage({ params }: Props) {
       />
       <nav className="mx-auto max-w-[1400px] px-4 text-[11px] uppercase tracking-wide text-neutral-500 md:px-6">
         <Link href="/sklep" className="transition hover:text-neutral-900">
-          Sklep
+          {t("shop.breadcrumbShop")}
         </Link>
         <span className="mx-2 text-neutral-300">/</span>
         <span className="text-neutral-900">{product.title}</span>
@@ -95,7 +98,7 @@ export default async function ProductPage({ params }: Props) {
                 {product.tags.length > 0 ? (
                   <p>
                     <span className="font-bold uppercase tracking-wider text-neutral-500">
-                      Tagi:{" "}
+                      {t("product.tagsLabel")}{" "}
                     </span>
                     {product.tags.join(", ")}
                   </p>
@@ -103,7 +106,7 @@ export default async function ProductPage({ params }: Props) {
                 {product.collections.length > 0 ? (
                   <p className="mt-2">
                     <span className="font-bold uppercase tracking-wider text-neutral-500">
-                      Kolekcje:{" "}
+                      {t("product.collectionsLabel")}{" "}
                     </span>
                     {product.collections.map((c) => c.title).join(", ")}
                   </p>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useT } from "@/i18n/I18nContext";
 
 export function FiltersDrawer({ children }: { children: React.ReactNode }) {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
@@ -47,14 +49,14 @@ export function FiltersDrawer({ children }: { children: React.ReactNode }) {
         onClick={() => setOpen(true)}
         className="mb-2 inline-flex items-center gap-2 border border-neutral-900 px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-100 lg:hidden"
       >
-        ☰ FILTRY
+        ☰ {t("shop.filters")}
       </button>
       {mounted ? (
         <div className="fixed inset-0 z-[260] lg:hidden">
           <button
             type="button"
             className="absolute inset-0 bg-black/40"
-            aria-label="Zamknij filtry"
+            aria-label={t("common.close")}
             onClick={() => setOpen(false)}
           />
           <aside
@@ -63,18 +65,18 @@ export function FiltersDrawer({ children }: { children: React.ReactNode }) {
             }`}
             role="dialog"
             aria-modal="true"
-            aria-label="Filtry sklepu"
+            aria-label={t("shop.filtersAria")}
           >
             <div className="flex items-center justify-between border-b border-neutral-200 px-4 py-4">
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-800">
-                Filtry
+                {t("shop.filtersHeading")}
               </span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-1 text-sm font-medium text-neutral-600 hover:bg-neutral-100"
               >
-                Zamknij
+                {t("common.close")}
               </button>
             </div>
             <div

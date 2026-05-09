@@ -2,23 +2,33 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { FiltersDrawer } from "@/components/shop/FiltersDrawer";
-import { ShopSidebar, type ShopFilterState } from "@/components/shop/ShopSidebar";
+import {
+  ShopSidebar,
+  type ShopFilterState,
+} from "@/components/shop/ShopSidebar";
 import { SortSelect } from "@/components/shop/SortSelect";
+import { getServerLocale, getServerT } from "@/i18n/server";
 import { getShopPageProducts, getSidebarCollectionCounts } from "@/lib/shopify/api";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
-  description:
-    "Wszystkie produkty UNMADE — koszulki, bluzy i longsleeve'y z grafikami aut. Limitowane serie, autorskie projekty.",
-  openGraph: {
-    title: "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
-    description:
-      "Wszystkie produkty UNMADE — koszulki, bluzy i longsleeve'y z grafikami aut.",
-    url: "https://unmade.pl/sklep",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getServerT();
+  const locale = await getServerLocale();
+  const title = `${t("shop.title").trim()} | UNMADE`;
+  const description = t("metadata.shopDescription");
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://unmade.pl/sklep",
+      locale: locale === "pl" ? "pl_PL" : "en_US",
+    },
+  };
+}
 
 type Props = {
   searchParams: Promise<{
@@ -41,7 +51,7 @@ export default async function ShopPage({ searchParams }: Props) {
     q: searchQuery,
   };
 
-  const [products, counts] = await Promise.all([
+  const [products, counts, t] = await Promise.all([
     getShopPageProducts({
       kolor: active.kolor,
       typ: active.typ,
@@ -49,6 +59,7 @@ export default async function ShopPage({ searchParams }: Props) {
       q: searchQuery,
     }),
     getSidebarCollectionCounts(),
+    getServerT(),
   ]);
 
   return (
@@ -56,10 +67,10 @@ export default async function ShopPage({ searchParams }: Props) {
       <div className="mx-auto max-w-[1400px] px-4 py-16 md:px-8 md:py-24">
         <header className="text-center lg:text-left">
           <h1 className="text-3xl font-bold uppercase tracking-widest text-neutral-900 md:text-5xl">
-            SKLEP
+            {t("shop.title")}
           </h1>
           <p className="mt-3 text-xs uppercase tracking-[0.25em] text-neutral-500 md:text-sm">
-            Wszystkie produkty UNMADE
+            {t("shop.subtitle")}
           </p>
         </header>
 
@@ -88,7 +99,7 @@ export default async function ShopPage({ searchParams }: Props) {
 
             {products.length === 0 ? (
               <p className="mt-12 text-center text-sm text-neutral-600">
-                Brak produktów dla wybranych filtrów.
+                {t("shop.noProductsFiltered")}
               </p>
             ) : (
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
