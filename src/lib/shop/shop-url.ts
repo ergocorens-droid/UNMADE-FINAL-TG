@@ -19,6 +19,20 @@ export function sklepHref(opts: {
   sort?: string;
   q?: string;
 }): string {
+  const hasOnlyType = opts.typ && !opts.kolor && !opts.q;
+  const hasOnlyNeedMoney = opts.q === "Need Money For" && !opts.kolor && !opts.typ;
+  const sort = opts.sort && opts.sort !== "najnowsze" ? `?sort=${encodeURIComponent(opts.sort)}` : "";
+
+  if (hasOnlyType && opts.typ === "t-shirts") {
+    return `/sklep-t-shirts${sort}`;
+  }
+  if (hasOnlyType && opts.typ === "blueprint") {
+    return `/sklep-bluzy${sort}`;
+  }
+  if (hasOnlyNeedMoney) {
+    return `/sklep-need-money${sort}`;
+  }
+
   const s = buildSklepSearchParams(opts);
   return s ? `/sklep?${s}` : "/sklep";
 }

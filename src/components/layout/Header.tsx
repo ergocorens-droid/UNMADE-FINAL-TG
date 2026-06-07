@@ -9,8 +9,8 @@ import { useT } from "@/i18n/I18nContext";
 import type { TranslationKey } from "@/i18n/translate";
 
 const NAV_SPEC: { href: string; key: TranslationKey }[] = [
-  { href: "/sklep?typ=t-shirts", key: "nav.tshirts" },
-  { href: "/sklep?typ=blueprint", key: "nav.hoodies" },
+  { href: "/sklep-t-shirts", key: "nav.tshirts" },
+  { href: "/sklep-bluzy", key: "nav.hoodies" },
   { href: "/kontakt", key: "nav.contact" },
 ];
 

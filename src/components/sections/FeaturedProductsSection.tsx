@@ -45,7 +45,7 @@ export async function FeaturedProductsSection() {
           ))}
         </div>
         <Link
-          href="/sklep?q=Need%20Money%20For"
+          href="/sklep-need-money"
           className="flex min-h-14 items-center justify-center border-b border-r border-black/[0.06] bg-white px-4 text-center text-xs font-black uppercase tracking-[0.22em] text-neutral-950 transition hover:bg-neutral-50 md:text-sm"
         >
           {t("home.viewCollection")}
