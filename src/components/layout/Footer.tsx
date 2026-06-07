@@ -4,44 +4,34 @@ import Link from "next/link";
 import { useT } from "@/i18n/I18nContext";
 import { COMPANY } from "@/lib/legal/company";
 
-function PayIcon({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-      {children}
-    </span>
-  );
-}
+const PAYMENTS = ["Visa", "Mastercard", "PayPal", "Apple Pay", "Google Pay", "BLIK"];
 
 export function Footer() {
   const { t } = useT();
   const year = 2026;
 
   return (
-    <footer className="border-t border-black/[0.06] bg-[#f5f1ea] text-neutral-600">
-      <div className="mx-auto max-w-[1500px] px-4 py-10 md:px-8">
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-          <div>
-            <Link
-              href="/"
-              className="text-lg font-black uppercase tracking-[0.22em] text-neutral-950"
-            >
-              UNMADE
-            </Link>
-            <p className="mt-4 max-w-sm text-xs uppercase leading-relaxed tracking-[0.16em] text-neutral-500">
-              Limited streetwear drops. Quote tees, essentials and pieces made
-              to be worn daily.
-            </p>
-          </div>
-
-          <p className="text-xs text-neutral-600 md:max-w-sm md:text-right">
+    <footer className="border-t border-black/[0.06] bg-white text-neutral-600">
+      <div className="mx-auto grid max-w-[1500px] gap-10 px-4 py-12 md:grid-cols-[1fr_auto] md:px-8">
+        <div>
+          <Link
+            href="/"
+            className="text-xl font-black uppercase tracking-[0.22em] text-neutral-950"
+          >
+            UNMADE
+          </Link>
+          <p className="mt-5 max-w-md text-xs uppercase leading-relaxed tracking-[0.16em] text-neutral-500">
+            {t("footer.tagline")}
+          </p>
+          <p className="mt-8 text-xs text-neutral-500">
             {t("footer.copyright", { year })}
           </p>
         </div>
 
-        <div className="mt-10 flex flex-col gap-8 border-t border-black/[0.06] pt-8 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-6 md:items-end md:text-right">
           <nav
             aria-label={t("footer.legalLinksAria")}
-            className="flex flex-wrap gap-x-4 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] md:max-w-3xl"
+            className="flex max-w-xl flex-wrap gap-x-4 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] md:justify-end"
           >
             <Link href="/regulamin" className="hover:text-neutral-900">
               {t("footer.terms")}
@@ -67,17 +57,21 @@ export function Footer() {
             <Link href="/faq" className="hover:text-neutral-900">
               {t("footer.faq")}
             </Link>
-            <Link href="/o-nas" className="hover:text-neutral-900">
-              {t("footer.about")}
-            </Link>
           </nav>
 
-          <div className="flex gap-4 md:justify-end md:min-w-[9rem]">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500 md:justify-end">
+            <span>{t("footer.payments")}:</span>
+            {PAYMENTS.map((payment) => (
+              <span key={payment}>{payment}</span>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs uppercase tracking-wide md:justify-end">
             <Link
               href="https://instagram.com/unmade.pl"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs uppercase tracking-wide hover:text-neutral-900"
+              className="hover:text-neutral-900"
               aria-label={t("footer.instagramAria")}
             >
               Instagram
@@ -86,27 +80,15 @@ export function Footer() {
               href="https://www.tiktok.com/@unmade.pl"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs uppercase tracking-wide hover:text-neutral-900"
+              className="hover:text-neutral-900"
               aria-label={t("footer.tiktokAria")}
             >
               TikTok
             </Link>
+            <a href={`mailto:${COMPANY.email}`} className="hover:text-neutral-900">
+              {COMPANY.email}
+            </a>
           </div>
-        </div>
-
-        <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 border-t border-black/[0.06] pt-6">
-          <PayIcon>Visa</PayIcon>
-          <PayIcon>Mastercard</PayIcon>
-          <PayIcon>PayPal</PayIcon>
-          <PayIcon>Apple Pay</PayIcon>
-          <PayIcon>Google Pay</PayIcon>
-          <PayIcon>BLIK</PayIcon>
-          <a
-            href={`mailto:${COMPANY.email}`}
-            className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500 hover:text-neutral-900"
-          >
-            {COMPANY.email}
-          </a>
         </div>
       </div>
     </footer>

@@ -11,7 +11,7 @@ export function LegalArticle({
   children: ReactNode;
 }) {
   return (
-    <article className="mx-auto max-w-[860px] bg-[#f5f1ea] px-6 py-16 md:px-8 md:py-24">
+    <article className="mx-auto max-w-[860px] bg-white px-6 py-16 md:px-8 md:py-24">
       {eyebrow ? (
         <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-neutral-500">
           {eyebrow}

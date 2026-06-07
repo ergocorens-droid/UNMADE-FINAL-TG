@@ -210,12 +210,14 @@ export async function getProducts({
 export async function getProductByHandle(
   handle: string,
   countryOpt?: string,
+  cache?: RequestCache,
 ): Promise<Product | null> {
   type R = { product: GQLProductNode | null };
   const country = await resolveServerCountry(countryOpt);
   const data = await shopifyFetch<R>({
     query: PRODUCT_BY_HANDLE_QUERY,
     variables: { handle, country },
+    cache,
     tags: [`shopify-product-${handle}`, `shopify-product-${country}-${handle}`],
   });
   if (!data.product) return null;

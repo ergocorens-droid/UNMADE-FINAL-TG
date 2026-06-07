@@ -71,8 +71,8 @@ export function CollectionHeader({ collection, size = "lg" }: Props) {
       variant === "black"
         ? "bg-neutral-950 text-white"
         : variant === "white"
-          ? "border-y border-black/[0.06] bg-[#f8f5ef] text-neutral-950"
-          : "border-y border-black/[0.06] bg-[#f5f1ea] text-neutral-950";
+          ? "border-y border-black/[0.06] bg-white text-neutral-950"
+          : "border-y border-black/[0.06] bg-white text-neutral-950";
 
   return (
     <div

@@ -74,7 +74,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} h-full antialiased`}>
       <body
-        className={`${inter.className} min-h-full flex flex-col bg-[#f5f1ea] text-neutral-900`}
+        className={`${inter.className} min-h-full flex flex-col bg-white text-neutral-900`}
       >
         <MetaPixel />
         <CurrencyProvider initialCurrency={initialCurrency}>

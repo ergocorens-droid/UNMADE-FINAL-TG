@@ -48,21 +48,21 @@
     "all": "WSZYSTKIE"
   },
   "metadata": {
-    "homeTitle": "UNMADE — Car Culture Streetwear | Koszulki i Bluzy z Grafikami Aut",
-    "homeDescription": "Streetwear inspirowany car culture. Koszulki, bluzy i longsleeve'y z autorskimi grafikami aut — Porsche, JDM, drift. Limitowane dropy. Darmowa dostawa od 300 zł.",
-    "shopTitle": "Sklep | UNMADE — Streetwear z Motywem Samochodowym",
-    "shopDescription": "Wszystkie produkty UNMADE — koszulki, bluzy i longsleeve'y z grafikami aut. Limitowane serie, autorskie projekty.",
+    "homeTitle": "UNMADE — limitowane dropy streetwear, quote tees i essentials",
+    "homeDescription": "UNMADE to limitowany streetwear: koszulki z mocnymi hasłami, autorskie nadruki, essentials i krótkie dropy dostępne online.",
+    "shopTitle": "Sklep | UNMADE — koszulki, bluzy i limitowane dropy",
+    "shopDescription": "Oficjalny sklep UNMADE. Koszulki, bluzy, quote tees i limitowane dropy tworzone w czystym streetwearowym stylu.",
     "collectionFallback": "Kolekcja — UNMADE",
     "productFallback": "Produkt",
     "kontaktTitle": "Kontakt",
-    "kontaktDescription": "Skontaktuj się z UNMADE — email, social media i formularz.",
+    "kontaktDescription": "Skontaktuj się z UNMADE — napisz do nas mailowo w sprawie zamówienia, współpracy lub dropu.",
     "wysylkaTitle": "Wysyłka",
     "wysylkaDescription": "Wysyłka UNMADE — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
     "kolekcjeListTitle": "Kolekcje",
-    "kolekcjeListDescription": "Kolekcje UNMADE — streetwear inspirowany motoryzacją.",
+    "kolekcjeListDescription": "Kolekcje UNMADE — limitowane dropy, quote tees i streetwearowe essentials.",
     "kolekcjeFallbackDescription": "Kolekcje UNMADE.",
     "aboutPageTitle": "O nas",
-    "aboutPageDescription": "UNMADE — streetwear z duszą car culture. Poznaj naszą historię, filozofię i dlaczego robimy to co robimy.",
+    "aboutPageDescription": "UNMADE — limitowany streetwear, autorskie hasła i dropy tworzone bez zbędnego hałasu.",
     "termsDocTitle": "Regulamin",
     "termsDocDescription": "Regulamin sklepu internetowego UNMADE — MMN sp. z o.o.",
     "privacyDocTitle": "Polityka prywatności",
@@ -143,6 +143,8 @@
     "closeAria": "Zamknij wyszukiwarkę"
   },
   "footer": {
+    "tagline": "Limitowane dropy streetwear. Koszulki z hasłami, essentials i rzeczy tworzone do noszenia na co dzień.",
+    "payments": "Płatności",
     "copyright": "© {year} UNMADE. Wszelkie prawa zastrzeżone.",
     "terms": "Regulamin",
     "privacy": "Polityka prywatności",
@@ -185,8 +187,9 @@
     "label": "Sortowanie"
   },
   "contactPage": {
-    "tagline": "🔥 Odpowiadamy w 24h w dni robocze",
-    "title": "KONTAKT",
+    "tagline": "KONTAKT",
+    "title": "SKONTAKTUJ SIĘ Z NAMI",
+    "body": "Masz pytanie o zamówienie, rozmiar, drop albo współpracę? Napisz do nas. Odpowiadamy możliwie szybko w dni robocze.",
     "emailLabel": "Email:",
     "instagramLabel": "Instagram:",
     "tiktokLabel": "TikTok:"
@@ -205,10 +208,17 @@
   },
   "staticPages": {
     "about": {
-      "tagline": "🔥 Nowy drop w drodze",
+      "tagline": "UNMADE / LIMITED DROPS",
       "heading": "O NAS",
-      "lead": "UNMADE to streetwear z sercem car culture — grafiki aut, nocne przejazdy i limitowane serie. Łączymy jakość materiałów z energią motoryzacji.",
-      "note": "Ta strona to front-end demo — treść „O nas” możesz tu rozwinąć pod SEO i markę."
+      "lead": "Robimy rzeczy z charakterem. Krótkie dropy, mocne hasła i proste kroje, które mają wyglądać dobrze bez tłumaczenia.",
+      "note": "UNMADE nie próbuje być dla wszystkich. Każdy projekt ma być prosty, czytelny i gotowy do noszenia na co dzień.",
+      "pointOne": "Limitowane serie",
+      "pointOneText": "Mniej produktów, więcej uwagi do każdego dropu.",
+      "pointTwo": "Mocny przekaz",
+      "pointTwoText": "Hasła, które brzmią jak wiadomość, nie jak reklama.",
+      "pointThree": "Czysty styl",
+      "pointThreeText": "Minimalna forma, mocny nadruk, bez zbędnych dodatków.",
+      "cta": "Zobacz aktualny drop"
     },
     "terms": {
       "heading": "Regulamin",

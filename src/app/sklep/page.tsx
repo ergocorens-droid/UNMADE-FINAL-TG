@@ -63,7 +63,7 @@ export default async function ShopPage({ searchParams }: Props) {
   ]);
 
   return (
-    <div className="bg-[#f5f1ea] pb-20">
+    <div className="bg-white pb-20">
       <div className="mx-auto max-w-[1500px] px-4 py-16 md:px-8 md:py-24">
         <header className="text-center lg:text-left">
           <h1 className="text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">

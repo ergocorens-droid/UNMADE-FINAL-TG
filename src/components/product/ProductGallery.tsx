@@ -29,14 +29,14 @@ export function ProductGallery({
 
   if (!main) {
     return (
-      <div className="aspect-square bg-[#f8f5ef]" aria-hidden />
+      <div className="aspect-square bg-white" aria-hidden />
     );
   }
 
   return (
     <div>
       <div
-        className="relative aspect-square overflow-hidden border border-black/[0.06] bg-[#f8f5ef] [--zoom-x:50%] [--zoom-y:50%] md:cursor-zoom-in"
+        className="relative aspect-square overflow-hidden border border-black/[0.06] bg-white [--zoom-x:50%] [--zoom-y:50%] md:cursor-zoom-in"
         onPointerMove={updateZoomOrigin}
       >
         <Image
@@ -55,7 +55,7 @@ export function ProductGallery({
               key={`${img.url}-${i}`}
               type="button"
               onClick={() => setCurrent(i)}
-              className={`relative h-16 w-16 shrink-0 overflow-hidden border bg-[#f8f5ef] ${
+              className={`relative h-16 w-16 shrink-0 overflow-hidden border bg-white ${
                 i === current ? "border-neutral-900" : "border-black/[0.06]"
               }`}
             >

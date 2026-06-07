@@ -29,7 +29,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/produkt/${product.handle}`}
-      className="group block border-b border-r border-black/[0.06] bg-[#f8f5ef] outline-none transition-colors duration-300 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+      className="group block border-b border-r border-black/[0.06] bg-white outline-none transition-colors duration-300 hover:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
     >
       <div className="relative aspect-square overflow-hidden">
         {img ? (

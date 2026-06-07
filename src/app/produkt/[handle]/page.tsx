@@ -12,7 +12,7 @@ type Props = { params: Promise<{ handle: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params;
   const t = await getServerT();
-  const product = await getProductByHandle(handle);
+  const product = await getProductByHandle(handle, undefined, "no-store");
   if (!product) {
     return { title: `${t("metadata.productFallback")} | UNMADE` };
   }
@@ -56,16 +56,93 @@ function buildJsonLd(product: ShopifyProduct) {
   };
 }
 
+function stripHeading(html: string, heading: string): string {
+  return html
+    .replace(
+      new RegExp(
+        `<p[^>]*>\\s*<strong[^>]*>\\s*${heading}\\s*</strong>\\s*</p>`,
+        "i",
+      ),
+      "",
+    )
+    .replace(
+      new RegExp(`<p[^>]*>\\s*${heading}\\s*</p>`, "i"),
+      "",
+    )
+    .trim();
+}
+
+function splitProductDescription(html: string): {
+  detailsHtml: string;
+  careHtml: string;
+} {
+  const careHeading = /<p[^>]*>\s*<strong[^>]*>\s*Pielęgnacja\s*<\/strong>\s*<\/p>/i;
+  const careMatch = html.match(careHeading);
+
+  if (!careMatch || careMatch.index === undefined) {
+    return {
+      detailsHtml: stripHeading(html, "Szczegóły produktu"),
+      careHtml: "",
+    };
+  }
+
+  const detailsPart = html.slice(0, careMatch.index);
+  const carePart = html.slice(careMatch.index);
+
+  return {
+    detailsHtml: stripHeading(detailsPart, "Szczegóły produktu"),
+    careHtml: stripHeading(carePart, "Pielęgnacja"),
+  };
+}
+
+function ProductDescriptionSections({ html }: { html: string }) {
+  const { detailsHtml, careHtml } = splitProductDescription(html);
+  if (!detailsHtml && !careHtml) return null;
+
+  const contentClass =
+    "mt-5 text-base leading-8 text-neutral-900 md:text-lg md:leading-9 [&_br]:block [&_p]:mb-0 [&_strong]:font-black";
+
+  return (
+    <section className="mt-12 border-y border-black/[0.08]">
+      <div className="grid md:grid-cols-2">
+        {detailsHtml ? (
+          <article className="py-8 md:pr-10">
+            <h2 className="text-sm font-black uppercase tracking-[0.18em] text-neutral-950 md:text-base">
+              Szczegóły produktu
+            </h2>
+            <div
+              className={contentClass}
+              dangerouslySetInnerHTML={{ __html: detailsHtml }}
+            />
+          </article>
+        ) : null}
+
+        {careHtml ? (
+          <article className="border-t border-black/[0.08] py-8 md:border-l md:border-t-0 md:pl-10">
+            <h2 className="text-sm font-black uppercase tracking-[0.18em] text-neutral-950 md:text-base">
+              Pielęgnacja
+            </h2>
+            <div
+              className={contentClass}
+              dangerouslySetInnerHTML={{ __html: careHtml }}
+            />
+          </article>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 export default async function ProductPage({ params }: Props) {
   const { handle } = await params;
-  const product = await getProductByHandle(handle);
+  const product = await getProductByHandle(handle, undefined, "no-store");
   if (!product) notFound();
 
   const t = await getServerT();
   const jsonLd = buildJsonLd(product);
 
   return (
-    <div className="min-h-screen bg-[#f5f1ea] pb-20 pt-8 md:pt-12">
+    <div className="min-h-screen bg-white pb-20 pt-8 md:pt-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -88,10 +165,7 @@ export default async function ProductPage({ params }: Props) {
 
             <ProductBuyBox key={product.id} product={product} />
 
-            <div
-              className="mt-10 max-w-none border-t border-black/[0.06] pt-8 text-sm leading-relaxed text-neutral-800 [&_img]:max-w-full [&_p]:mb-4 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6"
-              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-            />
+            <ProductDescriptionSections html={product.descriptionHtml} />
 
             {(product.tags.length > 0 || product.collections.length > 0) && (
               <div className="mt-10 border-t border-black/[0.06] pt-6 text-xs text-neutral-600">

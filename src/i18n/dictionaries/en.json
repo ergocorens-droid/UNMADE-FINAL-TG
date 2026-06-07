@@ -48,21 +48,21 @@
     "all": "ALL"
   },
   "metadata": {
-    "homeTitle": "UNMADE — Car Culture Streetwear | Tees & Hoodies With Car Graphics",
-    "homeDescription": "Streetwear inspired by car culture. Tees, hoodies and long sleeves with original car graphics — Porsche, JDM, drift. Limited drops. Free shipping from 300 PLN.",
-    "shopTitle": "Shop | UNMADE — Car Culture Streetwear",
-    "shopDescription": "All UNMADE products — tees, hoodies and long sleeves with car graphics. Limited runs, original designs.",
+    "homeTitle": "UNMADE — limited streetwear drops, quote tees and essentials",
+    "homeDescription": "UNMADE is limited streetwear: quote tees, original graphics, essentials and short online drops.",
+    "shopTitle": "Shop | UNMADE — tees, hoodies and limited drops",
+    "shopDescription": "The official UNMADE store. Tees, hoodies, quote tees and limited drops in a clean streetwear direction.",
     "collectionFallback": "Collection — UNMADE",
     "productFallback": "Product",
     "kontaktTitle": "Contact",
-    "kontaktDescription": "Get in touch with UNMADE — email, social media and form.",
+    "kontaktDescription": "Contact UNMADE by email about orders, sizing, drops or collaborations.",
     "wysylkaTitle": "Shipping",
     "wysylkaDescription": "UNMADE shipping — free from 300 PLN, InPost, DPD, delivery time and costs.",
     "kolekcjeListTitle": "Collections",
-    "kolekcjeListDescription": "UNMADE collections — car-inspired streetwear.",
+    "kolekcjeListDescription": "UNMADE collections — limited drops, quote tees and streetwear essentials.",
     "kolekcjeFallbackDescription": "UNMADE collections.",
     "aboutPageTitle": "About",
-    "aboutPageDescription": "UNMADE — streetwear with real car culture soul. Learn our story, philosophy, and why we build what we build.",
+    "aboutPageDescription": "UNMADE — limited streetwear, original statements and quiet drops made to be worn daily.",
     "termsDocTitle": "Terms",
     "termsDocDescription": "UNMADE web store terms — MMN LLC operating UNMADE.",
     "privacyDocTitle": "Privacy policy",
@@ -143,6 +143,8 @@
     "closeAria": "Close search"
   },
   "footer": {
+    "tagline": "Limited streetwear drops. Quote tees, essentials and pieces made to be worn daily.",
+    "payments": "Payments",
     "copyright": "© {year} UNMADE. All rights reserved.",
     "terms": "Terms",
     "privacy": "Privacy policy",
@@ -185,8 +187,9 @@
     "label": "Sort by"
   },
   "contactPage": {
-    "tagline": "🔥 We reply within 24h on business days",
-    "title": "CONTACT",
+    "tagline": "CONTACT",
+    "title": "GET IN TOUCH",
+    "body": "Questions about an order, sizing, a drop or collaboration? Send us an email. We reply as soon as possible on business days.",
     "emailLabel": "Email:",
     "instagramLabel": "Instagram:",
     "tiktokLabel": "TikTok:"
@@ -205,10 +208,17 @@
   },
   "staticPages": {
     "about": {
-      "tagline": "🔥 Next drop underway",
+      "tagline": "UNMADE / LIMITED DROPS",
       "heading": "ABOUT US",
-      "lead": "UNMADE is streetwear with car culture at its core — car graphics, late-night drives, and limited runs. We blend quality materials with motorsport energy.",
-      "note": "This site is a front-end demo — expand “About” here for SEO and brand."
+      "lead": "We make pieces with a point of view. Short drops, sharp statements and clean cuts that do not need explaining.",
+      "note": "UNMADE is not trying to be for everyone. Every piece should feel direct, wearable and built for everyday rotation.",
+      "pointOne": "Limited runs",
+      "pointOneText": "Fewer products, more attention on each drop.",
+      "pointTwo": "Sharp statements",
+      "pointTwoText": "Words that feel like a message, not an ad.",
+      "pointThree": "Clean style",
+      "pointThreeText": "Minimal form, strong print, no unnecessary noise.",
+      "cta": "View current drop"
     },
     "terms": {
       "heading": "Terms",

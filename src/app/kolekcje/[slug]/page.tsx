@@ -31,7 +31,7 @@ export default async function CollectionSlugPage({ params }: Props) {
   if (!col) notFound();
 
   return (
-    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+    <div className="bg-white pb-24 pt-16 md:pt-24">
       <div className="mx-auto max-w-[1500px] px-4 md:px-8">
         <nav className="text-[11px] uppercase tracking-wide text-neutral-500">
           <Link href="/kolekcje" className="hover:text-neutral-900">

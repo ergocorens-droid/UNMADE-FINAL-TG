@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/ContactForm";
 import { getServerLocale, getServerT } from "@/i18n/server";
+import { COMPANY } from "@/lib/legal/company";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
@@ -20,45 +20,25 @@ export default async function KontaktPage() {
   const t = await getServerT();
 
   return (
-    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
-      <div className="mx-auto max-w-[760px] px-6">
+    <div className="bg-white pb-24 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[920px] px-6">
         <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-neutral-500">
           {t("contactPage.tagline")}
         </p>
-        <h1 className="mt-4 border-b border-black/[0.06] pb-8 text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
+        <h1 className="mt-4 border-b border-black/[0.06] pb-8 text-5xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-7xl">
           {t("contactPage.title")}
         </h1>
-        <div className="mt-8 space-y-3 text-sm text-neutral-700">
-          <p>
-            {t("contactPage.emailLabel")}{" "}
-            <a href="mailto:kontakt@unmade.pl" className="font-medium text-neutral-950 underline">
-              kontakt@unmade.pl
-            </a>
+        <div className="mt-10 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+          <p className="max-w-2xl text-xl font-semibold leading-snug text-neutral-950 md:text-2xl">
+            {t("contactPage.body")}
           </p>
-          <p>
-            {t("contactPage.instagramLabel")}{" "}
-            <a
-              href="https://instagram.com/unmade.pl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-neutral-950 underline"
-            >
-              @unmade.pl
-            </a>
-          </p>
-          <p>
-            {t("contactPage.tiktokLabel")}{" "}
-            <a
-              href="https://www.tiktok.com/@unmade.pl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-neutral-950 underline"
-            >
-              @unmade.pl
-            </a>
-          </p>
+          <a
+            href={`mailto:${COMPANY.email}`}
+            className="text-xl font-black uppercase tracking-normal text-neutral-950 underline decoration-black/20 underline-offset-8 transition hover:decoration-black md:text-2xl"
+          >
+            {COMPANY.email}
+          </a>
         </div>
-        <ContactForm />
       </div>
     </div>
   );

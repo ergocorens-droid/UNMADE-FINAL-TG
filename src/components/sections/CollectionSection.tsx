@@ -16,7 +16,7 @@ export async function CollectionSection({ handle, productLimit = 8 }: Props) {
   const t = await getServerT();
 
   return (
-    <section className="w-full bg-[#f5f1ea]">
+    <section className="w-full bg-white">
       <CollectionHeader collection={collection} size="lg" />
       <div className="mx-auto max-w-[1500px] px-4 py-12 md:px-8 md:py-16">
         <div className="overflow-hidden border-l border-t border-black/[0.06]">

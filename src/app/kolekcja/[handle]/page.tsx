@@ -62,7 +62,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const count = products.length;
 
   return (
-    <div className="bg-[#f5f1ea] pb-20">
+    <div className="bg-white pb-20">
       <CollectionHeader collection={collection} size="xl" />
       <div className="mx-auto max-w-[1500px] px-4 py-12 md:px-8 md:py-16">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">

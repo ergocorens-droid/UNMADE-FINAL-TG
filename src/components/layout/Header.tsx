@@ -1,51 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useCart } from "@/context/CartContext";
 import { useT } from "@/i18n/I18nContext";
 import type { TranslationKey } from "@/i18n/translate";
-import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 const NAV_SPEC: { href: string; key: TranslationKey }[] = [
-  { href: "/sklep?sort=najnowsze", key: "nav.new" },
   { href: "/sklep?typ=t-shirts", key: "nav.tshirts" },
   { href: "/sklep?typ=blueprint", key: "nav.hoodies" },
-  { href: "/sklep", key: "nav.shop" },
-  { href: "/o-nas", key: "nav.about" },
-];
-
-const COLLECTION_PREVIEW: {
-  href: string;
-  key: TranslationKey;
-  img: string;
-}[] = [
-  {
-    href: "/sklep?kolekcja=quote-tees",
-    key: "nav.quoteTees",
-    img: pickHeroPhotoByIndex(1),
-  },
-  {
-    href: "/sklep?kolekcja=need-money",
-    key: "nav.needMoney",
-    img: pickHeroPhotoByIndex(4),
-  },
-  {
-    href: "/sklep?kolekcja=essentials",
-    key: "nav.essentials",
-    img: pickHeroPhotoByIndex(7),
-  },
+  { href: "/kontakt", key: "nav.contact" },
 ];
 
 export function Header({
   promoHeight,
-  onOpenSearch,
 }: {
   promoHeight: number;
-  onOpenSearch: () => void;
 }) {
   const pathname = usePathname();
   const { totalQuantity, toggleCart } = useCart();
@@ -61,13 +33,7 @@ export function Header({
   );
   const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [collectionsOpen, setCollectionsOpen] = useState(false);
-  const [accountOpen, setAccountOpen] = useState(false);
-  const collectionsRef = useRef<HTMLDivElement>(null);
-  const accountRef = useRef<HTMLDivElement>(null);
-
   const transparent = !mobileOpen;
-
   const headerTop = Math.max(0, promoHeight - scrollY);
 
   useEffect(() => {
@@ -81,20 +47,6 @@ export function Header({
     const id = requestAnimationFrame(() => setScrollY(window.scrollY));
     return () => cancelAnimationFrame(id);
   }, [pathname]);
-
-  useEffect(() => {
-    function onDocClick(e: MouseEvent) {
-      const t = e.target as Node;
-      if (collectionsRef.current && !collectionsRef.current.contains(t)) {
-        setCollectionsOpen(false);
-      }
-      if (accountRef.current && !accountRef.current.contains(t)) {
-        setAccountOpen(false);
-      }
-    }
-    document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
-  }, []);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -144,97 +96,11 @@ export function Header({
                 {l.label}
               </Link>
             ))}
-            <div className="relative" ref={collectionsRef}>
-              <button
-                type="button"
-                onClick={() => setCollectionsOpen((v) => !v)}
-                onMouseEnter={() => setCollectionsOpen(true)}
-                className={`flex items-center gap-1 ${navCls}`}
-                aria-expanded={collectionsOpen}
-                aria-haspopup="true"
-              >
-                {t("nav.collections")}
-                <span className="text-[10px]">▾</span>
-              </button>
-              {collectionsOpen && (
-                <div
-                  className="absolute left-1/2 top-full z-[110] mt-4 w-[min(90vw,720px)] -translate-x-1/2 border border-neutral-200 bg-white p-4 shadow-xl"
-                  onMouseLeave={() => setCollectionsOpen(false)}
-                >
-                  <div className="grid grid-cols-3 gap-3">
-                    {COLLECTION_PREVIEW.map((c) => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className="group block overflow-hidden border border-neutral-200 bg-neutral-50 transition hover:border-[var(--unmade-accent)]"
-                        onClick={() => setCollectionsOpen(false)}
-                      >
-                        <div className="relative aspect-[4/3]">
-                          {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
-                          <Image
-                            src={c.img}
-                            alt={t(c.key)}
-                            fill
-                            className="object-cover transition duration-500 group-hover:scale-105"
-                            sizes="240px"
-                          />
-                        </div>
-                        <p className="bg-neutral-100 py-2 text-center text-[11px] font-bold uppercase tracking-wider text-neutral-900">
-                          {t(c.key)}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
             <div className="hidden shrink-0 md:block">
               <CurrencySwitcher variant={transparent ? "light" : "dark"} />
-            </div>
-            <button
-              type="button"
-              onClick={onOpenSearch}
-              className={iconBtn}
-              aria-label={t("nav.search")}
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
-              </svg>
-            </button>
-
-            <div className="relative hidden sm:block" ref={accountRef}>
-              <button
-                type="button"
-                onClick={() => setAccountOpen((v) => !v)}
-                className={iconBtn}
-                aria-label={t("header.accountMenu")}
-                aria-expanded={accountOpen}
-              >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </button>
-              {accountOpen && (
-                <div className="absolute right-0 top-full z-[110] mt-2 min-w-[180px] border border-neutral-200 bg-white py-2 shadow-xl">
-                  <Link
-                    href="/logowanie"
-                    className="block px-4 py-2 text-xs uppercase tracking-wide text-neutral-800 hover:bg-neutral-100"
-                    onClick={() => setAccountOpen(false)}
-                  >
-                    {t("header.login")}
-                  </Link>
-                  <Link
-                    href="/rejestracja"
-                    className="block px-4 py-2 text-xs uppercase tracking-wide text-neutral-800 hover:bg-neutral-100"
-                    onClick={() => setAccountOpen(false)}
-                  >
-                    {t("header.register")}
-                  </Link>
-                </div>
-              )}
             </div>
 
             <button
@@ -245,14 +111,24 @@ export function Header({
                 count: totalQuantity > 99 ? "99+" : totalQuantity,
               })}
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z" />
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 12H6L5 9z"
+                />
               </svg>
-              {totalQuantity > 0 && (
+              {totalQuantity > 0 ? (
                 <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-[var(--unmade-accent)] px-1 text-[10px] font-bold text-white">
                   {totalQuantity > 99 ? "99+" : totalQuantity}
                 </span>
-              )}
+              ) : null}
             </button>
 
             <button
@@ -261,7 +137,12 @@ export function Header({
               onClick={() => setMobileOpen(true)}
               aria-label={t("header.menu")}
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -278,7 +159,6 @@ export function Header({
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         navLinks={navLinks}
-        collectionsHeading={t("nav.collections")}
       />
     </>
   );
@@ -288,12 +168,10 @@ function MobileDrawer({
   open,
   onClose,
   navLinks,
-  collectionsHeading,
 }: {
   open: boolean;
   onClose: () => void;
   navLinks: { id: string; href: string; label: string }[];
-  collectionsHeading: string;
 }) {
   const { t } = useT();
   useEffect(() => {
@@ -324,7 +202,7 @@ function MobileDrawer({
           onClick={onClose}
           aria-label={t("common.close")}
         >
-          ✕
+          X
         </button>
         <div className="-mt-2 mb-4 flex justify-end border-b border-neutral-200 pb-4">
           <CurrencySwitcher variant="dark" onPicked={onClose} />
@@ -339,33 +217,6 @@ function MobileDrawer({
             {l.label}
           </Link>
         ))}
-        <p className="mt-6 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
-          {collectionsHeading}
-        </p>
-        {COLLECTION_PREVIEW.map((c) => (
-          <Link
-            key={c.href}
-            href={c.href}
-            className="border-b border-neutral-200 py-3 text-sm uppercase tracking-wide text-neutral-800"
-            onClick={onClose}
-          >
-            {t(c.key)}
-          </Link>
-        ))}
-        <Link
-          href="/logowanie"
-          className="mt-4 text-xs uppercase text-neutral-600"
-          onClick={onClose}
-        >
-          {t("header.login")}
-        </Link>
-        <Link
-          href="/rejestracja"
-          className="text-xs uppercase text-neutral-600"
-          onClick={onClose}
-        >
-          {t("header.register")}
-        </Link>
       </nav>
     </div>
   );

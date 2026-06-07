@@ -7,11 +7,9 @@ import { EmailPopup } from "@/components/EmailPopup";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { SearchOverlay } from "@/components/SearchOverlay";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [searchOpen, setSearchOpen] = useState(false);
   const [promoHeight, setPromoHeight] = useState(0);
   const promoRef = useRef<HTMLDivElement>(null);
 
@@ -34,12 +32,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <div ref={promoRef} className="relative z-[60] w-full shrink-0">
         <AnnouncementBar />
       </div>
-      <Header
-        promoHeight={promoHeight}
-        onOpenSearch={() => setSearchOpen(true)}
-      />
+      <Header promoHeight={promoHeight} />
       <CartDrawer />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
       <div className={`flex min-h-0 flex-1 flex-col ${mainExtraClass}`}>
         {children}
       </div>

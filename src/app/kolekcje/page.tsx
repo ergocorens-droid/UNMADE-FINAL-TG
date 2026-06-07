@@ -27,7 +27,7 @@ export default async function KolekcjePage() {
   const t = await getServerT();
 
   return (
-    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+    <div className="bg-white pb-24 pt-16 md:pt-24">
       <div className="mx-auto max-w-[1500px] px-4 md:px-8">
         <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-neutral-500">
           {t("pages.limitedSeries")}
@@ -44,7 +44,7 @@ export default async function KolekcjePage() {
               <Link
                 key={c.id}
                 href={`/kolekcje/${encodeURIComponent(c.handle)}`}
-                className="group block border-b border-r border-black/[0.06] bg-[#f8f5ef] transition hover:bg-white"
+                className="group block border-b border-r border-black/[0.06] bg-white transition hover:bg-neutral-50"
               >
                 <div className="relative aspect-[4/5]">
                   <Image
