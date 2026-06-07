@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { MetaPixel } from "@/components/shared/meta-pixel";
 import { SiteChrome } from "@/components/SiteChrome";
 import { CartProvider } from "@/context/CartContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
@@ -73,8 +74,9 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} h-full antialiased`}>
       <body
-        className={`${inter.className} min-h-full flex flex-col bg-white text-neutral-900`}
+        className={`${inter.className} min-h-full flex flex-col bg-[#f5f1ea] text-neutral-900`}
       >
+        <MetaPixel />
         <CurrencyProvider initialCurrency={initialCurrency}>
           <I18nProvider>
             <CartProvider>

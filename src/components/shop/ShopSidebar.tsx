@@ -42,7 +42,7 @@ function FilterRow({
     <Link
       href={href}
       scroll={false}
-      className={`group flex items-center gap-3 rounded-xl px-2 py-2 text-sm transition hover:bg-neutral-100 ${
+      className={`group flex items-center gap-3 border-b border-black/[0.06] px-0 py-2.5 text-xs uppercase transition hover:text-neutral-950 ${
         active ? "font-bold" : "font-medium text-neutral-800"
       }`}
     >
@@ -55,8 +55,8 @@ function FilterRow({
         <span className="inline-block w-1.5 shrink-0" aria-hidden />
       )}
       <span
-        className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border border-neutral-400 text-[10px] ${
-          active ? "border-neutral-900 bg-neutral-900 text-white" : "bg-white"
+        className={`flex h-3.5 w-3.5 shrink-0 items-center justify-center border text-[9px] ${
+          active ? "border-neutral-900 bg-neutral-900 text-white" : "border-black/20 bg-transparent"
         }`}
       >
         {active ? "✓" : ""}
@@ -85,7 +85,7 @@ function FilterBlock({
 }) {
   return (
     <div>
-      <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+      <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
         {title}
       </p>
       <nav className="flex flex-col gap-0.5">
@@ -127,7 +127,7 @@ export function ShopSidebar({
   const anyFilter = Boolean(active.kolor || active.typ);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 border-y border-black/[0.06] py-6">
       <FilterBlock
         title={t("shop.color")}
         entries={colorEntries}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CollectionSection } from "@/components/sections/CollectionSection";
+import { FeaturedProductsSection } from "@/components/sections/FeaturedProductsSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { getServerLocale, getServerT } from "@/i18n/server";
 
@@ -28,8 +28,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <CollectionSection handle="black" />
-      <CollectionSection handle="white" />
+      <FeaturedProductsSection />
     </>
   );
 }

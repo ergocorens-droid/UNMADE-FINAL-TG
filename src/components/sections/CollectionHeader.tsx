@@ -13,8 +13,8 @@ type Props = {
 export function CollectionHeader({ collection, size = "lg" }: Props) {
   const heightClass =
     size === "xl"
-      ? "min-h-[280px] md:min-h-[480px]"
-      : "min-h-[200px] md:min-h-[320px]";
+      ? "min-h-[240px] md:min-h-[420px]"
+      : "min-h-[180px] md:min-h-[280px]";
 
   const variant =
     collection.handle === "black"
@@ -30,7 +30,7 @@ export function CollectionHeader({ collection, size = "lg" }: Props) {
   const content = (
     <div className="relative flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-10 text-center">
       <h2
-        className={`text-5xl font-bold uppercase tracking-widest md:text-7xl ${
+        className={`text-4xl font-black uppercase leading-none tracking-normal md:text-6xl ${
           collection.image ? "text-white drop-shadow-lg" : ""
         }`}
       >
@@ -69,10 +69,10 @@ export function CollectionHeader({ collection, size = "lg" }: Props) {
 
   const paletteClasses =
       variant === "black"
-        ? "bg-neutral-900 text-white"
+        ? "bg-neutral-950 text-white"
         : variant === "white"
-          ? "border-y border-neutral-200 bg-neutral-50 text-neutral-900"
-          : "bg-neutral-100 text-neutral-900";
+          ? "border-y border-black/[0.06] bg-[#f8f5ef] text-neutral-950"
+          : "border-y border-black/[0.06] bg-[#f5f1ea] text-neutral-950";
 
   return (
     <div

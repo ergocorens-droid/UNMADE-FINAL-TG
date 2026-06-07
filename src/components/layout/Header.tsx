@@ -11,29 +11,31 @@ import type { TranslationKey } from "@/i18n/translate";
 import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 const NAV_SPEC: { href: string; key: TranslationKey }[] = [
-  { href: "/", key: "nav.home" },
   { href: "/sklep?sort=najnowsze", key: "nav.new" },
   { href: "/sklep?typ=t-shirts", key: "nav.tshirts" },
   { href: "/sklep?typ=blueprint", key: "nav.hoodies" },
   { href: "/sklep", key: "nav.shop" },
-  { href: "/dostawa-i-platnosc", key: "nav.shipping" },
-  { href: "/kontakt", key: "nav.contact" },
+  { href: "/o-nas", key: "nav.about" },
 ];
 
-const COLLECTION_PREVIEW = [
+const COLLECTION_PREVIEW: {
+  href: string;
+  key: TranslationKey;
+  img: string;
+}[] = [
   {
-    href: "/kolekcje/porsche",
-    title: "PORSCHE",
+    href: "/sklep?kolekcja=quote-tees",
+    key: "nav.quoteTees",
     img: pickHeroPhotoByIndex(1),
   },
   {
-    href: "/kolekcje/jdm",
-    title: "JDM",
+    href: "/sklep?kolekcja=need-money",
+    key: "nav.needMoney",
     img: pickHeroPhotoByIndex(4),
   },
   {
-    href: "/kolekcje/drift",
-    title: "DRIFT",
+    href: "/sklep?kolekcja=essentials",
+    key: "nav.essentials",
     img: pickHeroPhotoByIndex(7),
   },
 ];
@@ -64,9 +66,7 @@ export function Header({
   const collectionsRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
 
-  const isHome = pathname === "/";
-  const scrolledPastTint = scrollY > 20;
-  const transparent = isHome && !scrolledPastTint && !mobileOpen;
+  const transparent = !mobileOpen;
 
   const headerTop = Math.max(0, promoHeight - scrollY);
 
@@ -105,29 +105,29 @@ export function Header({
   }, []);
 
   const headerBar = transparent
-    ? "border-transparent bg-transparent shadow-none"
+    ? "border-white/10 bg-black/20 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-md"
     : "border-neutral-200 bg-white shadow-sm";
 
   const logoCls = transparent
-    ? "text-lg font-bold tracking-[0.2em] text-white md:text-xl"
+    ? "text-lg font-bold tracking-[0.2em] text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] md:text-xl"
     : "text-lg font-bold tracking-[0.2em] text-neutral-900 md:text-xl";
 
   const navCls = transparent
-    ? "text-[11px] font-semibold uppercase tracking-[0.12em] text-white transition-colors duration-300 hover:text-[var(--unmade-accent-soft)]"
+    ? "text-[11px] font-semibold uppercase tracking-[0.12em] text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition-colors duration-300 hover:text-white/80"
     : "text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-900 transition-colors duration-300 hover:text-[var(--unmade-accent)]";
 
   const iconBtn = transparent
-    ? "rounded p-2 text-white transition-colors duration-300 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--unmade-accent)]"
+    ? "rounded p-2 text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition-colors duration-300 hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80"
     : "rounded p-2 text-neutral-900 transition-colors duration-300 hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--unmade-accent)]";
 
   const burgerCls = transparent
-    ? "rounded p-2 text-white transition-colors duration-300 lg:hidden"
+    ? "rounded p-2 text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition-colors duration-300 hover:bg-white/10 lg:hidden"
     : "rounded p-2 text-neutral-900 transition-colors duration-300 lg:hidden";
 
   return (
     <>
       <header
-        className={`fixed left-0 right-0 z-50 border-b transition-[top,background-color,border-color,box-shadow,color] duration-300 ease-out ${headerBar}`}
+        className={`fixed left-0 right-0 z-50 border-b transition-[top,background-color,border-color,box-shadow,color,backdrop-filter] duration-300 ease-out ${headerBar}`}
         style={{ top: headerTop }}
       >
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 md:px-6">
@@ -173,14 +173,14 @@ export function Header({
                           {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
                           <Image
                             src={c.img}
-                            alt={c.title}
+                            alt={t(c.key)}
                             fill
                             className="object-cover transition duration-500 group-hover:scale-105"
                             sizes="240px"
                           />
                         </div>
                         <p className="bg-neutral-100 py-2 text-center text-[11px] font-bold uppercase tracking-wider text-neutral-900">
-                          {c.title}
+                          {t(c.key)}
                         </p>
                       </Link>
                     ))}
@@ -349,7 +349,7 @@ function MobileDrawer({
             className="border-b border-neutral-200 py-3 text-sm uppercase tracking-wide text-neutral-800"
             onClick={onClose}
           >
-            {c.title}
+            {t(c.key)}
           </Link>
         ))}
         <Link

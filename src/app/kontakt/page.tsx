@@ -20,18 +20,18 @@ export default async function KontaktPage() {
   const t = await getServerT();
 
   return (
-    <div className="bg-white pb-24 pt-12 md:pt-16">
-      <div className="mx-auto max-w-[640px] px-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--unmade-accent)]">
+    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[760px] px-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-neutral-500">
           {t("contactPage.tagline")}
         </p>
-        <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.15em] text-neutral-900">
+        <h1 className="mt-4 border-b border-black/[0.06] pb-8 text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
           {t("contactPage.title")}
         </h1>
-        <div className="mt-8 space-y-2 text-sm text-neutral-600">
+        <div className="mt-8 space-y-3 text-sm text-neutral-700">
           <p>
             {t("contactPage.emailLabel")}{" "}
-            <a href="mailto:kontakt@unmade.pl" className="text-neutral-900 underline">
+            <a href="mailto:kontakt@unmade.pl" className="font-medium text-neutral-950 underline">
               kontakt@unmade.pl
             </a>
           </p>
@@ -41,7 +41,7 @@ export default async function KontaktPage() {
               href="https://instagram.com/unmade.pl"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-900 underline"
+              className="font-medium text-neutral-950 underline"
             >
               @unmade.pl
             </a>
@@ -52,7 +52,7 @@ export default async function KontaktPage() {
               href="https://www.tiktok.com/@unmade.pl"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-900 underline"
+              className="font-medium text-neutral-950 underline"
             >
               @unmade.pl
             </a>

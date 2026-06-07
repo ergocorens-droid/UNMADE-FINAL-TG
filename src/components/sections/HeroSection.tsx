@@ -2,26 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useT } from "@/i18n/I18nContext";
-import { HERO_PHOTO_PATHS_DESKTOP, pickRandomMobileHeroPhoto } from "@/lib/heroPhotos";
+
+const HERO_DESKTOP_SRC = "/hero-desktop-16x9.png";
+const HERO_MOBILE_SRC = "/hero-mobile.png";
 
 export function HeroSection() {
   const { t } = useT();
-  const [mobileSrc] = useState(() => pickRandomMobileHeroPhoto());
-  const [desktopIndex, setDesktopIndex] = useState(0);
-
-  useEffect(() => {
-    const n = HERO_PHOTO_PATHS_DESKTOP.length;
-    if (n === 0) return;
-    const id = window.setInterval(() => {
-      setDesktopIndex((i) => (i + 1) % n);
-    }, 3000);
-    return () => window.clearInterval(id);
-  }, []);
 
   return (
-    <section className="relative min-h-[100svh] w-full">
+    <section className="relative aspect-[1122/1402] w-full md:h-[min(100svh,56.25vw)] md:aspect-auto">
       <Link
         href="/sklep"
         className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)]"
@@ -29,7 +19,7 @@ export function HeroSection() {
       >
         <div className="absolute inset-0 z-0 md:hidden">
           <Image
-            src={mobileSrc}
+            src={HERO_MOBILE_SRC}
             alt={t("home.heroImageAlt")}
             fill
             priority
@@ -39,32 +29,17 @@ export function HeroSection() {
         </div>
 
         <div className="absolute inset-0 z-0 hidden md:block">
-          {HERO_PHOTO_PATHS_DESKTOP.map((src, i) => (
-            <Image
-              key={src}
-              src={src}
-              alt=""
-              fill
-              sizes="100vw"
-              loading={i === 0 ? "eager" : "lazy"}
-              className={`object-cover transition-opacity duration-700 ease-in-out ${
-                i === desktopIndex ? "z-[1] opacity-100" : "z-0 opacity-0"
-              }`}
-              aria-hidden={i !== desktopIndex}
-            />
-          ))}
+          <Image
+            src={HERO_DESKTOP_SRC}
+            alt={t("home.heroImageAlt")}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
         </div>
 
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
-        <div className="relative z-[2] flex min-h-[100svh] flex-col items-center justify-center px-6 text-center">
-          <span className="text-5xl font-bold tracking-[0.35em] text-white md:text-7xl lg:text-8xl">
-            UNMADE
-          </span>
-          <p className="mt-6 text-[11px] uppercase tracking-[0.45em] text-white/80 md:text-xs">
-            2026 COLLECTION
-          </p>
-        </div>
-        <div className="pointer-events-none absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center gap-2">
+        <div className="pointer-events-none absolute bottom-4 left-1/2 z-[2] hidden -translate-x-1/2 flex-col items-center gap-2 md:flex">
           <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
             {t("home.scrollHint")}
           </span>

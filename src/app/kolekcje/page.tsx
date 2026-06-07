@@ -27,15 +27,15 @@ export default async function KolekcjePage() {
   const t = await getServerT();
 
   return (
-    <div className="bg-white pb-24 pt-12 md:pt-16">
-      <div className="mx-auto max-w-[1200px] px-4 md:px-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--unmade-accent)]">
+    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[1500px] px-4 md:px-8">
+        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-neutral-500">
           {t("pages.limitedSeries")}
         </p>
-        <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.2em] text-neutral-900 md:text-4xl">
+        <h1 className="mt-4 border-b border-black/[0.06] pb-8 text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
           {t("nav.collections")}
         </h1>
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
+        <div className="mt-12 grid border-l border-t border-black/[0.06] md:grid-cols-3">
           {collections.map((c, index) => {
             const img =
               c.image?.url ??
@@ -44,9 +44,9 @@ export default async function KolekcjePage() {
               <Link
                 key={c.id}
                 href={`/kolekcje/${encodeURIComponent(c.handle)}`}
-                className="group block overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-neutral-400"
+                className="group block border-b border-r border-black/[0.06] bg-[#f8f5ef] transition hover:bg-white"
               >
-                <div className="relative aspect-[4/5] bg-neutral-100">
+                <div className="relative aspect-[4/5]">
                   <Image
                     src={img}
                     alt={c.title}
@@ -55,8 +55,8 @@ export default async function KolekcjePage() {
                     sizes="(max-width:768px) 100vw, 33vw"
                   />
                 </div>
-                <div className="border-t border-neutral-100 p-6">
-                  <h2 className="text-lg font-bold uppercase tracking-[0.15em] text-neutral-900">
+                <div className="border-t border-black/[0.06] p-5">
+                  <h2 className="text-sm font-black uppercase tracking-normal text-neutral-950">
                     {c.title}
                   </h2>
                   {c.description ? (

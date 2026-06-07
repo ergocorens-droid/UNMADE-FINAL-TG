@@ -32,7 +32,7 @@ export function SortSelect({ basePath = "/sklep" }: SortSelectProps) {
 
   return (
     <label className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+      <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
         {t("sortSelect.label")}
       </span>
       <select
@@ -51,7 +51,7 @@ export function SortSelect({ basePath = "/sklep" }: SortSelectProps) {
             router.push(q ? `${basePath}?${q}` : basePath, { scroll: false });
           });
         }}
-        className="border border-neutral-300 bg-white px-3 py-2 text-xs uppercase tracking-wide text-neutral-900"
+        className="border border-black/[0.12] bg-transparent px-3 py-2 text-xs uppercase tracking-wide text-neutral-950 outline-none transition focus:border-neutral-950"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>

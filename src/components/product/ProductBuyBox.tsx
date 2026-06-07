@@ -37,7 +37,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
     !isLoading;
 
   return (
-    <div className="mt-8 space-y-8 border-t border-neutral-200 pt-8">
+    <div className="mt-8 space-y-8 border-t border-black/[0.06] pt-8">
       <div>
         {selectedVariant ? (
           <div className="flex flex-wrap items-baseline gap-3">
@@ -48,7 +48,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
                 {formatPrice(selectedVariant.compareAtPrice)}
               </span>
             ) : null}
-            <span className="text-2xl font-semibold text-neutral-900">
+            <span className="text-2xl font-semibold text-neutral-950">
               {formatPrice(selectedVariant.price)}
             </span>
           </div>
@@ -78,7 +78,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
             openCart();
           })();
         }}
-        className="w-full bg-neutral-900 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
+        className="w-full bg-neutral-950 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {t("product.addToCart")}
       </button>

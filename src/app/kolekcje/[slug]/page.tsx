@@ -31,8 +31,8 @@ export default async function CollectionSlugPage({ params }: Props) {
   if (!col) notFound();
 
   return (
-    <div className="bg-white pb-24 pt-10 md:pt-14">
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[1500px] px-4 md:px-8">
         <nav className="text-[11px] uppercase tracking-wide text-neutral-500">
           <Link href="/kolekcje" className="hover:text-neutral-900">
             {t("nav.collections")}
@@ -40,7 +40,7 @@ export default async function CollectionSlugPage({ params }: Props) {
           <span className="mx-2 text-neutral-300">/</span>
           <span className="text-neutral-900">{col.title}</span>
         </nav>
-        <h1 className="mt-6 text-2xl font-bold uppercase tracking-[0.18em] text-neutral-900 md:text-3xl">
+        <h1 className="mt-6 border-b border-black/[0.06] pb-8 text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
           {col.title}
         </h1>
         {col.description ? (
@@ -55,10 +55,12 @@ export default async function CollectionSlugPage({ params }: Props) {
             {t("collection.emptySlug")}
           </p>
         ) : (
-          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
+          <div className="mt-12 overflow-hidden border-l border-t border-black/[0.06]">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {col.products.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
+            </div>
           </div>
         )}
       </div>

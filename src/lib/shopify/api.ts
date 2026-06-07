@@ -147,6 +147,7 @@ export async function getShopPageProducts(opts: {
       sortKey,
       reverse,
       query: opts.q,
+      cache: "no-store",
     });
   }
 
@@ -169,6 +170,7 @@ export async function getProducts({
   reverse = true,
   query,
   country: countryOpt,
+  cache,
 }: {
   first?: number;
   after?: string;
@@ -176,6 +178,7 @@ export async function getProducts({
   reverse?: boolean;
   query?: string;
   country?: string;
+  cache?: RequestCache;
 }): Promise<Product[]> {
   type R = {
     products: {
@@ -195,6 +198,7 @@ export async function getProducts({
       query: query ?? null,
       country,
     },
+    cache,
     tags: query
       ? ["shopify-products", `shopify-products-${country}`, `shopify-products-${query}`]
       : ["shopify-products", `shopify-products-${country}`],

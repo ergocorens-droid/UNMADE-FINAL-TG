@@ -62,16 +62,16 @@ export default async function CollectionPage({ params, searchParams }: Props) {
   const count = products.length;
 
   return (
-    <div className="bg-white pb-20">
+    <div className="bg-[#f5f1ea] pb-20">
       <CollectionHeader collection={collection} size="xl" />
-      <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-8 md:py-16">
+      <div className="mx-auto max-w-[1500px] px-4 py-12 md:px-8 md:py-16">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm font-medium uppercase tracking-wide text-neutral-600">
             {formatProductCount(locale, count)}
           </p>
           <Suspense
             fallback={
-              <div className="h-10 w-full max-w-xs animate-pulse rounded bg-neutral-100 sm:ml-auto" />
+              <div className="h-10 w-full max-w-xs animate-pulse bg-black/[0.06] sm:ml-auto" />
             }
           >
             <SortSelect basePath={`/kolekcja/${handle}`} />
@@ -89,10 +89,12 @@ export default async function CollectionPage({ params, searchParams }: Props) {
             </Link>
           </div>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+          <div className="mt-10 overflow-hidden border-l border-t border-black/[0.06]">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {products.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
+            </div>
           </div>
         )}
       </div>

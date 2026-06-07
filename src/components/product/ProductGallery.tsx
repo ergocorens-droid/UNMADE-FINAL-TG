@@ -2,7 +2,16 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import type { PointerEvent } from "react";
 import type { Image as ShopifyImage } from "@/lib/shopify/types";
+
+function updateZoomOrigin(e: PointerEvent<HTMLDivElement>) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  e.currentTarget.style.setProperty("--zoom-x", `${x}%`);
+  e.currentTarget.style.setProperty("--zoom-y", `${y}%`);
+}
 
 export function ProductGallery({
   images,
@@ -20,18 +29,21 @@ export function ProductGallery({
 
   if (!main) {
     return (
-      <div className="aspect-square rounded-2xl bg-neutral-100" aria-hidden />
+      <div className="aspect-square bg-[#f8f5ef]" aria-hidden />
     );
   }
 
   return (
     <div>
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
+      <div
+        className="relative aspect-square overflow-hidden border border-black/[0.06] bg-[#f8f5ef] [--zoom-x:50%] [--zoom-y:50%] md:cursor-zoom-in"
+        onPointerMove={updateZoomOrigin}
+      >
         <Image
           src={main.url}
           alt={alt}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-500 ease-out [transform-origin:var(--zoom-x)_var(--zoom-y)] md:hover:scale-[1.85]"
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority
         />
@@ -43,8 +55,8 @@ export function ProductGallery({
               key={`${img.url}-${i}`}
               type="button"
               onClick={() => setCurrent(i)}
-              className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 bg-neutral-100 ${
-                i === current ? "border-neutral-900" : "border-transparent"
+              className={`relative h-16 w-16 shrink-0 overflow-hidden border bg-[#f8f5ef] ${
+                i === current ? "border-neutral-900" : "border-black/[0.06]"
               }`}
             >
               <Image

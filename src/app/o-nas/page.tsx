@@ -20,16 +20,20 @@ export default async function AboutPage() {
   const t = await getServerT();
 
   return (
-    <div className="bg-white pb-24 pt-12 md:pt-16">
-      <div className="mx-auto max-w-[720px] px-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--unmade-accent)]">
+    <div className="bg-[#f5f1ea] pb-24 pt-16 md:pt-24">
+      <div className="mx-auto max-w-[860px] px-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.32em] text-neutral-500">
           {t("staticPages.about.tagline")}
         </p>
-        <h1 className="mt-4 text-3xl font-bold uppercase tracking-[0.15em] text-neutral-900">
+        <h1 className="mt-4 border-b border-black/[0.06] pb-8 text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
           {t("staticPages.about.heading")}
         </h1>
-        <p className="mt-8 text-sm leading-relaxed text-neutral-700">{t("staticPages.about.lead")}</p>
-        <p className="mt-6 text-sm leading-relaxed text-neutral-500">{t("staticPages.about.note")}</p>
+        <p className="mt-8 max-w-2xl text-base leading-relaxed text-neutral-800">
+          {t("staticPages.about.lead")}
+        </p>
+        <p className="mt-6 max-w-2xl text-sm leading-relaxed text-neutral-500">
+          {t("staticPages.about.note")}
+        </p>
       </div>
     </div>
   );

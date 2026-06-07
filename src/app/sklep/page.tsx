@@ -63,13 +63,13 @@ export default async function ShopPage({ searchParams }: Props) {
   ]);
 
   return (
-    <div className="bg-white pb-20">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 md:px-8 md:py-24">
+    <div className="bg-[#f5f1ea] pb-20">
+      <div className="mx-auto max-w-[1500px] px-4 py-16 md:px-8 md:py-24">
         <header className="text-center lg:text-left">
-          <h1 className="text-3xl font-bold uppercase tracking-widest text-neutral-900 md:text-5xl">
+          <h1 className="text-4xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-6xl">
             {t("shop.title")}
           </h1>
-          <p className="mt-3 text-xs uppercase tracking-[0.25em] text-neutral-500 md:text-sm">
+          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.32em] text-neutral-500 md:text-xs">
             {t("shop.subtitle")}
           </p>
         </header>
@@ -88,7 +88,7 @@ export default async function ShopPage({ searchParams }: Props) {
               </div>
               <Suspense
                 fallback={
-                  <div className="h-10 w-full max-w-xs animate-pulse rounded bg-neutral-100 lg:ml-auto" />
+                  <div className="h-10 w-full max-w-xs animate-pulse bg-black/[0.06] lg:ml-auto" />
                 }
               >
                 <div className="w-full sm:w-auto lg:ml-auto">
@@ -102,10 +102,12 @@ export default async function ShopPage({ searchParams }: Props) {
                 {t("shop.noProductsFiltered")}
               </p>
             ) : (
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+              <div className="overflow-hidden border-l border-t border-black/[0.06]">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {products.map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}
+                </div>
               </div>
             )}
           </div>

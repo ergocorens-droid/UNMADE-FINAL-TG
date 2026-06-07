@@ -65,12 +65,12 @@ export default async function ProductPage({ params }: Props) {
   const jsonLd = buildJsonLd(product);
 
   return (
-    <div className="min-h-screen bg-white pb-20 pt-6 md:pt-10">
+    <div className="min-h-screen bg-[#f5f1ea] pb-20 pt-8 md:pt-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav className="mx-auto max-w-[1400px] px-4 text-[11px] uppercase tracking-wide text-neutral-500 md:px-6">
+      <nav className="mx-auto max-w-[1500px] px-4 text-[11px] uppercase tracking-wide text-neutral-500 md:px-8">
         <Link href="/sklep" className="transition hover:text-neutral-900">
           {t("shop.breadcrumbShop")}
         </Link>
@@ -78,23 +78,23 @@ export default async function ProductPage({ params }: Props) {
         <span className="text-neutral-900">{product.title}</span>
       </nav>
 
-      <div className="mx-auto mt-8 max-w-[1400px] px-4 md:mt-12 md:px-6">
+      <div className="mx-auto mt-8 max-w-[1500px] px-4 md:mt-12 md:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <ProductGallery images={product.images} alt={product.title} />
           <div>
-            <h1 className="text-2xl font-bold uppercase tracking-[0.12em] text-neutral-900 md:text-3xl">
+            <h1 className="border-b border-black/[0.06] pb-6 text-3xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-5xl">
               {product.title}
             </h1>
 
             <ProductBuyBox key={product.id} product={product} />
 
             <div
-              className="mt-10 max-w-none text-sm leading-relaxed text-neutral-800 [&_img]:max-w-full [&_p]:mb-4 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6"
+              className="mt-10 max-w-none border-t border-black/[0.06] pt-8 text-sm leading-relaxed text-neutral-800 [&_img]:max-w-full [&_p]:mb-4 [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6"
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
 
             {(product.tags.length > 0 || product.collections.length > 0) && (
-              <div className="mt-10 border-t border-neutral-200 pt-6 text-xs text-neutral-600">
+              <div className="mt-10 border-t border-black/[0.06] pt-6 text-xs text-neutral-600">
                 {product.tags.length > 0 ? (
                   <p>
                     <span className="font-bold uppercase tracking-wider text-neutral-500">

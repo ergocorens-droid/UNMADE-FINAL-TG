@@ -16,18 +16,20 @@ export async function CollectionSection({ handle, productLimit = 8 }: Props) {
   const t = await getServerT();
 
   return (
-    <section className="w-full">
+    <section className="w-full bg-[#f5f1ea]">
       <CollectionHeader collection={collection} size="lg" />
-      <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-8 md:py-16">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+      <div className="mx-auto max-w-[1500px] px-4 py-12 md:px-8 md:py-16">
+        <div className="overflow-hidden border-l border-t border-black/[0.06]">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {collection.products.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
+          </div>
         </div>
         <div className="mt-10 flex justify-center">
           <Link
             href={`/kolekcja/${handle}`}
-            className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wide text-black hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-neutral-950 hover:underline"
           >
             {t("collection.viewAll")}
           </Link>
