@@ -41,46 +41,46 @@
   "home": {
     "viewCollection": "VIEW FULL COLLECTION",
     "heroCtaAria": "Go to shop — 2026 Collection",
-    "heroImageAlt": "UNMADE — limited streetwear",
+    "heroImageAlt": "CLTH.PL — limited streetwear",
     "scrollHint": "Scroll"
   },
   "carousel": {
     "all": "ALL"
   },
   "metadata": {
-    "homeTitle": "UNMADE — limited streetwear drops, quote tees and essentials",
-    "homeDescription": "UNMADE is limited streetwear: quote tees, original graphics, essentials and short online drops.",
-    "shopTitle": "Shop | UNMADE — tees, hoodies and limited drops",
-    "shopDescription": "The official UNMADE store. Tees, hoodies, quote tees and limited drops in a clean streetwear direction.",
-    "collectionFallback": "Collection — UNMADE",
+    "homeTitle": "CLTH.PL — limited streetwear drops, quote tees and essentials",
+    "homeDescription": "CLTH.PL is limited streetwear: quote tees, original graphics, essentials and short online drops.",
+    "shopTitle": "Shop | CLTH.PL — tees, hoodies and limited drops",
+    "shopDescription": "The official CLTH.PL store. Tees, hoodies, quote tees and limited drops in a clean streetwear direction.",
+    "collectionFallback": "Collection — CLTH.PL",
     "productFallback": "Product",
     "kontaktTitle": "Contact",
-    "kontaktDescription": "Contact UNMADE by email about orders, sizing, drops or collaborations.",
+    "kontaktDescription": "Contact CLTH.PL by email about orders, sizing, drops or collaborations.",
     "wysylkaTitle": "Shipping",
-    "wysylkaDescription": "UNMADE shipping — free from 300 PLN, InPost, DPD, delivery time and costs.",
+    "wysylkaDescription": "CLTH.PL shipping — free from 300 PLN, InPost, DPD, delivery time and costs.",
     "kolekcjeListTitle": "Collections",
-    "kolekcjeListDescription": "UNMADE collections — limited drops, quote tees and streetwear essentials.",
-    "kolekcjeFallbackDescription": "UNMADE collections.",
+    "kolekcjeListDescription": "CLTH.PL collections — limited drops, quote tees and streetwear essentials.",
+    "kolekcjeFallbackDescription": "CLTH.PL collections.",
     "aboutPageTitle": "About",
-    "aboutPageDescription": "UNMADE — limited streetwear, original statements and quiet drops made to be worn daily.",
+    "aboutPageDescription": "CLTH.PL — limited streetwear, original statements and quiet drops made to be worn daily.",
     "termsDocTitle": "Terms",
-    "termsDocDescription": "UNMADE web store terms — MMN LLC operating UNMADE.",
+    "termsDocDescription": "CLTH.PL web store terms — MMN LLC operating CLTH.PL.",
     "privacyDocTitle": "Privacy policy",
-    "privacyDocDescription": "How we process personal data when you shop at UNMADE.",
+    "privacyDocDescription": "How we process personal data when you shop at CLTH.PL.",
     "tosDocTitle": "Terms of service",
-    "tosDocDescription": "Terms of electronic service for UNMADE customers.",
+    "tosDocDescription": "Terms of electronic service for CLTH.PL customers.",
     "cookiesDocTitle": "Cookie policy",
-    "cookiesDocDescription": "Information about cookie files used on UNMADE.",
+    "cookiesDocDescription": "Information about cookie files used on CLTH.PL.",
     "withdrawalsDocTitle": "Returns & withdrawals",
-    "withdrawalsDocDescription": "Returns and statutory withdrawal rules for UNMADE orders.",
+    "withdrawalsDocDescription": "Returns and statutory withdrawal rules for CLTH.PL orders.",
     "deliveryPaymentDocTitle": "Shipping & payments",
-    "deliveryPaymentDocDescription": "Delivery times, costs and payment methods for UNMADE.",
+    "deliveryPaymentDocDescription": "Delivery times, costs and payment methods for CLTH.PL.",
     "faqDocTitle": "FAQ",
     "faqDocDescription": "Answers about shipping, returns, sizing and product care."
   },
   "shop": {
     "title": "SHOP",
-    "subtitle": "All UNMADE products",
+    "subtitle": "All CLTH.PL products",
     "filters": "FILTERS",
     "filtersHeading": "Filters",
     "filtersAria": "Shop filters",
@@ -151,7 +151,7 @@
   "footer": {
     "tagline": "Limited streetwear drops. Quote tees, essentials and pieces made to be worn daily.",
     "payments": "Payments",
-    "copyright": "© {year} UNMADE. All rights reserved.",
+    "copyright": "© {year} CLTH.PL. All rights reserved.",
     "terms": "Terms",
     "privacy": "Privacy policy",
     "termsOfService": "Terms of service",
@@ -163,8 +163,8 @@
     "sizeGuide": "Size guide",
     "contact": "Contact",
     "about": "About us",
-    "instagramAria": "UNMADE on Instagram",
-    "tiktokAria": "UNMADE on TikTok",
+    "instagramAria": "CLTH.PL on Instagram",
+    "tiktokAria": "CLTH.PL on TikTok",
     "legalLinksAria": "Legal links"
   },
   "header": {
@@ -214,10 +214,10 @@
   },
   "staticPages": {
     "about": {
-      "tagline": "UNMADE / LIMITED DROPS",
+      "tagline": "CLTH.PL / LIMITED DROPS",
       "heading": "ABOUT US",
       "lead": "We make pieces with a point of view. Short drops, sharp statements and clean cuts that do not need explaining.",
-      "note": "UNMADE is not trying to be for everyone. Every piece should feel direct, wearable and built for everyday rotation.",
+      "note": "CLTH.PL is not trying to be for everyone. Every piece should feel direct, wearable and built for everyday rotation.",
       "pointOne": "Limited runs",
       "pointOneText": "Fewer products, more attention on each drop.",
       "pointTwo": "Sharp statements",
@@ -228,7 +228,7 @@
     },
     "terms": {
       "heading": "Terms",
-      "body": "Purchase terms for the UNMADE store are available on the Terms page."
+      "body": "Purchase terms for the CLTH.PL store are available on the Terms page."
     },
     "privacy": {
       "heading": "Privacy policy",
@@ -278,6 +278,6 @@
     "viewCollection": "VIEW COLLECTION"
   },
   "socialProof": {
-    "slideAlt": "Photo of the UNMADE community"
+    "slideAlt": "Photo of the CLTH.PL community"
   }
 }

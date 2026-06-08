@@ -18,7 +18,7 @@ export function Footer() {
             href="/"
             className="text-xl font-black uppercase tracking-[0.22em] text-neutral-950"
           >
-            UNMADE
+            CLTH.PL
           </Link>
           <p className="mt-5 max-w-md text-xs uppercase leading-relaxed tracking-[0.16em] text-neutral-500">
             {t("footer.tagline")}

@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 const staticIconsAndRobots = {
-  metadataBase: new URL("https://unmade.pl"),
+  metadataBase: new URL("https://clth.pl"),
   manifest: "/site.webmanifest",
   icons: {
     icon: [
@@ -42,7 +42,7 @@ const socialPreviewImage = {
   url: "/hero-desktop-white.png",
   width: 1680,
   height: 945,
-  alt: "UNMADE - Need Money For Porsche Tee",
+  alt: "CLTH.PL - Need Money For Porsche Tee",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -57,13 +57,13 @@ export async function generateMetadata(): Promise<Metadata> {
     ...staticIconsAndRobots,
     title: {
       default: titleDefault,
-      template: "%s | UNMADE",
+      template: "%s | CLTH.PL",
     },
     description,
     openGraph: {
       type: "website",
       locale: ogLocale,
-      siteName: "UNMADE",
+      siteName: "CLTH.PL",
       title: titleDefault,
       description,
       images: [socialPreviewImage],

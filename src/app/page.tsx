@@ -9,7 +9,7 @@ const socialPreviewImage = {
   url: "/hero-desktop-white.png",
   width: 1680,
   height: 945,
-  alt: "UNMADE - Need Money For Porsche Tee",
+  alt: "CLTH.PL - Need Money For Porsche Tee",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: "https://unmade.pl",
+      url: "https://clth.pl",
       locale: locale === "pl" ? "pl_PL" : "en_US",
       images: [socialPreviewImage],
     },

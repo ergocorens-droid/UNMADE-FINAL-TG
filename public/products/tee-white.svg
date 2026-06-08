@@ -3,6 +3,6 @@
     <path d="M190 250c64-86 163-130 410-130s346 44 410 130l120 190-150 95-95-150v1035H325V385l-95 150L80 440z" fill="#fcfcfc" stroke="#dadada" stroke-width="10"/>
     <path d="M455 120c18 70 66 105 145 105s127-35 145-105" fill="none" stroke="#d0d0d0" stroke-width="24" stroke-linecap="round"/>
     <rect x="410" y="560" width="380" height="185" rx="24" fill="#ffffff" stroke="#dcdcdc" stroke-width="6"/>
-    <text x="600" y="668" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700" letter-spacing="3" fill="#222" text-anchor="middle">UNMADE</text>
+    <text x="600" y="668" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700" letter-spacing="3" fill="#222" text-anchor="middle">CLTH.PL</text>
   </g>
 </svg>

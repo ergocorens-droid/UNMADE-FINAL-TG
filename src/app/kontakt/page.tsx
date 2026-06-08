@@ -6,11 +6,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
   return {
-    title: `${t("metadata.kontaktTitle")} | UNMADE`,
+    title: `${t("metadata.kontaktTitle")} | CLTH.PL`,
     description: t("metadata.kontaktDescription"),
     openGraph: {
-      title: `${t("metadata.kontaktTitle")} | UNMADE`,
-      url: "https://unmade.pl/kontakt",
+      title: `${t("metadata.kontaktTitle")} | CLTH.PL`,
+      url: "https://clth.pl/kontakt",
       locale: locale === "pl" ? "pl_PL" : "en_US",
     },
   };

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getServerT();
   const product = await getProductByHandle(handle, undefined, "no-store");
   if (!product) {
-    return { title: `${t("metadata.productFallback")} | UNMADE` };
+    return { title: `${t("metadata.productFallback")} | CLTH.PL` };
   }
   return {
     title: product.title,
@@ -36,14 +36,14 @@ function buildJsonLd(product: ShopifyProduct) {
   const offers = price
     ? {
         "@type": "Offer" as const,
-        url: `https://unmade.pl/produkt/${product.handle}`,
+        url: `https://clth.pl/produkt/${product.handle}`,
         priceCurrency: price.currencyCode,
         price: price.amount,
         availability,
       }
     : {
         "@type": "Offer" as const,
-        url: `https://unmade.pl/produkt/${product.handle}`,
+        url: `https://clth.pl/produkt/${product.handle}`,
         availability,
       };
   return {
@@ -52,7 +52,7 @@ function buildJsonLd(product: ShopifyProduct) {
     name: product.title,
     image: product.images.map((i) => i.url).filter(Boolean),
     description: product.description,
-    brand: { "@type": "Brand", name: "UNMADE" },
+    brand: { "@type": "Brand", name: "CLTH.PL" },
     offers,
   };
 }

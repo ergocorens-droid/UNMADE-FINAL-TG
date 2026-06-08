@@ -41,46 +41,46 @@
   "home": {
     "viewCollection": "ZOBACZ CAŁĄ KOLEKCJĘ",
     "heroCtaAria": "Przejdź do sklepu — 2026 Collection",
-    "heroImageAlt": "UNMADE — limitowany streetwear",
+    "heroImageAlt": "CLTH.PL — limitowany streetwear",
     "scrollHint": "Przewijaj"
   },
   "carousel": {
     "all": "WSZYSTKIE"
   },
   "metadata": {
-    "homeTitle": "UNMADE — limitowane koszulki streetwear i dropy",
-    "homeDescription": "UNMADE to oficjalny sklep streetwear. Koszulki z mocnymi hasłami, bluzy, autorskie nadruki i krótkie dropy dostępne online.",
-    "shopTitle": "Sklep | UNMADE — koszulki, bluzy i limitowane dropy",
-    "shopDescription": "Oficjalny sklep UNMADE. Koszulki, bluzy, koszulki z cytatami i limitowane dropy tworzone w czystym streetwearowym stylu.",
-    "collectionFallback": "Kolekcja — UNMADE",
+    "homeTitle": "CLTH.PL — limitowane koszulki streetwear i dropy",
+    "homeDescription": "CLTH.PL to oficjalny sklep streetwear. Koszulki z mocnymi hasłami, bluzy, autorskie nadruki i krótkie dropy dostępne online.",
+    "shopTitle": "Sklep | CLTH.PL — koszulki, bluzy i limitowane dropy",
+    "shopDescription": "Oficjalny sklep CLTH.PL. Koszulki, bluzy, koszulki z cytatami i limitowane dropy tworzone w czystym streetwearowym stylu.",
+    "collectionFallback": "Kolekcja — CLTH.PL",
     "productFallback": "Produkt",
     "kontaktTitle": "Kontakt",
-    "kontaktDescription": "Skontaktuj się z UNMADE — napisz do nas mailowo w sprawie zamówienia, współpracy lub dropu.",
+    "kontaktDescription": "Skontaktuj się z CLTH.PL — napisz do nas mailowo w sprawie zamówienia, współpracy lub dropu.",
     "wysylkaTitle": "Wysyłka",
-    "wysylkaDescription": "Wysyłka UNMADE — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
+    "wysylkaDescription": "Wysyłka CLTH.PL — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
     "kolekcjeListTitle": "Kolekcje",
-    "kolekcjeListDescription": "Kolekcje UNMADE — limitowane dropy, koszulki z cytatami i streetwearowe essentials.",
-    "kolekcjeFallbackDescription": "Kolekcje UNMADE.",
+    "kolekcjeListDescription": "Kolekcje CLTH.PL — limitowane dropy, koszulki z cytatami i streetwearowe essentials.",
+    "kolekcjeFallbackDescription": "Kolekcje CLTH.PL.",
     "aboutPageTitle": "O nas",
-    "aboutPageDescription": "UNMADE — limitowany streetwear, autorskie hasła i dropy tworzone bez zbędnego hałasu.",
+    "aboutPageDescription": "CLTH.PL — limitowany streetwear, autorskie hasła i dropy tworzone bez zbędnego hałasu.",
     "termsDocTitle": "Regulamin",
-    "termsDocDescription": "Regulamin sklepu internetowego UNMADE — MMN sp. z o.o.",
+    "termsDocDescription": "Regulamin sklepu internetowego CLTH.PL — MMN sp. z o.o.",
     "privacyDocTitle": "Polityka prywatności",
-    "privacyDocDescription": "Zasady przetwarzania danych osobowych przy zakupach w UNMADE.",
+    "privacyDocDescription": "Zasady przetwarzania danych osobowych przy zakupach w CLTH.PL.",
     "tosDocTitle": "Warunki usługi",
-    "tosDocDescription": "Warunki świadczenia usługi elektronicznej przez sklep UNMADE.",
+    "tosDocDescription": "Warunki świadczenia usługi elektronicznej przez sklep CLTH.PL.",
     "cookiesDocTitle": "Polityka cookies",
-    "cookiesDocDescription": "Informacje o plikach cookies w sklepie UNMADE.",
+    "cookiesDocDescription": "Informacje o plikach cookies w sklepie CLTH.PL.",
     "withdrawalsDocTitle": "Zwroty i odstąpienie",
-    "withdrawalsDocDescription": "Zasady zwrotów i odstąpienia od umowy przy zakupach w UNMADE.",
+    "withdrawalsDocDescription": "Zasady zwrotów i odstąpienia od umowy przy zakupach w CLTH.PL.",
     "deliveryPaymentDocTitle": "Dostawa i płatności",
-    "deliveryPaymentDocDescription": "Koszty dostawy, czas realizacji i metody płatności w UNMADE.",
+    "deliveryPaymentDocDescription": "Koszty dostawy, czas realizacji i metody płatności w CLTH.PL.",
     "faqDocTitle": "FAQ",
     "faqDocDescription": "Najczęściej zadawane pytania dotyczące zakupów, wysyłki i zwrotów."
   },
   "shop": {
     "title": "SKLEP",
-    "subtitle": "Wszystkie produkty UNMADE",
+    "subtitle": "Wszystkie produkty CLTH.PL",
     "filters": "FILTRY",
     "filtersHeading": "Filtry",
     "filtersAria": "Filtry sklepu",
@@ -151,7 +151,7 @@
   "footer": {
     "tagline": "Limitowane dropy streetwear. Koszulki z hasłami, essentials i rzeczy tworzone do noszenia na co dzień.",
     "payments": "Płatności",
-    "copyright": "© {year} UNMADE. Wszelkie prawa zastrzeżone.",
+    "copyright": "© {year} CLTH.PL. Wszelkie prawa zastrzeżone.",
     "terms": "Regulamin",
     "privacy": "Polityka prywatności",
     "termsOfService": "Warunki usługi",
@@ -163,8 +163,8 @@
     "sizeGuide": "Tabela rozmiarów",
     "contact": "Kontakt",
     "about": "O nas",
-    "instagramAria": "Instagram UNMADE",
-    "tiktokAria": "TikTok UNMADE",
+    "instagramAria": "Instagram CLTH.PL",
+    "tiktokAria": "TikTok CLTH.PL",
     "legalLinksAria": "Informacje prawne"
   },
   "header": {
@@ -214,10 +214,10 @@
   },
   "staticPages": {
     "about": {
-      "tagline": "UNMADE / LIMITED DROPS",
+      "tagline": "CLTH.PL / LIMITED DROPS",
       "heading": "O NAS",
       "lead": "Robimy rzeczy z charakterem. Krótkie dropy, mocne hasła i proste kroje, które mają wyglądać dobrze bez tłumaczenia.",
-      "note": "UNMADE nie próbuje być dla wszystkich. Każdy projekt ma być prosty, czytelny i gotowy do noszenia na co dzień.",
+      "note": "CLTH.PL nie próbuje być dla wszystkich. Każdy projekt ma być prosty, czytelny i gotowy do noszenia na co dzień.",
       "pointOne": "Limitowane serie",
       "pointOneText": "Mniej produktów, więcej uwagi do każdego dropu.",
       "pointTwo": "Mocny przekaz",
@@ -228,7 +228,7 @@
     },
     "terms": {
       "heading": "Regulamin",
-      "body": "Regulamin zakupów w sklepie UNMADE znajdziesz na stronie Regulamin."
+      "body": "Regulamin zakupów w sklepie CLTH.PL znajdziesz na stronie Regulamin."
     },
     "privacy": {
       "heading": "Polityka prywatności",
@@ -278,6 +278,6 @@
     "viewCollection": "ZOBACZ KOLEKCJĘ"
   },
   "socialProof": {
-    "slideAlt": "Zdjęcie społeczności UNMADE"
+    "slideAlt": "Zdjęcie społeczności CLTH.PL"
   }
 }

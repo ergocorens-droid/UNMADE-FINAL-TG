@@ -7,7 +7,7 @@ import { getServerT } from "@/i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   return {
-    title: `${t("metadata.termsDocTitle")} | UNMADE`,
+    title: `${t("metadata.termsDocTitle")} | CLTH.PL`,
     description: t("metadata.termsDocDescription"),
     robots: { index: true, follow: true },
   };
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function RegulaminPage() {
   return (
-    <LegalArticle title="REGULAMIN SKLEPU INTERNETOWEGO UNMADE">
+    <LegalArticle title="REGULAMIN SKLEPU INTERNETOWEGO CLTH.PL">
       <RegulaminBody />
       <WithdrawalFormAppendix />
     </LegalArticle>

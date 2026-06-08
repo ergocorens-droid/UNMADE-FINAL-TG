@@ -8,7 +8,7 @@ export function ZwrotyBody() {
     <>
       <p className="uppercase tracking-wide text-neutral-600">{COMPANY.tradingName}</p>
       <p>
-        <strong>Sklep:</strong> unmade.pl
+        <strong>Sklep:</strong> clth.pl
         <br />
         <strong>Obowiązuje od:</strong> {LEGAL_EFFECTIVE_LABEL}
       </p>

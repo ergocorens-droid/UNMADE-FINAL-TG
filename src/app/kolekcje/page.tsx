@@ -8,7 +8,7 @@ import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
-  const title = `${t("metadata.kolekcjeListTitle")} | UNMADE`;
+  const title = `${t("metadata.kolekcjeListTitle")} | CLTH.PL`;
   const description = t("metadata.kolekcjeListDescription");
 
   return {
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     openGraph: {
       title,
-      url: "https://unmade.pl/kolekcje",
+      url: "https://clth.pl/kolekcje",
       locale: locale === "pl" ? "pl_PL" : "en_US",
     },
   };

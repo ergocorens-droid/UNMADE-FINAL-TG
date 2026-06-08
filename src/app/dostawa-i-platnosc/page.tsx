@@ -6,7 +6,7 @@ import { getServerT } from "@/i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   return {
-    title: `${t("metadata.deliveryPaymentDocTitle")} | UNMADE`,
+    title: `${t("metadata.deliveryPaymentDocTitle")} | CLTH.PL`,
     description: t("metadata.deliveryPaymentDocDescription"),
     robots: { index: true, follow: true },
   };

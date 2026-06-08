@@ -18,7 +18,7 @@ export function RegulaminBody() {
         <li>
           Sklep internetowy {COMPANY.tradingName}, dostępny pod adresem{" "}
           <a href={COMPANY.shopUrl} className="underline">
-            unmade.pl
+            clth.pl
           </a>
           , prowadzony jest przez {COMPANY.fullLegalName}.
         </li>

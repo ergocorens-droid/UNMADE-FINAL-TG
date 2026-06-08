@@ -6,7 +6,7 @@ import { getServerT } from "@/i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   return {
-    title: `${t("metadata.privacyDocTitle")} | UNMADE`,
+    title: `${t("metadata.privacyDocTitle")} | CLTH.PL`,
     description: t("metadata.privacyDocDescription"),
     robots: { index: true, follow: true },
   };
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Page() {
   return (
-    <LegalArticle title="POLITYKA PRYWATNOŚCI UNMADE">
+    <LegalArticle title="POLITYKA PRYWATNOŚCI CLTH.PL">
       <PolitykaPrywatnosciBody />
     </LegalArticle>
   );

@@ -6,7 +6,7 @@ import { getServerT } from "@/i18n/server";
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   return {
-    title: `${t("metadata.cookiesDocTitle")} | UNMADE`,
+    title: `${t("metadata.cookiesDocTitle")} | CLTH.PL`,
     description: t("metadata.cookiesDocDescription"),
     robots: { index: true, follow: true },
   };

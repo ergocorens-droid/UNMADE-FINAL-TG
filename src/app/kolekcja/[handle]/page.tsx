@@ -28,13 +28,13 @@ export async function generateMetadata({
   const col = await getCollectionByHandle(handle, 1);
   if (!col) {
     return {
-      title: `${tMeta("metadata.collectionFallback")} | UNMADE`,
+      title: `${tMeta("metadata.collectionFallback")} | CLTH.PL`,
     };
   }
   const description = col.description
     ? col.description.replace(/<[^>]*>/g, "").trim()
     : undefined;
-  const title = `${col.title} | UNMADE`;
+  const title = `${col.title} | CLTH.PL`;
   return {
     title,
     description,

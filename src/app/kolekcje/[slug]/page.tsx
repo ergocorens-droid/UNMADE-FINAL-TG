@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const t = await getServerT();
   const col = await getCollectionByHandle(slug, 1);
-  if (!col) return { title: `${t("metadata.collectionFallback")} | UNMADE` };
+  if (!col) return { title: `${t("metadata.collectionFallback")} | CLTH.PL` };
   const desc =
     col.description.replace(/<[^>]+>/g, "").trim().slice(0, 160) ||
     t("metadata.kolekcjeFallbackDescription");

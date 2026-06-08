@@ -7,7 +7,7 @@ export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
-  const title = `Need Money | UNMADE`;
+  const title = `Need Money | CLTH.PL`;
   const description = t("metadata.shopDescription");
 
   return {
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: "https://unmade.pl/sklep-need-money",
+      url: "https://clth.pl/sklep-need-money",
       locale: locale === "pl" ? "pl_PL" : "en_US",
     },
   };

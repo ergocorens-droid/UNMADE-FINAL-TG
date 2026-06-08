@@ -5,10 +5,10 @@ export function InstagramCta() {
     <section className="border-t border-neutral-200 bg-neutral-50 py-20 text-center">
       <div className="mx-auto max-w-[720px] px-6">
         <p className="text-3xl font-bold uppercase tracking-[0.2em] text-neutral-900 md:text-4xl">
-          @unmade.pl
+          @clth.pl
         </p>
         <Link
-          href="https://instagram.com/unmade.pl"
+          href="https://instagram.com/clth.pl"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-6 inline-block text-xs uppercase tracking-[0.25em] text-neutral-600 transition hover:text-neutral-900"
