@@ -152,6 +152,7 @@ const SHOP_COLLECTION_FETCH = 250;
 export async function getShopPageProducts(opts: {
   kolor?: string;
   typ?: string;
+  kolekcja?: string;
   sort?: string;
   q?: string;
 }): Promise<Product[]> {
@@ -165,6 +166,11 @@ export async function getShopPageProducts(opts: {
   }
   if (opts.typ) {
     const c = await getCollectionByHandle(opts.typ, SHOP_COLLECTION_FETCH, opts.sort);
+    if (c?.products.length) pools.push(c.products);
+    else return [];
+  }
+  if (opts.kolekcja) {
+    const c = await getCollectionByHandle(opts.kolekcja, SHOP_COLLECTION_FETCH, opts.sort);
     if (c?.products.length) pools.push(c.products);
     else return [];
   }
@@ -184,11 +190,11 @@ export async function getShopPageProducts(opts: {
     return sortShopDisplayProducts(sortProductsInMemory(pools[0], opts.sort), opts.sort);
   }
 
-  const [a, b] = pools;
-  const map = new Map(a.map((p) => [p.id, p] as const));
-  const intersection = b
-    .filter((p) => map.has(p.id))
-    .map((p) => map.get(p.id)!);
+  const [firstPool, ...restPools] = pools;
+  const intersection = restPools.reduce((current, pool) => {
+    const ids = new Set(pool.map((p) => p.id));
+    return current.filter((p) => ids.has(p.id));
+  }, firstPool);
   return sortShopDisplayProducts(sortProductsInMemory(intersection, opts.sort), opts.sort);
 }
 

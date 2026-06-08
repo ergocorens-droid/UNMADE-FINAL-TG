@@ -22,6 +22,7 @@ export async function ShopPageContent({
     getShopPageProducts({
       kolor: active.kolor,
       typ: active.typ,
+      kolekcja: active.kolekcja,
       sort: sortParam,
       q: active.q,
     }),

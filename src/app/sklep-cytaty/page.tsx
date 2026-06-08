@@ -7,7 +7,7 @@ export const revalidate = 60;
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
-  const title = `Need Money | UNMADE`;
+  const title = `Cytaty | UNMADE`;
   const description = t("metadata.shopDescription");
 
   return {
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: "https://unmade.pl/sklep-need-money",
+      url: "https://unmade.pl/sklep-cytaty",
       locale: locale === "pl" ? "pl_PL" : "en_US",
     },
   };
@@ -28,14 +28,14 @@ type Props = {
   }>;
 };
 
-export default async function NeedMoneyPage({ searchParams }: Props) {
+export default async function QuotesPage({ searchParams }: Props) {
   const sp = await searchParams;
 
   return (
     <ShopPageContent
-      basePath="/sklep-need-money"
+      basePath="/sklep-cytaty"
       active={{
-        kolekcja: "need-money-for",
+        kolekcja: "cytaty",
         sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />

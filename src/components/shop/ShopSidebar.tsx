@@ -8,13 +8,14 @@ import { useT } from "@/i18n/I18nContext";
 export type ShopFilterState = {
   kolor?: string;
   typ?: string;
+  kolekcja?: string;
   sort?: string;
   q?: string;
 };
 
 function hrefToggleKind(
   active: ShopFilterState,
-  kind: "kolor" | "typ",
+  kind: "kolor" | "typ" | "kolekcja",
   handle: string,
 ): string {
   const next: ShopFilterState = { ...active };
@@ -77,9 +78,9 @@ function FilterBlock({
   localeIsPl,
 }: {
   title: string;
-  entries: [string, { pl: string; en: string; type: "color" | "type" }][];
+  entries: [string, { pl: string; en: string; type: "color" | "type" | "collection" }][];
   counts: Record<string, number>;
-  kind: "kolor" | "typ";
+  kind: "kolor" | "typ" | "kolekcja";
   active: ShopFilterState;
   localeIsPl: boolean;
 }) {
@@ -98,7 +99,9 @@ function FilterBlock({
             active={
               kind === "kolor"
                 ? active.kolor === handle
-                : active.typ === handle
+                : kind === "typ"
+                  ? active.typ === handle
+                  : active.kolekcja === handle
             }
           />
         ))}
@@ -123,8 +126,11 @@ export function ShopSidebar({
   const typeEntries = Object.entries(COLLECTION_LABELS).filter(
     ([, v]) => v.type === "type",
   );
+  const collectionEntries = Object.entries(COLLECTION_LABELS).filter(
+    ([, v]) => v.type === "collection",
+  );
 
-  const anyFilter = Boolean(active.kolor || active.typ);
+  const anyFilter = Boolean(active.kolor || active.typ || active.kolekcja);
 
   return (
     <div className="space-y-10 border-y border-black/[0.06] py-6">
@@ -141,6 +147,14 @@ export function ShopSidebar({
         entries={typeEntries}
         counts={counts}
         kind="typ"
+        active={active}
+        localeIsPl={localeIsPl}
+      />
+      <FilterBlock
+        title={t("shop.collectionFilter")}
+        entries={collectionEntries}
+        counts={counts}
+        kind="kolekcja"
         active={active}
         localeIsPl={localeIsPl}
       />

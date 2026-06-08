@@ -27,6 +27,7 @@ type Props = {
   searchParams: Promise<{
     kolor?: string;
     typ?: string;
+    kolekcja?: string;
     sort?: string;
     q?: string;
   }>;
@@ -40,6 +41,7 @@ export default async function ShopPage({ searchParams }: Props) {
   const active: ShopFilterState = {
     kolor: typeof sp.kolor === "string" ? sp.kolor : undefined,
     typ: typeof sp.typ === "string" ? sp.typ : undefined,
+    kolekcja: typeof sp.kolekcja === "string" ? sp.kolekcja : undefined,
     sort: sortParam,
     q: searchQuery,
   };
