@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
+import { trackEvent } from "@/lib/meta-pixel";
+
+const FREE_SHIPPING_THRESHOLD_PLN = 190;
 
 function variantLabel(
   merch: { title: string; selectedOptions: { name: string; value: string }[] },
@@ -65,6 +68,16 @@ export function CartDrawer() {
   if (!mounted) return null;
 
   const lines = cart?.lines ?? [];
+  const subtotal = cart?.cost.subtotalAmount;
+  const subtotalValue = Number.parseFloat(subtotal?.amount ?? "0");
+  const remainingToFreeShipping =
+    subtotal?.currencyCode === "PLN"
+      ? Math.max(0, FREE_SHIPPING_THRESHOLD_PLN - subtotalValue)
+      : null;
+  const freeShippingProgress =
+    subtotal?.currencyCode === "PLN"
+      ? Math.min(100, (subtotalValue / FREE_SHIPPING_THRESHOLD_PLN) * 100)
+      : 0;
 
   return (
     <div className="fixed inset-0 z-[250]">
@@ -199,6 +212,34 @@ export function CartDrawer() {
               })}
             </ul>
             <div className="border-t border-neutral-200 bg-neutral-50 px-4 py-5">
+              <div className="mb-4 border border-black/[0.08] bg-white px-4 py-3">
+                {remainingToFreeShipping === null ? (
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
+                    {t("cart.freeShippingThreshold")}
+                  </p>
+                ) : remainingToFreeShipping > 0 ? (
+                  <>
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
+                      {t("cart.freeShippingRemaining", {
+                        amount: formatPrice({
+                          amount: remainingToFreeShipping.toFixed(2),
+                          currencyCode: "PLN",
+                        }),
+                      })}
+                    </p>
+                    <div className="mt-3 h-1.5 bg-neutral-200">
+                      <div
+                        className="h-full bg-neutral-950"
+                        style={{ width: `${freeShippingProgress}%` }}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
+                    {t("cart.freeShippingUnlocked")}
+                  </p>
+                )}
+              </div>
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-xs uppercase tracking-wide text-neutral-500">
                   {t("cart.totalShort")}
@@ -212,6 +253,14 @@ export function CartDrawer() {
               {cart?.checkoutUrl ? (
                 <a
                   href={cart.checkoutUrl}
+                  onClick={() => {
+                    trackEvent("InitiateCheckout", {
+                      value: Number.parseFloat(cart.cost.subtotalAmount.amount),
+                      currency: cart.cost.subtotalAmount.currencyCode,
+                      num_items: cart.totalQuantity,
+                      content_ids: lines.map((line) => line.merchandise.id),
+                    });
+                  }}
                   className="mt-4 flex w-full justify-center bg-neutral-900 py-4 text-center text-sm font-bold uppercase tracking-wide text-white transition hover:bg-neutral-800"
                 >
                   {t("cart.checkout")}

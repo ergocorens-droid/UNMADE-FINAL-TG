@@ -104,6 +104,34 @@ export function sortProductsInMemory(
   return arr;
 }
 
+function productSearchText(product: Product): string {
+  return `${product.title} ${product.handle} ${product.tags.join(" ")}`.toLowerCase();
+}
+
+function needMoneyDisplayRank(product: Product): number {
+  const text = productSearchText(product);
+  if (!text.includes("need money")) return 1000;
+
+  const colorRank = text.includes("black") ? 0 : text.includes("white") ? 100 : 200;
+  const cars = ["ferrari", "bmw", "lambo", "mclaren", "porsche"];
+  const carRank = cars.findIndex((car) => text.includes(car));
+
+  return colorRank + (carRank === -1 ? 50 : carRank);
+}
+
+function sortShopDisplayProducts(
+  products: Product[],
+  sort: string | undefined,
+): Product[] {
+  if (sort && sort !== "najnowsze") return products;
+
+  return [...products].sort((a, b) => {
+    const rankDiff = needMoneyDisplayRank(a) - needMoneyDisplayRank(b);
+    if (rankDiff !== 0) return rankDiff;
+    return 0;
+  });
+}
+
 /**
  * Liczniki produktów dla sidebaru (do 250 / kolekcja).
  */
@@ -142,17 +170,18 @@ export async function getShopPageProducts(opts: {
   }
 
   if (pools.length === 0) {
-    return getProducts({
+    const products = await getProducts({
       first: 48,
       sortKey,
       reverse,
       query: opts.q,
       cache: "no-store",
     });
+    return sortShopDisplayProducts(products, opts.sort);
   }
 
   if (pools.length === 1) {
-    return sortProductsInMemory(pools[0], opts.sort);
+    return sortShopDisplayProducts(sortProductsInMemory(pools[0], opts.sort), opts.sort);
   }
 
   const [a, b] = pools;
@@ -160,7 +189,7 @@ export async function getShopPageProducts(opts: {
   const intersection = b
     .filter((p) => map.has(p.id))
     .map((p) => map.get(p.id)!);
-  return sortProductsInMemory(intersection, opts.sort);
+  return sortShopDisplayProducts(sortProductsInMemory(intersection, opts.sort), opts.sort);
 }
 
 export async function getProducts({

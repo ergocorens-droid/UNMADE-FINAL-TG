@@ -35,7 +35,7 @@ export default async function HoodiesPage({ searchParams }: Props) {
     <ShopPageContent
       basePath="/sklep-bluzy"
       active={{
-        typ: "blueprint",
+        typ: "bluzy",
         sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />

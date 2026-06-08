@@ -48,9 +48,6 @@ export function Footer() {
             <Link href="/dostawa-i-platnosc" className="hover:text-neutral-900">
               {t("footer.shipping")}
             </Link>
-            <Link href="/warunki-uslugi" className="hover:text-neutral-900">
-              {t("footer.termsOfService")}
-            </Link>
             <Link href="/kontakt" className="hover:text-neutral-900">
               {t("footer.contact")}
             </Link>
@@ -67,24 +64,6 @@ export function Footer() {
           </div>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs uppercase tracking-wide md:justify-end">
-            <Link
-              href="https://instagram.com/unmade.pl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neutral-900"
-              aria-label={t("footer.instagramAria")}
-            >
-              Instagram
-            </Link>
-            <Link
-              href="https://www.tiktok.com/@unmade.pl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neutral-900"
-              aria-label={t("footer.tiktokAria")}
-            >
-              TikTok
-            </Link>
             <a href={`mailto:${COMPANY.email}`} className="hover:text-neutral-900">
               {COMPANY.email}
             </a>

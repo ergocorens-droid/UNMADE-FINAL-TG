@@ -26,7 +26,11 @@ export function sklepHref(opts: {
   if (hasOnlyType && opts.typ === "t-shirts") {
     return `/sklep-t-shirts${sort}`;
   }
-  if (hasOnlyType && opts.typ === "blueprint") {
+  if (
+    hasOnlyType &&
+    opts.typ &&
+    ["bluzy", "hoodies", "blueprint"].includes(opts.typ)
+  ) {
     return `/sklep-bluzy${sort}`;
   }
   if (hasOnlyNeedMoney) {

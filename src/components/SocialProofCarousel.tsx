@@ -51,7 +51,6 @@ export function SocialProofCarousel() {
             className="min-w-[min(36vw,200px)] shrink-0 pl-2 md:min-w-[200px]"
           >
             <div className="relative aspect-square overflow-hidden border border-neutral-200 bg-neutral-100">
-              {/* TODO: podmienić na własną grafikę — Unsplash placeholder */}
               <Image
                 src={src}
                 alt={t("socialProof.slideAlt")}

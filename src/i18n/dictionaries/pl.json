@@ -114,6 +114,8 @@
     "lowStock": "Zostało {count} szt.",
     "size": "Rozmiar",
     "color": "Kolor",
+    "shippingInfo": "Wysyłka z Polski 24H–48H",
+    "freeShippingInfo": "Darmowa wysyłka od 190 zł",
     "unavailable": "Niedostępne",
     "description": "Opis",
     "tagsLabel": "Tagi:",
@@ -132,6 +134,9 @@
     "qtyDecrease": "Zmniejsz ilość",
     "qtyIncrease": "Zwiększ ilość",
     "currencyChangeWarning": "Zmiana waluty wyczyści koszyk. Kontynuować?",
+    "freeShippingThreshold": "Darmowa wysyłka od 190 zł",
+    "freeShippingRemaining": "Do darmowej wysyłki brakuje Ci {amount}",
+    "freeShippingUnlocked": "Masz darmową wysyłkę",
     "units": "szt."
   },
   "search": {
@@ -179,7 +184,7 @@
     "limitedSeries": "Limitowane serie",
     "loginSubtitle": "Panel klienta — wkrótce.",
     "registerSubtitle": "Rejestracja — wkrótce.",
-    "checkoutSubtitle": "Placeholder kasy — podłącz bramkę płatności.",
+    "checkoutSubtitle": "Aby sfinalizować zamówienie, dodaj produkty do koszyka i przejdź do bezpiecznej kasy Shopify.",
     "continueShopping": "Kontynuuj zakupy",
     "checkoutTitle": "Kasa"
   },
@@ -222,15 +227,15 @@
     },
     "terms": {
       "heading": "Regulamin",
-      "body": "Treść regulaminu — placeholder (uzupełnij prawnie)."
+      "body": "Regulamin zakupów w sklepie UNMADE znajdziesz na stronie Regulamin."
     },
     "privacy": {
       "heading": "Polityka prywatności",
-      "body": "Treść polityki — placeholder (RODO / cookies)."
+      "body": "Zasady przetwarzania danych osobowych znajdziesz na stronie Polityka prywatności."
     },
     "tos": {
       "heading": "Warunki usługi",
-      "body": "Treść warunków — placeholder."
+      "body": "Warunki korzystania ze sklepu są opisane w Regulaminie."
     }
   },
   "contactForm": {
@@ -239,7 +244,7 @@
     "subject": "Temat",
     "message": "Wiadomość",
     "submit": "WYŚLIJ",
-    "demoSent": "Wiadomość wysłana (demo front-end — bez backendu)."
+    "sent": "Dziękujemy za wiadomość. Odpowiemy możliwie szybko."
   },
   "emailPopup": {
     "title": "ODBIERZ -10% NA PIERWSZY ZAKUP",
@@ -263,7 +268,7 @@
     "emailLabel": "Adres e-mail",
     "placeholder": "Twój e-mail",
     "submit": "ZAPISZ SIĘ",
-    "thanks": "Dzięki! Sprawdź skrzynkę (demo front-end)."
+    "thanks": "Dzięki! Sprawdź swoją skrzynkę."
   },
   "joinCustomers": {
     "title": "DOŁĄCZ DO 500+ ZADOWOLONYCH KLIENTÓW"

@@ -114,6 +114,8 @@
     "lowStock": "Only {count} left",
     "size": "Size",
     "color": "Color",
+    "shippingInfo": "Ships from Poland in 24H–48H",
+    "freeShippingInfo": "Free shipping from 190 PLN",
     "unavailable": "Unavailable",
     "description": "Description",
     "tagsLabel": "Tags:",
@@ -132,6 +134,9 @@
     "qtyDecrease": "Decrease quantity",
     "qtyIncrease": "Increase quantity",
     "currencyChangeWarning": "Changing currency will empty your cart. Continue?",
+    "freeShippingThreshold": "Free shipping from 190 PLN",
+    "freeShippingRemaining": "{amount} away from free shipping",
+    "freeShippingUnlocked": "You have free shipping",
     "units": "pcs"
   },
   "search": {
@@ -179,7 +184,7 @@
     "limitedSeries": "Limited series",
     "loginSubtitle": "Customer area — coming soon.",
     "registerSubtitle": "Sign up — coming soon.",
-    "checkoutSubtitle": "Checkout placeholder — connect your payment gateway.",
+    "checkoutSubtitle": "To complete your order, add products to cart and continue to the secure Shopify checkout.",
     "continueShopping": "Continue shopping",
     "checkoutTitle": "Checkout"
   },
@@ -222,15 +227,15 @@
     },
     "terms": {
       "heading": "Terms",
-      "body": "Terms content — placeholder (have legal draft it)."
+      "body": "Purchase terms for the UNMADE store are available on the Terms page."
     },
     "privacy": {
       "heading": "Privacy policy",
-      "body": "Policy content — placeholder (GDPR / cookies)."
+      "body": "Personal data processing rules are available on the Privacy policy page."
     },
     "tos": {
       "heading": "Terms of service",
-      "body": "Service terms — placeholder."
+      "body": "Store usage terms are described in the Terms page."
     }
   },
   "contactForm": {
@@ -239,7 +244,7 @@
     "subject": "Subject",
     "message": "Message",
     "submit": "SEND",
-    "demoSent": "Message sent (front-end demo — no backend)."
+    "sent": "Thank you for your message. We will reply as soon as possible."
   },
   "emailPopup": {
     "title": "GET -10% ON YOUR FIRST ORDER",
@@ -263,7 +268,7 @@
     "emailLabel": "Email address",
     "placeholder": "Your email",
     "submit": "SUBSCRIBE",
-    "thanks": "Thanks — check your inbox (front-end demo)."
+    "thanks": "Thanks — check your inbox."
   },
   "joinCustomers": {
     "title": "JOIN 500+ HAPPY CUSTOMERS"

@@ -5,6 +5,7 @@ import { VariantSelector } from "@/components/product/VariantSelector";
 import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
+import { trackEvent } from "@/lib/meta-pixel";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 export function ProductBuyBox({ product }: { product: Product }) {
@@ -68,6 +69,11 @@ export function ProductBuyBox({ product }: { product: Product }) {
         />
       ) : null}
 
+      <div className="space-y-1 border-y border-black/[0.06] py-3 text-xs font-bold uppercase tracking-[0.18em] text-neutral-700">
+        <p>{t("product.shippingInfo")}</p>
+        <p>{t("product.freeShippingInfo")}</p>
+      </div>
+
       <button
         type="button"
         disabled={!canAdd}
@@ -75,6 +81,13 @@ export function ProductBuyBox({ product }: { product: Product }) {
           if (!selectedVariant) return;
           void (async () => {
             await addItem(selectedVariant.id, 1);
+            trackEvent("AddToCart", {
+              content_ids: [selectedVariant.id],
+              content_name: product.title,
+              content_type: "product",
+              value: Number.parseFloat(selectedVariant.price.amount),
+              currency: selectedVariant.price.currencyCode,
+            });
             openCart();
           })();
         }}

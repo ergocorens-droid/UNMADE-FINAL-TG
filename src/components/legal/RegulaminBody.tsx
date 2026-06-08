@@ -6,10 +6,6 @@ export function RegulaminBody() {
   return (
     <>
       <p>
-        Dokument został opracowany na potrzeby sklepu {COMPANY.shopUrl.replace("https://", "")}. Przed pierwszą
-        publikacją zalecamy konsultację z doradcą prawnym.
-      </p>
-      <p>
         Obowiązuje od: <strong>{LEGAL_EFFECTIVE_LABEL}</strong>
         <br />
         Sklep: {COMPANY.shopUrl.replace("https://", "")}

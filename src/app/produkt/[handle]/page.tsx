@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductBuyBox } from "@/components/product/ProductBuyBox";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { ViewContentTracker } from "@/components/product/ViewContentTracker";
 import { getServerT } from "@/i18n/server";
 import { getProductByHandle } from "@/lib/shopify/api";
 import type { Product as ShopifyProduct } from "@/lib/shopify/types";
@@ -140,9 +141,18 @@ export default async function ProductPage({ params }: Props) {
 
   const t = await getServerT();
   const jsonLd = buildJsonLd(product);
+  const trackingPrice = product.priceRange.minVariantPrice;
 
   return (
     <div className="min-h-screen bg-white pb-20 pt-8 md:pt-12">
+      {trackingPrice ? (
+        <ViewContentTracker
+          id={product.id}
+          name={product.title}
+          price={Number.parseFloat(trackingPrice.amount)}
+          currency={trackingPrice.currencyCode}
+        />
+      ) : null}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

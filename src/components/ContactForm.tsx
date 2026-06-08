@@ -70,7 +70,7 @@ export function ContactForm() {
       </form>
       {sent && (
         <p className="mt-6 text-sm font-semibold text-[#2e7d32]" role="status">
-          {t("contactForm.demoSent")}
+          {t("contactForm.sent")}
         </p>
       )}
     </>
