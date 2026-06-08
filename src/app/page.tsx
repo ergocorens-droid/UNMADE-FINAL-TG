@@ -5,6 +5,13 @@ import { getServerLocale, getServerT } from "@/i18n/server";
 
 export const revalidate = 60;
 
+const socialPreviewImage = {
+  url: "/hero-desktop-white.png",
+  width: 1680,
+  height: 945,
+  alt: "UNMADE - Need Money For Porsche Tee",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
@@ -20,6 +27,13 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       url: "https://unmade.pl",
       locale: locale === "pl" ? "pl_PL" : "en_US",
+      images: [socialPreviewImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [socialPreviewImage.url],
     },
   };
 }

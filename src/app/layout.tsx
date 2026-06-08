@@ -38,6 +38,13 @@ const staticIconsAndRobots = {
   robots: { index: true, follow: true },
 } satisfies Partial<Metadata>;
 
+const socialPreviewImage = {
+  url: "/hero-desktop-white.png",
+  width: 1680,
+  height: 945,
+  alt: "UNMADE - Need Money For Porsche Tee",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getServerT();
   const locale = await getServerLocale();
@@ -59,6 +66,13 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "UNMADE",
       title: titleDefault,
       description,
+      images: [socialPreviewImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titleDefault,
+      description,
+      images: [socialPreviewImage.url],
     },
   };
 }

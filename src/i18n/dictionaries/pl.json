@@ -41,17 +41,17 @@
   "home": {
     "viewCollection": "ZOBACZ CAŁĄ KOLEKCJĘ",
     "heroCtaAria": "Przejdź do sklepu — 2026 Collection",
-    "heroImageAlt": "UNMADE — streetwear car culture",
+    "heroImageAlt": "UNMADE — limitowany streetwear",
     "scrollHint": "Przewijaj"
   },
   "carousel": {
     "all": "WSZYSTKIE"
   },
   "metadata": {
-    "homeTitle": "UNMADE — limitowane dropy streetwear, quote tees i essentials",
-    "homeDescription": "UNMADE to limitowany streetwear: koszulki z mocnymi hasłami, autorskie nadruki, essentials i krótkie dropy dostępne online.",
+    "homeTitle": "UNMADE — limitowane koszulki streetwear i dropy",
+    "homeDescription": "UNMADE to oficjalny sklep streetwear. Koszulki z mocnymi hasłami, bluzy, autorskie nadruki i krótkie dropy dostępne online.",
     "shopTitle": "Sklep | UNMADE — koszulki, bluzy i limitowane dropy",
-    "shopDescription": "Oficjalny sklep UNMADE. Koszulki, bluzy, quote tees i limitowane dropy tworzone w czystym streetwearowym stylu.",
+    "shopDescription": "Oficjalny sklep UNMADE. Koszulki, bluzy, koszulki z cytatami i limitowane dropy tworzone w czystym streetwearowym stylu.",
     "collectionFallback": "Kolekcja — UNMADE",
     "productFallback": "Produkt",
     "kontaktTitle": "Kontakt",
@@ -59,7 +59,7 @@
     "wysylkaTitle": "Wysyłka",
     "wysylkaDescription": "Wysyłka UNMADE — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
     "kolekcjeListTitle": "Kolekcje",
-    "kolekcjeListDescription": "Kolekcje UNMADE — limitowane dropy, quote tees i streetwearowe essentials.",
+    "kolekcjeListDescription": "Kolekcje UNMADE — limitowane dropy, koszulki z cytatami i streetwearowe essentials.",
     "kolekcjeFallbackDescription": "Kolekcje UNMADE.",
     "aboutPageTitle": "O nas",
     "aboutPageDescription": "UNMADE — limitowany streetwear, autorskie hasła i dropy tworzone bez zbędnego hałasu.",
