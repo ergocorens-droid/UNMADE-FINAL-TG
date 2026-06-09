@@ -40,7 +40,27 @@ export function SizeGuideAccordion() {
             </p>
           </div>
 
-          <div className="overflow-x-auto border border-black/[0.08] bg-white">
+          <div className="grid gap-3 md:hidden">
+            {SIZE_ROWS.map((row) => (
+              <div key={row.size} className="border border-black/[0.08] bg-white p-4">
+                <div className="mb-3 text-lg font-black text-neutral-950">
+                  {row.size}
+                </div>
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                  <dt className="font-bold text-neutral-500">Dlugosc calkowita</dt>
+                  <dd className="text-right font-black text-neutral-950">{row.length}</dd>
+                  <dt className="font-bold text-neutral-500">Szerokosc pod pachami</dt>
+                  <dd className="text-right font-black text-neutral-950">{row.chest}</dd>
+                  <dt className="font-bold text-neutral-500">Szerokosc ramion</dt>
+                  <dd className="text-right font-black text-neutral-950">{row.shoulders}</dd>
+                  <dt className="font-bold text-neutral-500">Dlugosc rekawa</dt>
+                  <dd className="text-right font-black text-neutral-950">{row.sleeve}</dd>
+                </dl>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden border border-black/[0.08] bg-white md:block">
             <table className="min-w-[680px] w-full border-collapse text-left text-sm">
               <thead>
                 <tr className="bg-white text-neutral-950">

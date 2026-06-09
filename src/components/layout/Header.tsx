@@ -64,8 +64,8 @@ export function Header({
   const logoCls = "block";
 
   const logoImgCls = transparent
-    ? "h-10 w-auto md:h-10"
-    : "h-10 w-auto md:h-10";
+    ? "h-9 w-auto md:h-10"
+    : "h-9 w-auto md:h-10";
 
   const navCls = transparent
     ? "text-[11px] font-semibold uppercase tracking-[0.12em] text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition-colors duration-300 hover:text-white/80"
