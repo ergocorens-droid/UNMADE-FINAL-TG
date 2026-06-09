@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useT } from "@/i18n/I18nContext";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
@@ -20,39 +20,64 @@ function findVariantForOptions(
   return product.variants.find((v) => matchesVariant(v, selected)) ?? null;
 }
 
-function initialOptionsFromProduct(product: Product): Record<string, string> {
-  const firstAvail =
-    product.variants.find((v) => v.availableForSale) ?? product.variants[0];
-  const rec: Record<string, string> = {};
-  if (firstAvail) {
-    for (const o of firstAvail.selectedOptions) {
-      rec[o.name] = o.value;
-    }
-  }
-  return rec;
-}
-
 export function VariantSelector({
   product,
   onVariantChange,
 }: {
   product: Product;
-  onVariantChange: (variant: ProductVariant) => void;
+  onVariantChange: (variant: ProductVariant | null) => void;
 }) {
   const { t } = useT();
+  const sizeOption =
+    product.options.find((option) =>
+      ["rozmiar", "size"].includes(option.name.toLowerCase()),
+    ) ?? product.options.find((option) => option.values.length > 1);
+
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
-    () => initialOptionsFromProduct(product),
+    () => {
+      const initial: Record<string, string> = {};
+      for (const option of product.options) {
+        if (option.values.length === 1) {
+          initial[option.name] = option.values[0];
+        }
+      }
+      return initial;
+    },
   );
+  const [openOptionId, setOpenOptionId] = useState<string | null>(null);
 
   const matched = findVariantForOptions(product, selectedOptions);
   const combinationUnavailable =
     matched !== null && !matched.availableForSale;
+  const missingSelection = product.options.some(
+    (option) => option.values.length > 1 && !selectedOptions[option.name],
+  );
 
   useEffect(() => {
-    if (matched) {
+    if (matched && !missingSelection) {
       onVariantChange(matched);
+    } else {
+      onVariantChange(null);
     }
-  }, [matched, onVariantChange]);
+  }, [matched, missingSelection, onVariantChange]);
+
+  const optionAvailability = useMemo(() => {
+    const map = new Map<string, Map<string, ProductVariant | null>>();
+    for (const option of product.options) {
+      const values = new Map<string, ProductVariant | null>();
+      for (const value of option.values) {
+        values.set(
+          value,
+          findVariantForOptions(product, {
+            ...selectedOptions,
+            [option.name]: value,
+          }),
+        );
+      }
+      map.set(option.id, values);
+    }
+    return map;
+  }, [product, selectedOptions]);
 
   if (product.options.length === 0) {
     return null;
@@ -64,46 +89,73 @@ export function VariantSelector({
   }
 
   return (
-    <div className="space-y-6">
-      {product.options.map((option) => (
-        <div key={option.id}>
-          <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-neutral-600">
-            {option.name}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {option.values.map((value) => {
-              const next = { ...selectedOptions, [option.name]: value };
-              const v = findVariantForOptions(product, next);
-              const disabledCombo = v !== null && !v.availableForSale;
-              const active = selectedOptions[option.name] === value;
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  disabled={v === null}
-                  onClick={() =>
-                    setSelectedOptions((prev) => ({
-                      ...prev,
-                      [option.name]: value,
-                    }))
-                  }
-                  className={`min-w-[2.5rem] rounded border px-3 py-2 text-xs font-semibold uppercase tracking-wide transition ${
-                    active
-                      ? "border-neutral-900 ring-2 ring-neutral-900"
-                      : "border-neutral-300 text-neutral-800"
-                  } ${
-                    disabledCombo
-                      ? "line-through opacity-50"
-                      : "hover:border-neutral-900"
-                  } disabled:cursor-not-allowed disabled:opacity-30`}
+    <div className="space-y-4">
+      {product.options
+        .filter((option) => option.values.length > 1)
+        .map((option) => {
+          const selectedValue = selectedOptions[option.name];
+          const isOpen = openOptionId === option.id;
+          const label =
+            option.id === sizeOption?.id
+              ? t("product.chooseSize")
+              : option.name;
+
+          return (
+            <div key={option.id} className="relative">
+              <button
+                type="button"
+                onClick={() => setOpenOptionId(isOpen ? null : option.id)}
+                className={`flex min-h-12 w-full items-center justify-between border px-5 text-left text-sm transition ${
+                  isOpen
+                    ? "border-neutral-900 border-b-transparent"
+                    : "border-neutral-400 hover:border-neutral-900"
+                }`}
+                aria-expanded={isOpen}
+              >
+                <span className="text-neutral-900">
+                  {selectedValue || label}
+                </span>
+                <span
+                  className={`text-xl leading-none transition-transform ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
                 >
-                  {value}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ))}
+                  ˅
+                </span>
+              </button>
+
+              {isOpen ? (
+                <div className="border border-t-0 border-neutral-900 bg-white">
+                  {option.values.map((value) => {
+                    const v = optionAvailability.get(option.id)?.get(value) ?? null;
+                    const unavailable = v !== null && !v.availableForSale;
+                    const active = selectedValue === value;
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        disabled={v === null}
+                        onClick={() => {
+                          setSelectedOptions((prev) => ({
+                            ...prev,
+                            [option.name]: value,
+                          }));
+                          setOpenOptionId(null);
+                        }}
+                        className={`flex min-h-12 w-full items-center px-5 text-left text-sm transition hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-30 ${
+                          active ? "font-bold text-neutral-950" : "text-neutral-700"
+                        } ${unavailable ? "line-through opacity-50" : ""}`}
+                      >
+                        {value}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
       {combinationUnavailable ? (
         <p className="text-sm font-medium text-[var(--unmade-accent)]">
           {t("product.unavailable")}

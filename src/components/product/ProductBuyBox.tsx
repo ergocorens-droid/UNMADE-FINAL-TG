@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import { VariantSelector } from "@/components/product/VariantSelector";
 import { useT } from "@/i18n/I18nContext";
@@ -8,18 +9,26 @@ import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
+const PAYMENT_METHODS = [
+  { src: "/payments/blik.png", alt: "BLIK" },
+  { src: "/payments/klarna.png", alt: "Klarna" },
+  { src: "/payments/apple-pay.png", alt: "Apple Pay" },
+  { src: "/payments/google-pay.png", alt: "Google Pay" },
+] as const;
+
 export function ProductBuyBox({ product }: { product: Product }) {
   const { t } = useT();
   const { addItem, openCart, isLoading } = useCart();
 
-  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
-    () =>
-      product.variants.find((v) => v.availableForSale) ??
-      product.variants[0] ??
-      null,
-  );
+  const [selectedVariant, setSelectedVariant] =
+    useState<ProductVariant | null>(null);
+  const displayVariant =
+    selectedVariant ??
+    product.variants.find((v) => v.availableForSale) ??
+    product.variants[0] ??
+    null;
 
-  const onVariantChange = useCallback((v: ProductVariant) => {
+  const onVariantChange = useCallback((v: ProductVariant | null) => {
     setSelectedVariant(v);
   }, []);
 
@@ -38,19 +47,19 @@ export function ProductBuyBox({ product }: { product: Product }) {
     !isLoading;
 
   return (
-    <div className="mt-8 space-y-8 border-t border-black/[0.06] pt-8">
-      <div>
-        {selectedVariant ? (
+    <div className="space-y-8">
+      <div className="border-b border-black/[0.06] py-6">
+        {displayVariant ? (
           <div className="flex flex-wrap items-baseline gap-3">
-            {selectedVariant.compareAtPrice &&
-            Number.parseFloat(selectedVariant.compareAtPrice.amount) >
-              Number.parseFloat(selectedVariant.price.amount) ? (
-              <span className="text-lg text-neutral-500 line-through">
-                {formatPrice(selectedVariant.compareAtPrice)}
+            {displayVariant.compareAtPrice &&
+            Number.parseFloat(displayVariant.compareAtPrice.amount) >
+              Number.parseFloat(displayVariant.price.amount) ? (
+              <span className="text-xl font-semibold text-neutral-500 line-through">
+                {formatPrice(displayVariant.compareAtPrice)}
               </span>
             ) : null}
-            <span className="text-2xl font-semibold text-neutral-950">
-              {formatPrice(selectedVariant.price)}
+            <span className="text-3xl font-black text-neutral-950">
+              {formatPrice(displayVariant.price)}
             </span>
           </div>
         ) : null}
@@ -69,7 +78,8 @@ export function ProductBuyBox({ product }: { product: Product }) {
         />
       ) : null}
 
-      <div className="space-y-1 border-y border-black/[0.06] py-3 text-xs font-bold uppercase tracking-[0.18em] text-neutral-700">
+      <div className="space-y-1 border-y border-black/[0.06] py-3 text-xs uppercase tracking-[0.18em] text-neutral-700">
+        <p className="font-black text-neutral-950">Made in Poland</p>
         <p>{t("product.shippingInfo")}</p>
         <p>{t("product.freeShippingInfo")}</p>
       </div>
@@ -95,6 +105,26 @@ export function ProductBuyBox({ product }: { product: Product }) {
       >
         {t("product.addToCart")}
       </button>
+
+      <div
+        className="grid grid-cols-4 items-center border-y border-black/[0.06] bg-white"
+        aria-label="Dostępne metody płatności"
+      >
+        {PAYMENT_METHODS.map((method) => (
+          <div
+            key={method.alt}
+            className="flex h-14 items-center justify-center border-r border-black/[0.06] last:border-r-0"
+          >
+            <Image
+              src={method.src}
+              alt={method.alt}
+              width={140}
+              height={44}
+              className="h-9 w-auto object-contain"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

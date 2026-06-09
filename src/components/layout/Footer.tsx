@@ -1,10 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useT } from "@/i18n/I18nContext";
 import { COMPANY } from "@/lib/legal/company";
 
-const PAYMENTS = ["Visa", "Mastercard", "PayPal", "Apple Pay", "Google Pay", "BLIK"];
+const PAYMENTS = [
+  "Visa",
+  "Mastercard",
+  "PayPal",
+  "Apple Pay",
+  "Google Pay",
+  "BLIK",
+  "Klarna",
+];
 
 export function Footer() {
   const { t } = useT();
@@ -16,9 +25,16 @@ export function Footer() {
         <div>
           <Link
             href="/"
-            className="text-xl font-black uppercase tracking-[0.22em] text-neutral-950"
+            className="inline-block"
+            aria-label="CLTH.PL"
           >
-            CLTH.PL
+            <Image
+              src="/clth-logo-clean.png"
+              alt="CLTH.PL"
+              width={240}
+              height={100}
+              className="h-16 w-auto"
+            />
           </Link>
           <p className="mt-5 max-w-md text-xs uppercase leading-relaxed tracking-[0.16em] text-neutral-500">
             {t("footer.tagline")}

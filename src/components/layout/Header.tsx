@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
@@ -60,9 +61,11 @@ export function Header({
     ? "border-white/10 bg-black/20 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-md"
     : "border-neutral-200 bg-white shadow-sm";
 
-  const logoCls = transparent
-    ? "text-lg font-bold tracking-[0.2em] text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.45)] md:text-xl"
-    : "text-lg font-bold tracking-[0.2em] text-neutral-900 md:text-xl";
+  const logoCls = "block";
+
+  const logoImgCls = transparent
+    ? "h-10 w-auto md:h-10"
+    : "h-10 w-auto md:h-10";
 
   const navCls = transparent
     ? "text-[11px] font-semibold uppercase tracking-[0.12em] text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] transition-colors duration-300 hover:text-white/80"
@@ -83,8 +86,15 @@ export function Header({
         style={{ top: headerTop }}
       >
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-4 py-3 md:px-6">
-          <Link href="/" className={logoCls}>
-            CLTH.PL
+          <Link href="/" className={logoCls} aria-label="CLTH.PL">
+            <Image
+              src="/clth-logo-clean.png"
+              alt="CLTH.PL"
+              width={220}
+              height={92}
+              priority
+              className={logoImgCls}
+            />
           </Link>
 
           <nav

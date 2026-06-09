@@ -114,6 +114,7 @@
     "outOfStock": "WYPRZEDANE",
     "lowStock": "Zostało {count} szt.",
     "size": "Rozmiar",
+    "chooseSize": "Wybierz rozmiar",
     "color": "Kolor",
     "shippingInfo": "Wysyłka z Polski 24H–48H",
     "freeShippingInfo": "Darmowa wysyłka od 190 zł",

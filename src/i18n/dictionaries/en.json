@@ -114,6 +114,7 @@
     "outOfStock": "SOLD OUT",
     "lowStock": "Only {count} left",
     "size": "Size",
+    "chooseSize": "Choose size",
     "color": "Color",
     "shippingInfo": "Ships from Poland in 24H–48H",
     "freeShippingInfo": "Free shipping from 190 PLN",

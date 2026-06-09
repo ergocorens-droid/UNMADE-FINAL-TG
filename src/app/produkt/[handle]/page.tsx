@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductBuyBox } from "@/components/product/ProductBuyBox";
 import { ProductGallery } from "@/components/product/ProductGallery";
+import { SizeGuideAccordion } from "@/components/product/SizeGuideAccordion";
 import { ViewContentTracker } from "@/components/product/ViewContentTracker";
 import { getServerT } from "@/i18n/server";
 import { getProductByHandle } from "@/lib/shopify/api";
@@ -104,7 +105,7 @@ function ProductDescriptionSections({ html }: { html: string }) {
     "mt-5 text-base leading-8 text-neutral-900 md:text-lg md:leading-9 [&_br]:block [&_p]:mb-0 [&_strong]:font-black";
 
   return (
-    <section className="mt-12 border-y border-black/[0.08]">
+    <section className="mt-6 border-y border-black/[0.08] md:mt-12">
       <div className="grid md:grid-cols-2">
         {detailsHtml ? (
           <article className="py-8 md:pr-10">
@@ -176,6 +177,7 @@ export default async function ProductPage({ params }: Props) {
             <ProductBuyBox key={product.id} product={product} />
 
             <ProductDescriptionSections html={product.descriptionHtml} />
+            <SizeGuideAccordion />
 
             {(product.tags.length > 0 || product.collections.length > 0) && (
               <div className="mt-10 border-t border-black/[0.06] pt-6 text-xs text-neutral-600">
