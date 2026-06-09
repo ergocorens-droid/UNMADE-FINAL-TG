@@ -1,0 +1,32 @@
+# CLTH.PL
+
+CLTH.PL is a Polish streetwear store focused on limited drops, graphic T-shirts, quote tees, hoodies and everyday essentials.
+
+## Primary Pages
+
+- Home: https://clth.pl/
+- Shop: https://clth.pl/sklep
+- T-shirts: https://clth.pl/sklep-t-shirts
+- Hoodies: https://clth.pl/sklep-bluzy
+- Need Money collection: https://clth.pl/sklep-need-money
+- Quote tees collection: https://clth.pl/sklep-cytaty
+- Contact: https://clth.pl/kontakt
+- Shipping and payments: https://clth.pl/dostawa-i-platnosc
+- Returns: https://clth.pl/zwroty-i-odstapienie
+- Terms: https://clth.pl/regulamin
+- Privacy policy: https://clth.pl/polityka-prywatnosci
+- FAQ: https://clth.pl/faq
+
+## Brand Facts
+
+- Brand name: CLTH.PL
+- Store URL: https://clth.pl
+- Contact email: kontakt@clth.pl
+- Main product categories: T-shirts, hoodies, quote tees, limited streetwear drops
+- Shipping: from Poland
+- Free shipping threshold: 190 PLN
+
+## Crawling
+
+The canonical sitemap is available at https://clth.pl/sitemap.xml.
+Robots policy is available at https://clth.pl/robots.txt.

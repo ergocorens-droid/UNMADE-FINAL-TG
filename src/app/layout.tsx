@@ -9,6 +9,9 @@ import { I18nProvider } from "@/i18n/I18nContext";
 import { getServerLocale, getServerT } from "@/i18n/server";
 import { getServerCurrency } from "@/lib/shopify/get-currency";
 
+const SITE_URL = "https://clth.pl";
+const SITE_NAME = "CLTH.PL";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
@@ -16,7 +19,7 @@ const inter = Inter({
 });
 
 const staticIconsAndRobots = {
-  metadataBase: new URL("https://clth.pl"),
+  metadataBase: new URL(SITE_URL),
   manifest: "/site.webmanifest",
   icons: {
     icon: [
@@ -42,7 +45,49 @@ const socialPreviewImage = {
   url: "/hero-desktop-white.png",
   width: 1680,
   height: 945,
-  alt: "CLTH.PL - Need Money For Porsche Tee",
+  alt: `${SITE_NAME} - Need Money For Porsche Tee`,
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: `${SITE_URL}/android-chrome-512x512.png`,
+      email: "kontakt@clth.pl",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      publisher: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+      inLanguage: ["pl-PL", "en"],
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${SITE_URL}/sklep?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "Store",
+      "@id": `${SITE_URL}/#store`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      email: "kontakt@clth.pl",
+      image: `${SITE_URL}/hero-desktop-white.png`,
+      priceRange: "79-129 PLN",
+      brand: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+      makesOffer: "Limited streetwear drops, T-shirts, hoodies and quote tees",
+    },
+  ],
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -57,13 +102,13 @@ export async function generateMetadata(): Promise<Metadata> {
     ...staticIconsAndRobots,
     title: {
       default: titleDefault,
-      template: "%s | CLTH.PL",
+      template: `%s | ${SITE_NAME}`,
     },
     description,
     openGraph: {
       type: "website",
       locale: ogLocale,
-      siteName: "CLTH.PL",
+      siteName: SITE_NAME,
       title: titleDefault,
       description,
       images: [socialPreviewImage],
@@ -91,6 +136,10 @@ export default async function RootLayout({
         className={`${inter.className} min-h-full flex flex-col bg-white text-neutral-900`}
       >
         <MetaPixel />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <CurrencyProvider initialCurrency={initialCurrency}>
           <I18nProvider>
             <CartProvider>
