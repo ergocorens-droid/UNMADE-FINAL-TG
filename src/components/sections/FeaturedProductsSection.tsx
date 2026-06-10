@@ -79,13 +79,13 @@ export async function FeaturedProductsSection() {
   return (
     <section className="space-y-10 bg-white text-neutral-950 md:space-y-14">
       <ProductCollectionBlock
-        products={productsToShow}
-        href="/sklep-need-money"
+        products={quoteProducts}
+        href="/sklep-cytaty"
         label={t("home.viewCollection")}
       />
       <ProductCollectionBlock
-        products={quoteProducts}
-        href="/sklep-cytaty"
+        products={productsToShow}
+        href="/sklep-need-money"
         label={t("home.viewCollection")}
       />
     </section>
