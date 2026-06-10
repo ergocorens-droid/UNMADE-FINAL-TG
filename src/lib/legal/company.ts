@@ -10,9 +10,9 @@ export const COMPANY = {
   krs: "0001225651",
   regon: "544051855",
   shareCapitalPln: "5 000 zł",
-  email: "kontakt@clth.pl",
-  returnsEmail: "zwroty@clth.pl",
-  complaintsEmail: "reklamacje@clth.pl",
+  email: "kontakt.clth.pl@gmail.com",
+  returnsEmail: "kontakt.clth.pl@gmail.com",
+  complaintsEmail: "kontakt.clth.pl@gmail.com",
 } as const;
 
 export const LEGAL_EFFECTIVE_LABEL = "8 maja 2026 r.";

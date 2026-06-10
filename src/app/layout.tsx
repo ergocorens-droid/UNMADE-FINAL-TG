@@ -57,7 +57,7 @@ const structuredData = {
       name: SITE_NAME,
       url: SITE_URL,
       logo: `${SITE_URL}/android-chrome-512x512.png`,
-      email: "kontakt@clth.pl",
+      email: "kontakt.clth.pl@gmail.com",
     },
     {
       "@type": "WebSite",
@@ -79,7 +79,7 @@ const structuredData = {
       "@id": `${SITE_URL}/#store`,
       name: SITE_NAME,
       url: SITE_URL,
-      email: "kontakt@clth.pl",
+      email: "kontakt.clth.pl@gmail.com",
       image: `${SITE_URL}/hero-desktop-white.png`,
       priceRange: "79-129 PLN",
       brand: {

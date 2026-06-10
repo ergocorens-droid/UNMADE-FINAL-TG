@@ -21,7 +21,7 @@ CLTH.PL is a Polish streetwear store focused on limited drops, graphic T-shirts,
 
 - Brand name: CLTH.PL
 - Store URL: https://clth.pl
-- Contact email: kontakt@clth.pl
+- Contact email: kontakt.clth.pl@gmail.com
 - Main product categories: T-shirts, hoodies, quote tees, limited streetwear drops
 - Shipping: from Poland
 - Free shipping threshold: 190 PLN
