@@ -1,26 +1,8 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
 import { getServerT } from "@/i18n/server";
-import {
-  getCollectionByHandle,
-  getProducts,
-  shopSortFromParam,
-} from "@/lib/shopify/api";
+import { getCollectionByHandle } from "@/lib/shopify/api";
 import type { Product } from "@/lib/shopify/types";
-
-function productText(product: Product): string {
-  return `${product.title} ${product.handle} ${product.tags.join(" ")}`.toLowerCase();
-}
-
-function pickColorProducts(products: Product[], color: "black" | "white") {
-  const colorNeedle = color === "black" ? "black" : "white";
-  return products
-    .filter((product) => {
-      const text = productText(product);
-      return text.includes("need money") && text.includes(colorNeedle);
-    })
-    .slice(0, 4);
-}
 
 function ProductCollectionBlock({
   products,
@@ -57,35 +39,18 @@ function ProductCollectionBlock({
 }
 
 export async function FeaturedProductsSection() {
-  const { sortKey, reverse } = shopSortFromParam("najnowsze");
-  const [shopifyProducts, quotesCollection, t] = await Promise.all([
-    getProducts({
-      first: 48,
-      sortKey,
-      reverse,
-      cache: "no-store",
-    }),
-    getCollectionByHandle("cytaty", 8, "najnowsze"),
+  const [quotesCollection, t] = await Promise.all([
+    getCollectionByHandle("cytaty", 16, "najnowsze"),
     getServerT(),
   ]);
 
-  const blackProducts = pickColorProducts(shopifyProducts, "black");
-  const whiteProducts = pickColorProducts(shopifyProducts, "white");
-  const groupedProducts = [...blackProducts, ...whiteProducts];
-  const productsToShow =
-    groupedProducts.length > 0 ? groupedProducts : shopifyProducts.slice(0, 8);
-  const quoteProducts = quotesCollection?.products.slice(0, 8) ?? [];
+  const quoteProducts = quotesCollection?.products.slice(0, 16) ?? [];
 
   return (
-    <section className="space-y-10 bg-white text-neutral-950 md:space-y-14">
+    <section className="bg-white text-neutral-950">
       <ProductCollectionBlock
         products={quoteProducts}
         href="/sklep-cytaty"
-        label={t("home.viewCollection")}
-      />
-      <ProductCollectionBlock
-        products={productsToShow}
-        href="/sklep-need-money"
         label={t("home.viewCollection")}
       />
     </section>
