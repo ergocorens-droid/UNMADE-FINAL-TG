@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useT } from "@/i18n/I18nContext";
 
-const HERO_DESKTOP_SRC = "/hero-desktop-white.png";
-const HERO_MOBILE_SRC = "/hero-mobile-white.png";
+const HERO_DESKTOP_SRC = "/hero-desktop-viral-tees-v3.png";
+const HERO_MOBILE_SRC = "/hero-mobile-viral-tees-v2.png";
 
 export function HeroSection() {
   const { t } = useT();
 
   return (
-    <section className="relative h-[calc(124.96vw+3.5rem)] w-full md:h-[min(100svh,56.25vw)]">
+    <section className="relative h-[calc(124.96vw+3.5rem)] w-full md:h-[43.72vw]">
       <Link
         href="/sklep"
         className="absolute inset-0 block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)]"
