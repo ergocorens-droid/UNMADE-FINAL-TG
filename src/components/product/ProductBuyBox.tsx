@@ -19,9 +19,16 @@ const PAYMENT_METHODS = [
 export function ProductBuyBox({ product }: { product: Product }) {
   const { t } = useT();
   const { addItem, openCart, isLoading } = useCart();
+  const bypassVariantSelection = product.handle === "test1";
 
-  const [selectedVariant, setSelectedVariant] =
-    useState<ProductVariant | null>(null);
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
+    () =>
+      bypassVariantSelection
+        ? (product.variants.find((variant) => variant.availableForSale) ??
+          product.variants[0] ??
+          null)
+        : null,
+  );
   const displayVariant =
     selectedVariant ??
     product.variants.find((v) => v.availableForSale) ??
@@ -32,7 +39,8 @@ export function ProductBuyBox({ product }: { product: Product }) {
     setSelectedVariant(v);
   }, []);
 
-  const showSelector = product.options.some((o) => o.values.length > 1);
+  const showSelector =
+    !bypassVariantSelection && product.options.some((o) => o.values.length > 1);
 
   const qtyAvail = selectedVariant?.quantityAvailable;
   const lowStock =
