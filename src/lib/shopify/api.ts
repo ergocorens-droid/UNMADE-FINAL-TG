@@ -147,12 +147,40 @@ function needMoneyDisplayRank(product: Product): number {
   return colorRank + (carRank === -1 ? 50 : carRank);
 }
 
+function capDisplayRank(product: Product): number {
+  const text = productSearchText(product);
+  const order = [
+    ["hot girl", "hot-girl"],
+    ["love me", "love-me"],
+    ["heaven", "heaven-sent"],
+    ["star girl", "star-girl"],
+    ["kisses"],
+    ["god bless scammers", "god-bless-scammers"],
+    ["angel"],
+    ["loveyourself", "love yourself"],
+  ];
+
+  const rank = order.findIndex((needles) =>
+    needles.some((needle) => text.includes(needle)),
+  );
+
+  return rank === -1 ? 1000 : rank;
+}
+
 function sortShopDisplayProducts(
   products: Product[],
   sort: string | undefined,
-  opts?: { kolekcja?: string },
+  opts?: { kolekcja?: string; typ?: string },
 ): Product[] {
   if (sort && sort !== "najnowsze") return products;
+
+  if (opts?.typ === "baseball-cap") {
+    return [...products].sort((a, b) => {
+      const rankDiff = capDisplayRank(a) - capDisplayRank(b);
+      if (rankDiff !== 0) return rankDiff;
+      return 0;
+    });
+  }
 
   if (opts?.kolekcja === "cytaty") {
     return [...products].sort((a, b) => {
