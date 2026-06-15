@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
 import { getServerT } from "@/i18n/server";
-import { getCollectionByHandle } from "@/lib/shopify/api";
+import { getCollectionByHandle, isTshirtProduct } from "@/lib/shopify/api";
 import type { Product } from "@/lib/shopify/types";
 
 function ProductCollectionBlock({
@@ -40,11 +40,12 @@ function ProductCollectionBlock({
 
 export async function FeaturedProductsSection() {
   const [quotesCollection, t] = await Promise.all([
-    getCollectionByHandle("cytaty", 16, "najnowsze"),
+    getCollectionByHandle("cytaty", 64, "najnowsze"),
     getServerT(),
   ]);
 
-  const quoteProducts = quotesCollection?.products.slice(0, 16) ?? [];
+  const quoteProducts =
+    quotesCollection?.products.filter(isTshirtProduct).slice(0, 16) ?? [];
 
   return (
     <section className="bg-white text-neutral-950">

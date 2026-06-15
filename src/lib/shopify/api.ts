@@ -105,7 +105,35 @@ export function sortProductsInMemory(
 }
 
 function productSearchText(product: Product): string {
-  return `${product.title} ${product.handle} ${product.tags.join(" ")}`.toLowerCase();
+  return `${product.title} ${product.handle} ${product.tags.join(" ")} ${product.collections
+    .map((collection) => `${collection.handle} ${collection.title}`)
+    .join(" ")}`.toLowerCase();
+}
+
+export function productTypeDisplayRank(product: Product): number {
+  const text = productSearchText(product);
+  if (
+    text.includes("t-shirts") ||
+    text.includes("t-shirt") ||
+    text.includes("tshirt") ||
+    text.includes("tee") ||
+    text.includes("koszul")
+  ) {
+    return 0;
+  }
+  if (
+    text.includes("bluzy") ||
+    text.includes("bluza") ||
+    text.includes("hoodie") ||
+    text.includes("hoodies")
+  ) {
+    return 100;
+  }
+  return 50;
+}
+
+export function isTshirtProduct(product: Product): boolean {
+  return productTypeDisplayRank(product) === 0;
 }
 
 function needMoneyDisplayRank(product: Product): number {
@@ -122,8 +150,17 @@ function needMoneyDisplayRank(product: Product): number {
 function sortShopDisplayProducts(
   products: Product[],
   sort: string | undefined,
+  opts?: { kolekcja?: string },
 ): Product[] {
   if (sort && sort !== "najnowsze") return products;
+
+  if (opts?.kolekcja === "cytaty") {
+    return [...products].sort((a, b) => {
+      const rankDiff = productTypeDisplayRank(a) - productTypeDisplayRank(b);
+      if (rankDiff !== 0) return rankDiff;
+      return 0;
+    });
+  }
 
   return [...products].sort((a, b) => {
     const rankDiff = needMoneyDisplayRank(a) - needMoneyDisplayRank(b);
@@ -183,11 +220,11 @@ export async function getShopPageProducts(opts: {
       query: opts.q,
       cache: "no-store",
     });
-    return sortShopDisplayProducts(products, opts.sort);
+    return sortShopDisplayProducts(products, opts.sort, opts);
   }
 
   if (pools.length === 1) {
-    return sortShopDisplayProducts(sortProductsInMemory(pools[0], opts.sort), opts.sort);
+    return sortShopDisplayProducts(sortProductsInMemory(pools[0], opts.sort), opts.sort, opts);
   }
 
   const [firstPool, ...restPools] = pools;
@@ -195,7 +232,7 @@ export async function getShopPageProducts(opts: {
     const ids = new Set(pool.map((p) => p.id));
     return current.filter((p) => ids.has(p.id));
   }, firstPool);
-  return sortShopDisplayProducts(sortProductsInMemory(intersection, opts.sort), opts.sort);
+  return sortShopDisplayProducts(sortProductsInMemory(intersection, opts.sort), opts.sort, opts);
 }
 
 export async function getProducts({
