@@ -42,10 +42,10 @@ const staticIconsAndRobots = {
 } satisfies Partial<Metadata>;
 
 const socialPreviewImage = {
-  url: "/hero-desktop-white.png",
-  width: 1680,
-  height: 945,
-  alt: `${SITE_NAME} - Need Money For Porsche Tee`,
+  url: "/hero-desktop-summer-caps-21x9.png",
+  width: 1916,
+  height: 821,
+  alt: `${SITE_NAME} - Limitowana wakacyjna kolekcja`,
 };
 
 const structuredData = {
@@ -80,7 +80,7 @@ const structuredData = {
       name: SITE_NAME,
       url: SITE_URL,
       email: "kontakt.clth.pl@gmail.com",
-      image: `${SITE_URL}/hero-desktop-white.png`,
+      image: `${SITE_URL}/hero-desktop-summer-caps-21x9.png`,
       priceRange: "79-129 PLN",
       brand: {
         "@id": `${SITE_URL}/#organization`,

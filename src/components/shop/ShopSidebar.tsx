@@ -18,14 +18,12 @@ function hrefToggleKind(
   kind: "kolor" | "typ" | "kolekcja",
   handle: string,
 ): string {
-  const next: ShopFilterState = { ...active };
   const key = kind;
   if (active[key] === handle) {
-    delete next[key];
+    return sklepHref({ sort: active.sort });
   } else {
-    next[key] = handle;
+    return sklepHref({ [key]: handle, sort: active.sort });
   }
-  return sklepHref(next);
 }
 
 function FilterRow({
