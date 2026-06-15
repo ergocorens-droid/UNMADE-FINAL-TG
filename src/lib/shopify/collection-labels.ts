@@ -6,6 +6,7 @@ export const COLLECTION_LABELS: Record<
   white: { pl: "Białe", en: "White", type: "color" },
   "t-shirts": { pl: "T-Shirty", en: "T-Shirts", type: "type" },
   bluzy: { pl: "Bluzy", en: "Hoodies", type: "type" },
+  "baseball-cap": { pl: "Czapki", en: "Caps", type: "type" },
   cytaty: { pl: "Cytaty", en: "Quotes", type: "collection" },
 };
 

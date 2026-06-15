@@ -45,6 +45,13 @@ export function sklepHref(opts: {
   ) {
     return `/sklep-bluzy${sort}`;
   }
+  if (
+    hasOnlyType &&
+    opts.typ &&
+    ["baseball-cap", "czapki", "caps"].includes(opts.typ)
+  ) {
+    return `/sklep-czapki${sort}`;
+  }
   if (hasNeedMoney) {
     return `/sklep-need-money${sort}`;
   }

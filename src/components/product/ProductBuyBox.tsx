@@ -16,10 +16,24 @@ const PAYMENT_METHODS = [
   { src: "/payments/google-pay.png", alt: "Google Pay" },
 ] as const;
 
+function isCapProduct(product: Product): boolean {
+  const text = `${product.title} ${product.handle} ${product.tags.join(" ")} ${product.collections
+    .map((collection) => `${collection.handle} ${collection.title}`)
+    .join(" ")}`.toLowerCase();
+
+  return (
+    text.includes("baseball-cap") ||
+    text.includes("baseball cap") ||
+    text.includes("czapka") ||
+    text.includes("czapki") ||
+    text.includes("cap")
+  );
+}
+
 export function ProductBuyBox({ product }: { product: Product }) {
   const { t } = useT();
   const { addItem, openCart, isLoading } = useCart();
-  const bypassVariantSelection = product.handle === "test1";
+  const bypassVariantSelection = product.handle === "test1" || isCapProduct(product);
 
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
     () =>

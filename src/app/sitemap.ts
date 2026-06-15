@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/sklep", 0.95, "daily"),
     entry("/sklep-t-shirts", 0.9, "daily"),
     entry("/sklep-bluzy", 0.85, "weekly"),
+    entry("/sklep-czapki", 0.85, "weekly"),
     entry("/sklep-need-money", 0.9, "daily"),
     entry("/sklep-cytaty", 0.9, "daily"),
     entry("/kolekcje", 0.75, "weekly"),

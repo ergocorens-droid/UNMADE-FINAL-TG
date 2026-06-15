@@ -19,6 +19,22 @@ function variantLabel(
   return merch.title;
 }
 
+function visibleVariantLabel(
+  merch: { title: string; selectedOptions: { name: string; value: string }[] },
+): string {
+  const realOptions = merch.selectedOptions.filter((option) => {
+    const name = option.name.trim().toLowerCase();
+    const value = option.value.trim().toLowerCase();
+    return name !== "title" && value !== "default title";
+  });
+
+  if (realOptions.length > 0) {
+    return realOptions.map((o) => `${o.name}: ${o.value}`).join(" · ");
+  }
+
+  return merch.title === "Default Title" ? "" : merch.title;
+}
+
 export function CartDrawer() {
   const { t } = useT();
   const {
@@ -131,6 +147,7 @@ export function CartDrawer() {
                   line.merchandise.image?.url ??
                   line.merchandise.product.featuredImage?.url;
                 const href = `/produkt/${line.merchandise.product.handle}`;
+                const variant = visibleVariantLabel(line.merchandise);
                 return (
                   <li
                     key={line.id}
@@ -163,9 +180,11 @@ export function CartDrawer() {
                       >
                         {line.merchandise.product.title}
                       </Link>
-                      <p className="mt-1 text-[11px] text-neutral-500">
-                        {variantLabel(line.merchandise)}
-                      </p>
+                      {variant ? (
+                        <p className="mt-1 text-[11px] text-neutral-500">
+                          {variant}
+                        </p>
+                      ) : null}
                       <p className="mt-1 text-xs font-medium text-neutral-900">
                         {formatPrice(line.cost.totalAmount)}
                         <span className="font-normal text-neutral-500">
