@@ -29,7 +29,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <EmailPopup />
-      <div ref={promoRef} className="relative z-[60] w-full shrink-0">
+      <div ref={promoRef} className="sticky top-0 z-[60] w-full shrink-0">
         <AnnouncementBar />
       </div>
       <Header promoHeight={promoHeight} />

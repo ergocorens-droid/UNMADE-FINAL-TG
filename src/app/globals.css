@@ -66,3 +66,16 @@ body {
 .unmade-scale-in {
   animation: unmade-scale-in 0.35s ease-out forwards;
 }
+
+@keyframes unmade-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-unmade-marquee {
+  animation: unmade-marquee 26s linear infinite;
+}

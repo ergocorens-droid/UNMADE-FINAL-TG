@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { CurrencySwitcher } from "@/components/CurrencySwitcher";
 import { useCart } from "@/context/CartContext";
@@ -21,7 +20,6 @@ export function Header({
 }: {
   promoHeight: number;
 }) {
-  const pathname = usePathname();
   const { totalQuantity, toggleCart } = useCart();
   const { t } = useT();
   const navLinks = useMemo(
@@ -33,22 +31,9 @@ export function Header({
       })),
     [t],
   );
-  const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const transparent = !mobileOpen;
-  const headerTop = Math.max(0, promoHeight - scrollY);
-
-  useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setScrollY(window.scrollY));
-    return () => cancelAnimationFrame(id);
-  }, [pathname]);
+  const headerTop = promoHeight;
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
