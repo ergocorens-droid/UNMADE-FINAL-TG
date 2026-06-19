@@ -170,7 +170,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
           <ProductGallery images={product.images} alt={product.title} />
           <div>
-            <h1 className="border-b border-black/[0.06] pb-6 text-3xl font-black uppercase leading-none tracking-normal text-neutral-950 md:text-5xl">
+            <h1 className="border-b border-black/[0.06] pb-5 text-2xl font-black uppercase leading-tight tracking-normal text-neutral-950 sm:text-3xl lg:text-[34px]">
               {product.title}
             </h1>
 

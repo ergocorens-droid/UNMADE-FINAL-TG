@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
 import { CartDrawer } from "@/components/CartDrawer";
-import { EmailPopup } from "@/components/EmailPopup";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
@@ -28,7 +27,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <EmailPopup />
       <div ref={promoRef} className="sticky top-0 z-[60] w-full shrink-0">
         <AnnouncementBar />
       </div>
