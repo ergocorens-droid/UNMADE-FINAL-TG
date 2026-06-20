@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SIZE_ROWS = [
   { size: "S", length: "68 cm", chest: "48 cm", shoulders: "43 cm", sleeve: "19 cm" },
@@ -13,8 +13,22 @@ const SIZE_ROWS = [
 export function SizeGuideAccordion() {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    function openGuide() {
+      setOpen(true);
+      requestAnimationFrame(() => {
+        document
+          .getElementById("size-guide")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    window.addEventListener("open-size-guide", openGuide);
+    return () => window.removeEventListener("open-size-guide", openGuide);
+  }, []);
+
   return (
-    <section className="border-b border-black/[0.08]">
+    <section id="size-guide" className="scroll-mt-28 border-b border-black/[0.08]">
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}

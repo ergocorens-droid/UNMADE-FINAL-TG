@@ -178,27 +178,6 @@ export default async function ProductPage({ params }: Props) {
 
             <ProductDescriptionSections html={product.descriptionHtml} />
             <SizeGuideAccordion />
-
-            {(product.tags.length > 0 || product.collections.length > 0) && (
-              <div className="mt-10 border-t border-black/[0.06] pt-6 text-xs text-neutral-600">
-                {product.tags.length > 0 ? (
-                  <p>
-                    <span className="font-bold uppercase tracking-wider text-neutral-500">
-                      {t("product.tagsLabel")}{" "}
-                    </span>
-                    {product.tags.join(", ")}
-                  </p>
-                ) : null}
-                {product.collections.length > 0 ? (
-                  <p className="mt-2">
-                    <span className="font-bold uppercase tracking-wider text-neutral-500">
-                      {t("product.collectionsLabel")}{" "}
-                    </span>
-                    {product.collections.map((c) => c.title).join(", ")}
-                  </p>
-                ) : null}
-              </div>
-            )}
           </div>
         </div>
       </div>

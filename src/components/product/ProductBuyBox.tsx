@@ -78,6 +78,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
         : null,
   );
   const [quantity, setQuantity] = useState(1);
+  const [selectionNotice, setSelectionNotice] = useState(false);
   const displayVariant =
     selectedVariant ??
     product.variants.find((v) => v.availableForSale) ??
@@ -86,6 +87,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
 
   const onVariantChange = useCallback((v: ProductVariant | null) => {
     setSelectedVariant(v);
+    if (v) setSelectionNotice(false);
   }, []);
 
   const showSelector =
@@ -102,6 +104,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
     selectedVariant !== null &&
     selectedVariant.availableForSale &&
     !isLoading;
+  const needsVariantSelection = selectedVariant === null;
   const percentSaved = savingsPercent(displayVariant);
 
   return (
@@ -177,6 +180,15 @@ export function ProductBuyBox({ product }: { product: Product }) {
       </div>
 
       <div className="space-y-2">
+        {selectionNotice ? (
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:hidden">
+            Wybierz najpierw rozmiar
+          </p>
+        ) : selectedVariant && !selectedVariant.availableForSale ? (
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:hidden">
+            Ten wariant jest niedostępny
+          </p>
+        ) : null}
         <div className="flex flex-col gap-3 sm:flex-row">
           <div className="flex h-14 overflow-hidden rounded-2xl border border-black/15 bg-white sm:w-36">
           <button
@@ -200,11 +212,26 @@ export function ProductBuyBox({ product }: { product: Product }) {
           </button>
         </div>
 
+          <div className="flex-1 space-y-2">
+            {selectionNotice ? (
+              <p className="hidden text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:block">
+                Wybierz najpierw rozmiar
+              </p>
+            ) : selectedVariant && !selectedVariant.availableForSale ? (
+              <p className="hidden text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:block">
+                Ten wariant jest niedostępny
+              </p>
+            ) : null}
+
         <button
           type="button"
-          disabled={!canAdd}
+          disabled={isLoading}
           onClick={() => {
-            if (!selectedVariant) return;
+            if (needsVariantSelection) {
+              setSelectionNotice(true);
+              return;
+            }
+            if (!canAdd || !selectedVariant) return;
             void (async () => {
               await addItem(selectedVariant.id, quantity);
               trackEvent("AddToCart", {
@@ -218,13 +245,18 @@ export function ProductBuyBox({ product }: { product: Product }) {
               openCart();
             })();
           }}
-          className="min-h-14 flex-1 rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
+          className="min-h-14 w-full rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
         >
           {t("product.addToCart")}
           </button>
+
+            <p className="hidden text-center text-xs uppercase tracking-[0.18em] text-neutral-700 sm:block">
+              {t("product.freeShippingInfo")}
+            </p>
+          </div>
         </div>
 
-        <p className="text-center text-xs uppercase tracking-[0.18em] text-neutral-700">
+        <p className="text-center text-xs uppercase tracking-[0.18em] text-neutral-700 sm:hidden">
           {t("product.freeShippingInfo")}
         </p>
       </div>
@@ -241,7 +273,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
         <div className="grid gap-2 text-xs uppercase tracking-[0.14em] text-neutral-700 sm:grid-cols-3">
           <div className="rounded-xl bg-[#d9ecf8]/70 px-3 py-3">
             <p className="font-black text-neutral-950">2 produkty</p>
-            <p className="mt-1">-15% na drugi</p>
+            <p className="mt-1">-25% na drugi</p>
           </div>
           <div className="rounded-xl bg-neutral-50 px-3 py-3">
             <p className="font-black text-neutral-950">3 produkty</p>

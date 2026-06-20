@@ -90,6 +90,10 @@ function colorLabel(value: string): string {
   return value.toUpperCase();
 }
 
+function openSizeGuide() {
+  window.dispatchEvent(new Event("open-size-guide"));
+}
+
 export function VariantSelector({
   product,
   enableColorOptions = true,
@@ -166,9 +170,23 @@ export function VariantSelector({
         return (
           <div key={option.id}>
             <div className="mb-2 flex items-center justify-between gap-3">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
-                {color ? "Kolor" : label}
-              </p>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
+                  {color ? "Kolor" : label}
+                </p>
+                {size ? (
+                  <button
+                    type="button"
+                    onClick={openSizeGuide}
+                    className="inline-flex items-center gap-1.5 border-b border-black/25 pb-0.5 text-xs font-bold text-neutral-950 transition hover:border-black"
+                  >
+                    <span className="text-sm leading-none" aria-hidden>
+                      ↔
+                    </span>
+                    Przewodnik po rozmiarach
+                  </button>
+                ) : null}
+              </div>
               {selectedValue ? (
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-950">
                   {color ? colorLabel(selectedValue) : selectedValue}
