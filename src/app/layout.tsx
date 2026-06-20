@@ -42,10 +42,10 @@ const staticIconsAndRobots = {
 } satisfies Partial<Metadata>;
 
 const socialPreviewImage = {
-  url: "/hero-desktop-summer-caps-21x9.png",
+  url: "/hero-desktop-summer-sale-city-21x9.png",
   width: 1916,
   height: 821,
-  alt: `${SITE_NAME} - Limitowana wakacyjna kolekcja`,
+  alt: `${SITE_NAME} - Wakacyjna wyprzedaż`,
 };
 
 const structuredData = {
@@ -80,7 +80,7 @@ const structuredData = {
       name: SITE_NAME,
       url: SITE_URL,
       email: "kontakt.clth.pl@gmail.com",
-      image: `${SITE_URL}/hero-desktop-summer-caps-21x9.png`,
+      image: `${SITE_URL}/hero-desktop-summer-sale-city-21x9.png`,
       priceRange: "79-129 PLN",
       brand: {
         "@id": `${SITE_URL}/#organization`,

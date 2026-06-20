@@ -6,10 +6,10 @@ import { getServerLocale, getServerT } from "@/i18n/server";
 export const revalidate = 60;
 
 const socialPreviewImage = {
-  url: "/hero-desktop-summer-caps-21x9.png",
+  url: "/hero-desktop-summer-sale-city-21x9.png",
   width: 1916,
   height: 821,
-  alt: "CLTH.PL - Limitowana wakacyjna kolekcja",
+  alt: "CLTH.PL - Wakacyjna wyprzedaż",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
