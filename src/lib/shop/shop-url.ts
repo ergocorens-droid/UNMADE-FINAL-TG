@@ -33,6 +33,11 @@ export function sklepHref(opts: {
     !opts.kolor &&
     isTshirtOrUnset &&
     !opts.q;
+  const hasChristian =
+    opts.kolekcja === "christian" &&
+    !opts.kolor &&
+    isTshirtOrUnset &&
+    !opts.q;
   const sort = opts.sort && opts.sort !== "najnowsze" ? `?sort=${encodeURIComponent(opts.sort)}` : "";
 
   if (hasOnlyType && opts.typ === "t-shirts") {
@@ -57,6 +62,9 @@ export function sklepHref(opts: {
   }
   if (hasQuotes) {
     return `/sklep-cytaty${sort}`;
+  }
+  if (hasChristian) {
+    return `/sklep-christian${sort}`;
   }
 
   const s = buildSklepSearchParams(opts);
