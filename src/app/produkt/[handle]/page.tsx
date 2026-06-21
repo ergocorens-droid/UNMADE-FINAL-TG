@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductBuyBox } from "@/components/product/ProductBuyBox";
 import { ProductGallery } from "@/components/product/ProductGallery";
-import { SizeGuideAccordion } from "@/components/product/SizeGuideAccordion";
+import { ProductInfoAccordions } from "@/components/product/ProductInfoAccordions";
 import { ViewContentTracker } from "@/components/product/ViewContentTracker";
 import { getServerT } from "@/i18n/server";
 import { getProductByHandle } from "@/lib/shopify/api";
@@ -135,6 +135,111 @@ function ProductDescriptionSections({ html }: { html: string }) {
   );
 }
 
+function ProductTrustSection({ className = "" }: { className?: string }) {
+  const items = [
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+          <path
+            d="M20 6 9 17l-5-5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: "Kup teraz",
+      accent: "wysy&#x142;amy z Polski w 24-48h",
+      tone: "text-emerald-600",
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+          <path
+            d="M3 7h11v10H3V7Zm11 3h4l3 3v4h-7v-7Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M7 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm11 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+        </svg>
+      ),
+      title: "InPost",
+      accent: "kurier i paczkomaty InPost",
+      tone: "text-neutral-950",
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+          <path
+            d="M4 12a8 8 0 0 1 13.66-5.66L20 8.68M20 4v4.68h-4.68M20 12a8 8 0 0 1-13.66 5.66L4 15.32M4 20v-4.68h4.68"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: "&#x141;atwe zwroty",
+      accent: "14 dni na zwrot",
+      tone: "text-neutral-950",
+    },
+    {
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+          <path
+            d="m12 3 2.75 5.57 6.15.9-4.45 4.34 1.05 6.12L12 17.04l-5.5 2.89 1.05-6.12L3.1 9.47l6.15-.9L12 3Z"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      title: "Wysoka jako&#x15B;&#x107;",
+      accent: "",
+      tone: "text-neutral-950",
+    },
+  ];
+
+  return (
+    <section
+      className={`mt-6 border-y border-black/[0.08] py-5 md:mt-8 md:max-w-[620px] ${className}`}
+    >
+      <div className="grid gap-4">
+        {items.map((item) => (
+          <div key={item.title} className="flex items-center gap-3">
+            <span
+              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-current ${item.tone}`}
+              aria-hidden
+            >
+              {item.icon}
+            </span>
+            <p className="text-sm font-black uppercase tracking-[0.04em] text-neutral-950">
+              <span dangerouslySetInnerHTML={{ __html: item.title }} />
+              {item.accent ? (
+                <>
+                  <span> - </span>
+                  <span
+                    className={item.tone}
+                    dangerouslySetInnerHTML={{ __html: item.accent }}
+                  />
+                </>
+              ) : null}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default async function ProductPage({ params }: Props) {
   const { handle } = await params;
   const product = await getProductByHandle(handle, undefined, "no-store");
@@ -168,7 +273,10 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="mx-auto mt-8 max-w-[1500px] px-4 md:mt-12 md:px-8">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <ProductGallery images={product.images} alt={product.title} />
+          <div>
+            <ProductGallery images={product.images} alt={product.title} />
+            <ProductTrustSection className="hidden md:block" />
+          </div>
           <div>
             <h1 className="border-b border-black/[0.06] pb-5 text-2xl font-black uppercase leading-tight tracking-normal text-neutral-950 sm:text-3xl lg:text-[34px]">
               {product.title}
@@ -176,8 +284,8 @@ export default async function ProductPage({ params }: Props) {
 
             <ProductBuyBox key={product.id} product={product} />
 
-            <ProductDescriptionSections html={product.descriptionHtml} />
-            <SizeGuideAccordion />
+            <ProductInfoAccordions html={product.descriptionHtml} />
+            <ProductTrustSection className="md:hidden" />
           </div>
         </div>
       </div>
