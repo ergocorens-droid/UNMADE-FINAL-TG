@@ -59,6 +59,38 @@ function isWhiteValue(value: string): boolean {
   );
 }
 
+function isBlackValue(value: string): boolean {
+  const v = value.toLowerCase();
+  return ["czarny", "czarne", "black"].some((x) => v.includes(x));
+}
+
+function defaultColorValue(product: Product, option: ProductOption): string {
+  const collections = product.collections
+    .map((collection) => `${collection.handle} ${collection.title}`)
+    .join(" ")
+    .toLowerCase();
+  const hasBlackCollection = /\bblack\b|czarn/.test(collections);
+  const hasWhiteCollection = /\bwhite\b|bial/.test(collections);
+
+  if (hasBlackCollection) {
+    return (
+      option.values.find((value) => isBlackValue(value)) ??
+      option.values.find((value) => isWhiteValue(value)) ??
+      option.values[0]
+    );
+  }
+
+  if (hasWhiteCollection) {
+    return (
+      option.values.find((value) => isWhiteValue(value)) ??
+      option.values.find((value) => isBlackValue(value)) ??
+      option.values[0]
+    );
+  }
+
+  return option.values.find((value) => isWhiteValue(value)) ?? option.values[0];
+}
+
 function colorClass(value: string): string {
   const v = value.toLowerCase();
   if (["bialy", "biale", "white", "biały", "białe"].some((x) => v.includes(x))) {
@@ -111,9 +143,7 @@ export function VariantSelector({
         if (option.values.length === 1) {
           initial[option.name] = option.values[0];
         } else if (enableColorOptions && isColorOption(option)) {
-          initial[option.name] =
-            option.values.find((value) => isWhiteValue(value)) ??
-            option.values[0];
+          initial[option.name] = defaultColorValue(product, option);
         }
       }
       return initial;

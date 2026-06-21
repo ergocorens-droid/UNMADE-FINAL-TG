@@ -1,8 +1,29 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
 import { getServerT } from "@/i18n/server";
-import { getCollectionByHandle, isTshirtProduct } from "@/lib/shopify/api";
+import { getProducts } from "@/lib/shopify/api";
 import type { Product } from "@/lib/shopify/types";
+
+function seededRandom(seed: number): () => number {
+  let state = seed || 1;
+  return () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+}
+
+function hourlyShuffle(products: Product[], limit: number): Product[] {
+  const currentHourSeed = Math.floor(Date.now() / 3_600_000);
+  const random = seededRandom(currentHourSeed);
+  const shuffled = [...products];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled.slice(0, limit);
+}
 
 function ProductCollectionBlock({
   products,
@@ -39,19 +60,21 @@ function ProductCollectionBlock({
 }
 
 export async function FeaturedProductsSection() {
-  const [quotesCollection, t] = await Promise.all([
-    getCollectionByHandle("cytaty", 64, "najnowsze"),
+  const [products, t] = await Promise.all([
+    getProducts({ first: 80, sortKey: "CREATED_AT", reverse: true }),
     getServerT(),
   ]);
 
-  const quoteProducts =
-    quotesCollection?.products.filter(isTshirtProduct).slice(0, 16) ?? [];
+  const mixedProducts = hourlyShuffle(
+    products.filter((product) => product.availableForSale),
+    16,
+  );
 
   return (
     <section className="bg-white text-neutral-950">
       <ProductCollectionBlock
-        products={quoteProducts}
-        href="/sklep-cytaty"
+        products={mixedProducts}
+        href="/sklep"
         label={t("home.viewCollection")}
       />
     </section>

@@ -8,6 +8,7 @@ export const COLLECTION_LABELS: Record<
   bluzy: { pl: "Bluzy", en: "Hoodies", type: "type" },
   "baseball-cap": { pl: "Czapki", en: "Caps", type: "type" },
   cytaty: { pl: "Cytaty", en: "Quotes", type: "collection" },
+  christian: { pl: "Christian", en: "Christian", type: "collection" },
 };
 
 export const SIDEBAR_COLLECTION_HANDLES = Object.keys(COLLECTION_LABELS);
