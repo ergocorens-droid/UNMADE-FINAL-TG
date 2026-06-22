@@ -16,7 +16,7 @@ export async function ShopPageContent({
   active: ShopFilterState;
   basePath?: string;
 }) {
-  const sortParam = active.sort ?? "najnowsze";
+  const sortParam = active.sort ?? "losowo";
 
   const [products, counts, t] = await Promise.all([
     getShopPageProducts({

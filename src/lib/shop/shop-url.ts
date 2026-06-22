@@ -10,7 +10,7 @@ export function buildSklepSearchParams(opts: {
   if (opts.kolor) p.set("kolor", opts.kolor);
   if (opts.typ) p.set("typ", opts.typ);
   if (opts.kolekcja) p.set("kolekcja", opts.kolekcja);
-  if (opts.sort && opts.sort !== "najnowsze") p.set("sort", opts.sort);
+  if (opts.sort && opts.sort !== "losowo") p.set("sort", opts.sort);
   if (opts.q) p.set("q", opts.q);
   return p.toString();
 }
@@ -33,12 +33,7 @@ export function sklepHref(opts: {
     !opts.kolor &&
     isTshirtOrUnset &&
     !opts.q;
-  const hasChristian =
-    opts.kolekcja === "christian" &&
-    !opts.kolor &&
-    isTshirtOrUnset &&
-    !opts.q;
-  const sort = opts.sort && opts.sort !== "najnowsze" ? `?sort=${encodeURIComponent(opts.sort)}` : "";
+  const sort = opts.sort && opts.sort !== "losowo" ? `?sort=${encodeURIComponent(opts.sort)}` : "";
 
   if (hasOnlyType && opts.typ === "t-shirts") {
     return `/sklep-t-shirts${sort}`;
@@ -62,9 +57,6 @@ export function sklepHref(opts: {
   }
   if (hasQuotes) {
     return `/sklep-cytaty${sort}`;
-  }
-  if (hasChristian) {
-    return `/sklep-christian${sort}`;
   }
 
   const s = buildSklepSearchParams(opts);

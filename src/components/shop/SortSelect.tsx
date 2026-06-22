@@ -6,6 +6,7 @@ import { useT } from "@/i18n/I18nContext";
 import type { TranslationKey } from "@/i18n/translate";
 
 const OPTION_DEF: { value: string; key: TranslationKey }[] = [
+  { value: "losowo", key: "shop.sortRandom" },
   { value: "najnowsze", key: "shop.sortNewest" },
   { value: "cena-rosnaco", key: "shop.sortPriceAsc" },
   { value: "cena-malejaco", key: "shop.sortPriceDesc" },
@@ -23,7 +24,7 @@ export function SortSelect({ basePath = "/sklep" }: SortSelectProps) {
   const [pending, startTransition] = useTransition();
   const { t } = useT();
 
-  const current = searchParams.get("sort") ?? "najnowsze";
+  const current = searchParams.get("sort") ?? "losowo";
 
   const options = useMemo(
     () => OPTION_DEF.map((o) => ({ value: o.value, label: t(o.key) })),
@@ -41,7 +42,7 @@ export function SortSelect({ basePath = "/sklep" }: SortSelectProps) {
         onChange={(e) => {
           const value = e.target.value;
           const next = new URLSearchParams(searchParams.toString());
-          if (value === "najnowsze") {
+          if (value === "losowo") {
             next.delete("sort");
           } else {
             next.set("sort", value);

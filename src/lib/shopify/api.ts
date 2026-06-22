@@ -78,10 +78,33 @@ export function collectionSortFromParam(sort: string | undefined): {
 }
 
 /** Sortuje listę produktów po wyborze użytkownika (np. po przecięciu kolekcji). */
+function seededRandom(seed: number): () => number {
+  let state = seed || 1;
+  return () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+}
+
+function hourlyShuffleProducts(products: Product[]): Product[] {
+  const currentHourSeed = Math.floor(Date.now() / 3_600_000);
+  const random = seededRandom(currentHourSeed);
+  const shuffled = [...products];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+}
+
 export function sortProductsInMemory(
   products: Product[],
   sort: string | undefined,
 ): Product[] {
+  if (sort === "losowo") return hourlyShuffleProducts(products);
+
   const { sortKey, reverse } = shopSortFromParam(sort);
   const arr = [...products];
   arr.sort((a, b) => {
@@ -172,6 +195,8 @@ function sortShopDisplayProducts(
   sort: string | undefined,
   opts?: { kolekcja?: string; typ?: string },
 ): Product[] {
+  if (sort === "losowo") return hourlyShuffleProducts(products);
+
   if (sort && sort !== "najnowsze") return products;
 
   if (opts?.typ === "baseball-cap") {

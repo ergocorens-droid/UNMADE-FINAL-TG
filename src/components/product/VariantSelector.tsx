@@ -100,7 +100,7 @@ function colorClass(value: string): string {
     return "bg-neutral-950";
   }
   if (["blue", "niebieski", "baby"].some((x) => v.includes(x))) {
-    return "bg-[#b7d8ef]";
+    return "bg-neutral-200";
   }
   if (["pink", "roz", "róż"].some((x) => v.includes(x))) {
     return "bg-[#f0a9c0]";
@@ -242,10 +242,10 @@ export function VariantSelector({
                           [option.name]: value,
                         }))
                       }
-                      className={`flex h-11 w-11 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-30 ${
-                        active
-                          ? "border-[#89bedd] bg-[#d9ecf8] shadow-[0_0_0_3px_rgba(217,236,248,0.95)]"
-                          : "border-black/15 bg-white hover:border-[#89bedd] hover:bg-[#eef8fd]"
+                        className={`flex h-11 w-11 items-center justify-center rounded-full border transition disabled:cursor-not-allowed disabled:opacity-30 ${
+                          active
+                          ? "border-neutral-950 bg-neutral-100 shadow-[0_0_0_3px_rgba(245,245,245,0.95)]"
+                          : "border-black/15 bg-white hover:border-neutral-500 hover:bg-neutral-50"
                       } ${unavailable ? "opacity-50" : ""}`}
                       aria-label={`${option.name}: ${value}`}
                     >
@@ -270,7 +270,7 @@ export function VariantSelector({
                     }
                     className={`min-h-11 rounded-xl border px-4 text-sm font-bold uppercase transition disabled:cursor-not-allowed disabled:opacity-30 ${
                       active
-                        ? "border-neutral-950 bg-[#d9ecf8] text-neutral-950"
+                        ? "border-neutral-950 bg-neutral-100 text-neutral-950"
                         : "border-black/15 bg-white text-neutral-900 hover:border-neutral-500"
                     } ${unavailable ? "line-through opacity-50" : ""}`}
                   >

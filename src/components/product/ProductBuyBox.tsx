@@ -123,7 +123,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
               </span>
             ) : null}
             {percentSaved ? (
-              <span className="rounded-full bg-[#d9ecf8] px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-neutral-950">
+              <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-neutral-950">
                 Oszczedzasz {percentSaved}%
               </span>
             ) : null}
@@ -194,7 +194,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="flex w-12 items-center justify-center bg-[#d9ecf8] text-xl font-black text-neutral-950 transition hover:bg-[#c8e2f2]"
+            className="flex w-12 items-center justify-center bg-neutral-100 text-xl font-black text-neutral-950 transition hover:bg-neutral-200"
             aria-label="Zmniejsz ilość"
           >
             -
@@ -205,7 +205,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQuantity((q) => q + 1)}
-            className="flex w-12 items-center justify-center bg-[#d9ecf8] text-xl font-black text-neutral-950 transition hover:bg-[#c8e2f2]"
+            className="flex w-12 items-center justify-center bg-neutral-100 text-xl font-black text-neutral-950 transition hover:bg-neutral-200"
             aria-label="Zwiększ ilość"
           >
             +
@@ -265,13 +265,13 @@ export function ProductBuyBox({ product }: { product: Product }) {
         <div className="mb-3 flex items-center justify-between gap-3 px-1">
           <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-neutral-950">
             Dodaj do koszyka minimum
-            <span className="text-base leading-none text-[#89bedd]" aria-hidden>
+            <span className="text-base leading-none text-neutral-500" aria-hidden>
               ↓
             </span>
           </p>
         </div>
         <div className="grid gap-2 text-xs uppercase tracking-[0.14em] text-neutral-700 sm:grid-cols-3">
-          <div className="rounded-xl bg-[#d9ecf8]/70 px-3 py-3">
+          <div className="rounded-xl bg-neutral-100 px-3 py-3">
             <p className="font-black text-neutral-950">2 produkty</p>
             <p className="mt-1">-25% na drugi</p>
           </div>

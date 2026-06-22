@@ -35,7 +35,7 @@ type Props = {
 
 export default async function ShopPage({ searchParams }: Props) {
   const sp = await searchParams;
-  const sortParam = sp.sort ?? "najnowsze";
+  const sortParam = sp.sort ?? "losowo";
   const searchQuery = typeof sp.q === "string" ? sp.q : undefined;
 
   const active: ShopFilterState = {
