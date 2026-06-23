@@ -77,6 +77,7 @@ export type CartLineMerchandise = ProductVariant & {
     handle: string;
     title: string;
     featuredImage: Image | null;
+    images: Image[];
     variants: Array<{
       id: string;
       selectedOptions: SelectedOption[];

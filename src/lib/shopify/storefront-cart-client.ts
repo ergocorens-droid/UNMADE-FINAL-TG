@@ -32,6 +32,9 @@ type GQLMerch = {
     handle: string;
     title: string;
     featuredImage: GQLImageRaw | null;
+    images: {
+      edges: Array<{ node: GQLImageRaw }>;
+    };
     variants: {
       edges: Array<{
         node: {
@@ -85,6 +88,9 @@ function mapMerchToCartLineMerch(
       handle: m.product.handle,
       title: m.product.title,
       featuredImage: mapImage(m.product.featuredImage),
+      images: m.product.images.edges
+        .map((edge) => mapImage(edge.node))
+        .filter((image): image is NonNullable<typeof image> => image !== null),
       variants: m.product.variants.edges.map(({ node }) => ({
         id: node.id,
         selectedOptions: node.selectedOptions.map((o) => ({

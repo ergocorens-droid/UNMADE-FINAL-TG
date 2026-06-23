@@ -47,6 +47,16 @@ fragment CartFragment on Cart {
                 width
                 height
               }
+              images(first: 4) {
+                edges {
+                  node {
+                    url
+                    altText
+                    width
+                    height
+                  }
+                }
+              }
               variants(first: 100) {
                 edges {
                   node {

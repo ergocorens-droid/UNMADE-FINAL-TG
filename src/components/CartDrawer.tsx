@@ -63,8 +63,26 @@ function sameColor(a: string, b: string): boolean {
   return false;
 }
 
+function isBlackColor(value: string): boolean {
+  return /black|czarn/.test(normalize(value));
+}
+
+function isWhiteColor(value: string): boolean {
+  return /white|bial/.test(normalize(value));
+}
+
 function cartLineImage(merch: CartLineMerchandise): string | undefined {
   const color = selectedColor(merch);
+  if (color && merch.product.images.length > 0) {
+    if (isBlackColor(color) && merch.product.images[1]?.url) {
+      return merch.product.images[1].url;
+    }
+
+    if (isWhiteColor(color) && merch.product.images[0]?.url) {
+      return merch.product.images[0].url;
+    }
+  }
+
   const colorImage =
     color &&
     merch.product.variants.find(
