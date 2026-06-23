@@ -1,8 +1,8 @@
-import { COMPANY, LEGAL_EFFECTIVE_LABEL, companyAddressMultiline } from "@/lib/legal/company";
+import { COMPANY, LEGAL_EFFECTIVE_LABEL, returnsAddressMultiline } from "@/lib/legal/company";
 
 /** Treść przygotowana na bazie dokumentu „Zwroty i odstąpienie” — adres i dane spółki wg `company.ts`. */
 export function ZwrotyBody() {
-  const adres = companyAddressMultiline();
+  const adres = returnsAddressMultiline();
 
   return (
     <>
@@ -43,6 +43,7 @@ export function ZwrotyBody() {
       <div className="rounded border border-neutral-200 bg-neutral-50 px-4 py-3">
         <p className="font-semibold">{COMPANY.fullLegalName}</p>
         <p className="whitespace-pre-line">{adres}</p>
+        <p>Tel. do zwrotu: {COMPANY.returnsPhone}</p>
       </div>
       <p className="mt-3">
         Przed wysyłką upewnij się przy otrzymanej wiadomości zwrotnej, że adres jest nadal aktualny.

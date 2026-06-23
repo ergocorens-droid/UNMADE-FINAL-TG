@@ -5,7 +5,10 @@ export const COMPANY = {
   fullLegalName: "MMN spółka z ograniczoną odpowiedzialnością",
   headquartersLine1: "ul. Lwowska 154A",
   headquartersLine2: "33-300 Nowy Sącz",
-  returnsAddressSameAsHQ: true,
+  returnsAddressSameAsHQ: false,
+  returnsAddressLine1: "ul. Bolesława Prusa 12",
+  returnsAddressLine2: "05-082 Blizne Jasińskiego",
+  returnsPhone: "513 529 126",
   nip: "7343667747",
   krs: "0001225651",
   regon: "544051855",
@@ -19,4 +22,8 @@ export const LEGAL_EFFECTIVE_LABEL = "8 maja 2026 r.";
 
 export function companyAddressMultiline(): string {
   return `${COMPANY.headquartersLine1}\n${COMPANY.headquartersLine2}`;
+}
+
+export function returnsAddressMultiline(): string {
+  return `${COMPANY.returnsAddressLine1}\n${COMPANY.returnsAddressLine2}`;
 }

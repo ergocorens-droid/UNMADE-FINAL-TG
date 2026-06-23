@@ -1,6 +1,12 @@
-import { COMPANY, LEGAL_EFFECTIVE_LABEL, companyAddressMultiline } from "@/lib/legal/company";
+import {
+  COMPANY,
+  LEGAL_EFFECTIVE_LABEL,
+  companyAddressMultiline,
+  returnsAddressMultiline,
+} from "@/lib/legal/company";
 
 const addrHQ = () => companyAddressMultiline();
+const addrReturns = () => returnsAddressMultiline();
 
 export function RegulaminBody() {
   return (
@@ -182,7 +188,8 @@ export function RegulaminBody() {
         <li>
           Produkt należy odesłać niezwłocznie — nie później niż 14 dni od dnia złożenia oświadczenia o odstąpieniu —
           na adres zwrotowy:{" "}
-          <span className="block whitespace-pre-line font-semibold">{addrHQ()}</span>
+          <span className="block whitespace-pre-line font-semibold">{addrReturns()}</span>
+          <span className="block font-semibold">Tel. do zwrotu: {COMPANY.returnsPhone}</span>
         </li>
         <li>Bezpośrednie koszty zwrotnego odesłania Produktu ponosi Klient, chyba że Sprzedawca wyraźnie stanowi inaczej.</li>
         <li>

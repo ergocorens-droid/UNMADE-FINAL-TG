@@ -1,7 +1,7 @@
-import { COMPANY, companyAddressMultiline } from "@/lib/legal/company";
+import { COMPANY, returnsAddressMultiline } from "@/lib/legal/company";
 
 export function WithdrawalFormAppendix() {
-  const addr = companyAddressMultiline();
+  const addr = returnsAddressMultiline();
   return (
     <section className="scroll-mt-24 border border-neutral-300 bg-neutral-50 p-6 md:p-8" id="formularz-odstapienia">
       <h2 className="text-lg font-bold uppercase tracking-[0.1em] text-neutral-950">FORMULARZ ODSTĄPIENIA OD UMOWY</h2>
@@ -13,6 +13,7 @@ export function WithdrawalFormAppendix() {
           <p className="font-semibold text-neutral-900">Adresat</p>
           <p>{COMPANY.fullLegalName}</p>
           <p className="whitespace-pre-line">{addr}</p>
+          <p>Tel. do zwrotu: {COMPANY.returnsPhone}</p>
           <p>
             E-mail:{" "}
             <a href={`mailto:${COMPANY.returnsEmail}`} className="underline">
