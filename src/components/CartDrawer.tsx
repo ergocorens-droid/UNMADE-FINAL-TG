@@ -7,6 +7,7 @@ import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
+import type { CartLineMerchandise } from "@/lib/shopify/types";
 
 const FREE_SHIPPING_THRESHOLD_PLN = 190;
 
@@ -33,6 +34,48 @@ function visibleVariantLabel(
   }
 
   return merch.title === "Default Title" ? "" : merch.title;
+}
+
+function normalize(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function isColorOption(name: string): boolean {
+  return ["kolor", "color"].includes(normalize(name));
+}
+
+function selectedColor(merch: CartLineMerchandise): string | null {
+  return (
+    merch.selectedOptions.find((option) => isColorOption(option.name))?.value ??
+    null
+  );
+}
+
+function sameColor(a: string, b: string): boolean {
+  const aa = normalize(a);
+  const bb = normalize(b);
+  if (aa === bb) return true;
+  if (/black|czarn/.test(aa)) return /black|czarn/.test(bb);
+  if (/white|bial/.test(aa)) return /white|bial/.test(bb);
+  return false;
+}
+
+function cartLineImage(merch: CartLineMerchandise): string | undefined {
+  const color = selectedColor(merch);
+  const colorImage =
+    color &&
+    merch.product.variants.find(
+      (variant) =>
+        variant.image &&
+        variant.selectedOptions.some(
+          (option) => isColorOption(option.name) && sameColor(option.value, color),
+        ),
+    )?.image?.url;
+
+  return colorImage ?? merch.image?.url ?? merch.product.featuredImage?.url;
 }
 
 export function CartDrawer() {
@@ -143,9 +186,7 @@ export function CartDrawer() {
           <>
             <ul className="flex-1 overflow-y-auto px-4 py-4">
               {lines.map((line) => {
-                const img =
-                  line.merchandise.image?.url ??
-                  line.merchandise.product.featuredImage?.url;
+                const img = cartLineImage(line.merchandise);
                 const href = `/produkt/${line.merchandise.product.handle}`;
                 const variant = visibleVariantLabel(line.merchandise);
                 return (

@@ -47,6 +47,23 @@ fragment CartFragment on Cart {
                 width
                 height
               }
+              variants(first: 100) {
+                edges {
+                  node {
+                    id
+                    selectedOptions {
+                      name
+                      value
+                    }
+                    image {
+                      url
+                      altText
+                      width
+                      height
+                    }
+                  }
+                }
+              }
             }
           }
         }

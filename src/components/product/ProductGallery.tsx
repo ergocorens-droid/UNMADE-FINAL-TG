@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PointerEvent, UIEvent } from "react";
-import type { Image as ShopifyImage } from "@/lib/shopify/types";
+import type {
+  Image as ShopifyImage,
+  ProductVariant,
+} from "@/lib/shopify/types";
 
 function updateZoomOrigin(e: PointerEvent<HTMLDivElement>) {
   const rect = e.currentTarget.getBoundingClientRect();
@@ -13,19 +16,191 @@ function updateZoomOrigin(e: PointerEvent<HTMLDivElement>) {
   e.currentTarget.style.setProperty("--zoom-y", `${y}%`);
 }
 
+function normalize(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function isColorOption(name: string): boolean {
+  return ["kolor", "color"].includes(normalize(name));
+}
+
+function isWhiteValue(value: string): boolean {
+  const v = normalize(value);
+  return ["bialy", "biale", "white"].some((x) => v.includes(x));
+}
+
+function isBlackValue(value: string): boolean {
+  const v = normalize(value);
+  return ["czarny", "czarne", "black"].some((x) => v.includes(x));
+}
+
+function colorKeywords(value: string): string[] {
+  if (isBlackValue(value)) return ["black", "czarn", "czarne", "czarny"];
+  if (isWhiteValue(value)) return ["white", "bial", "biale", "bialy"];
+  return [normalize(value)];
+}
+
+function imageKey(image: ShopifyImage): string {
+  return image.url.split("?")[0];
+}
+
+function uniqImages(images: ShopifyImage[]): ShopifyImage[] {
+  const seen = new Set<string>();
+  const unique: ShopifyImage[] = [];
+
+  for (const image of images) {
+    const key = imageKey(image);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    unique.push(image);
+  }
+
+  return unique;
+}
+
+function variantColor(variant: ProductVariant | null): string | null {
+  return (
+    variant?.selectedOptions.find((option) => isColorOption(option.name))
+      ?.value ?? null
+  );
+}
+
+function imageLooksLikeColor(image: ShopifyImage, color: string): boolean {
+  const haystack = normalize(`${image.altText ?? ""} ${image.url}`);
+  return colorKeywords(color).some((keyword) => haystack.includes(keyword));
+}
+
+function sameColor(a: string, b: string): boolean {
+  const aa = normalize(a);
+  const bb = normalize(b);
+  return aa === bb || colorKeywords(a).some((keyword) => bb.includes(keyword));
+}
+
+function variantColorOrder(variants: ProductVariant[]): string[] {
+  const colors: string[] = [];
+
+  for (const variant of variants) {
+    const color = variantColor(variant);
+    if (!color || colors.some((existing) => sameColor(existing, color))) continue;
+    colors.push(color);
+  }
+
+  return colors;
+}
+
+function variantImageColorMap(variants: ProductVariant[]): Map<string, Set<string>> {
+  const map = new Map<string, Set<string>>();
+
+  for (const variant of variants) {
+    const color = variantColor(variant);
+    if (!color || !variant.image) continue;
+
+    const key = imageKey(variant.image);
+    const colors = map.get(key) ?? new Set<string>();
+    colors.add(normalize(color));
+    map.set(key, colors);
+  }
+
+  return map;
+}
+
+function imageBelongsOnlyToColor(
+  image: ShopifyImage,
+  color: string,
+  imageColors: Map<string, Set<string>>,
+): boolean {
+  const colors = imageColors.get(imageKey(image));
+  if (!colors || colors.size === 0) return true;
+
+  const normalizedColor = normalize(color);
+  const belongsToCurrent = [...colors].some(
+    (value) => value === normalizedColor || sameColor(value, color),
+  );
+
+  return belongsToCurrent && colors.size === 1;
+}
+
+function imagesByMediaOrder(
+  images: ShopifyImage[],
+  variants: ProductVariant[],
+  color: string,
+): ShopifyImage[] {
+  const colors = variantColorOrder(variants);
+  const colorIndex = colors.findIndex((value) => sameColor(value, color));
+
+  if (colors.length < 2 || colorIndex === -1) return [];
+
+  return images.filter((_, index) => index % colors.length === colorIndex);
+}
+
+function imagesForColor(
+  images: ShopifyImage[],
+  variants: ProductVariant[],
+  selectedVariant: ProductVariant | null,
+): ShopifyImage[] {
+  const color = variantColor(selectedVariant);
+  if (!color) return images;
+
+  const byVariant = variants
+    .filter((variant) => variantColor(variant) === color)
+    .map((variant) => variant.image)
+    .filter((image): image is ShopifyImage => image !== null);
+
+  const orderedImages = imagesByMediaOrder(images, variants, color);
+  if (orderedImages.length >= 2) {
+    return orderedImages;
+  }
+
+  const variantImages = uniqImages(byVariant);
+  if (variantImages.length > 0) {
+    const imageColors = variantImageColorMap(variants);
+    const exclusiveImages = variantImages.filter((image) =>
+      imageBelongsOnlyToColor(image, color, imageColors),
+    );
+
+    return exclusiveImages.length > 0 ? exclusiveImages : variantImages;
+  }
+
+  if (orderedImages.length > 0) {
+    return orderedImages;
+  }
+
+  const galleryMatches = images.filter((image) => imageLooksLikeColor(image, color));
+  const merged = uniqImages(galleryMatches);
+
+  return merged.length > 0 ? merged : images;
+}
+
 export function ProductGallery({
   images,
   alt,
+  variants = [],
+  selectedVariant = null,
 }: {
   images: ShopifyImage[];
   alt: string;
+  variants?: ProductVariant[];
+  selectedVariant?: ProductVariant | null;
 }) {
-  const list = useMemo(
-    () => images.filter((im) => im.url.length > 0),
+  const baseList = useMemo(
+    () => uniqImages(images.filter((im) => im.url.length > 0)),
     [images],
+  );
+  const list = useMemo(
+    () => imagesForColor(baseList, variants, selectedVariant),
+    [baseList, selectedVariant, variants],
   );
   const [current, setCurrent] = useState(0);
   const main = list[current] ?? list[0];
+
+  useEffect(() => {
+    setCurrent(0);
+    const el = document.getElementById("product-mobile-gallery");
+    if (el) el.scrollTo({ left: 0 });
+  }, [selectedVariant?.id]);
 
   function handleMobileScroll(e: UIEvent<HTMLDivElement>) {
     const width = e.currentTarget.clientWidth;

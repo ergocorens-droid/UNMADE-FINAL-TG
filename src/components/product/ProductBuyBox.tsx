@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { VariantSelector } from "@/components/product/VariantSelector";
 import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
@@ -62,7 +62,13 @@ function savingsPercent(variant: ProductVariant | null): number | null {
   return Math.round(((oldPrice - price) / oldPrice) * 100);
 }
 
-export function ProductBuyBox({ product }: { product: Product }) {
+export function ProductBuyBox({
+  product,
+  onSelectedVariantChange,
+}: {
+  product: Product;
+  onSelectedVariantChange?: (variant: ProductVariant | null) => void;
+}) {
   const { t } = useT();
   const { addItem, openCart, isLoading } = useCart();
   const bypassVariantSelection = product.handle === "test1" || isCapProduct(product);
@@ -89,6 +95,12 @@ export function ProductBuyBox({ product }: { product: Product }) {
     setSelectedVariant(v);
     if (v) setSelectionNotice(false);
   }, []);
+
+  useEffect(() => {
+    if (selectedVariant || bypassVariantSelection) {
+      onSelectedVariantChange?.(selectedVariant);
+    }
+  }, [bypassVariantSelection, onSelectedVariantChange, selectedVariant]);
 
   const showSelector =
     !bypassVariantSelection && product.options.some((o) => o.values.length > 1);
@@ -171,6 +183,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           product={product}
           enableColorOptions={productHasColorOption}
           onVariantChange={onVariantChange}
+          onVisualVariantChange={onSelectedVariantChange}
         />
       ) : null}
 

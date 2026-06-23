@@ -130,10 +130,12 @@ export function VariantSelector({
   product,
   enableColorOptions = true,
   onVariantChange,
+  onVisualVariantChange,
 }: {
   product: Product;
   enableColorOptions?: boolean;
   onVariantChange: (variant: ProductVariant | null) => void;
+  onVisualVariantChange?: (variant: ProductVariant | null) => void;
 }) {
   const { t } = useT();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
@@ -151,6 +153,7 @@ export function VariantSelector({
   );
 
   const matched = findVariantForOptions(product, selectedOptions);
+  const visualVariant = findVariantForPartialOptions(product, selectedOptions);
   const combinationUnavailable =
     matched !== null && !matched.availableForSale;
   const visibleOptions = product.options.filter(
@@ -168,6 +171,10 @@ export function VariantSelector({
       onVariantChange(null);
     }
   }, [matched, missingSelection, onVariantChange]);
+
+  useEffect(() => {
+    onVisualVariantChange?.(visualVariant);
+  }, [onVisualVariantChange, visualVariant]);
 
   const optionAvailability = useMemo(() => {
     const map = new Map<string, Map<string, ProductVariant | null>>();

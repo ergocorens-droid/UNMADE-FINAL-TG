@@ -32,6 +32,15 @@ type GQLMerch = {
     handle: string;
     title: string;
     featuredImage: GQLImageRaw | null;
+    variants: {
+      edges: Array<{
+        node: {
+          id: string;
+          selectedOptions: Array<{ name: string; value: string }>;
+          image: GQLImageRaw | null;
+        };
+      }>;
+    };
   };
 };
 
@@ -76,6 +85,14 @@ function mapMerchToCartLineMerch(
       handle: m.product.handle,
       title: m.product.title,
       featuredImage: mapImage(m.product.featuredImage),
+      variants: m.product.variants.edges.map(({ node }) => ({
+        id: node.id,
+        selectedOptions: node.selectedOptions.map((o) => ({
+          name: o.name,
+          value: o.value,
+        })),
+        image: mapImage(node.image),
+      })),
     },
   };
 }

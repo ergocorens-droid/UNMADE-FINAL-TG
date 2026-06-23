@@ -1,9 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ProductBuyBox } from "@/components/product/ProductBuyBox";
-import { ProductGallery } from "@/components/product/ProductGallery";
-import { ProductInfoAccordions } from "@/components/product/ProductInfoAccordions";
+import { ProductPageClient } from "@/components/product/ProductPageClient";
 import { ViewContentTracker } from "@/components/product/ViewContentTracker";
 import { getServerT } from "@/i18n/server";
 import { getProductByHandle } from "@/lib/shopify/api";
@@ -272,22 +270,7 @@ export default async function ProductPage({ params }: Props) {
       </nav>
 
       <div className="mx-auto mt-8 max-w-[1500px] px-4 md:mt-12 md:px-8">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-          <div>
-            <ProductGallery images={product.images} alt={product.title} />
-            <ProductTrustSection className="hidden md:block" />
-          </div>
-          <div>
-            <h1 className="border-b border-black/[0.06] pb-5 text-2xl font-black uppercase leading-tight tracking-normal text-neutral-950 sm:text-3xl lg:text-[34px]">
-              {product.title}
-            </h1>
-
-            <ProductBuyBox key={product.id} product={product} />
-
-            <ProductInfoAccordions html={product.descriptionHtml} />
-            <ProductTrustSection className="md:hidden" />
-          </div>
-        </div>
+        <ProductPageClient product={product} />
       </div>
     </div>
   );
