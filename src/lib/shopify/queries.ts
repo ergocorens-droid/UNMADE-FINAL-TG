@@ -118,7 +118,7 @@ const PRODUCT_LIST_BODY = `
             currencyCode
           }
         }
-        images(first: 1) {
+        images(first: 4) {
           edges {
             node {
               url
