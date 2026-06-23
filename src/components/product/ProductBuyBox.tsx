@@ -62,6 +62,62 @@ function savingsPercent(variant: ProductVariant | null): number | null {
   return Math.round(((oldPrice - price) / oldPrice) * 100);
 }
 
+function ProductPromoOffers() {
+  const offers = [
+    { title: "Kup 2 i odbierz -25%", detail: "na drugi produkt", badge: "x2" },
+    { title: "Kup 3 i odbierz -50%", detail: "na trzeci produkt", badge: "x3" },
+    { title: "Kup 4 i odbierz gratis", detail: "czwarty produkt", badge: "x4" },
+  ] as const;
+
+  return (
+    <div className="space-y-2">
+      {offers.map((offer) => (
+        <div
+          key={offer.badge}
+          className="group flex items-center gap-3 rounded-xl border border-red-100 bg-red-50/70 px-4 py-3 text-red-700 transition hover:border-red-200 hover:bg-red-50"
+        >
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-red-600 ring-1 ring-red-100">
+            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
+              <path
+                d="M20 12.5 12.5 20 4 11.5V4h7.5L20 12.5Z"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M8 8h.01"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-sm font-black leading-tight text-red-700">
+                {offer.title}
+              </p>
+              <span className="rounded-md bg-neutral-900 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em] text-white">
+                {offer.badge}
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs font-semibold text-red-600">
+              {offer.detail} - rabat nalicza sie automatycznie w koszyku
+            </p>
+          </div>
+          <span
+            className="text-xl leading-none text-red-500 transition group-hover:translate-x-0.5"
+            aria-hidden
+          >
+            &rsaquo;
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function ProductBuyBox({
   product,
   onSelectedVariantChange,
@@ -147,6 +203,8 @@ export function ProductBuyBox({
           </p>
         ) : null}
       </div>
+
+      <ProductPromoOffers />
 
       {false && !productHasColorOption && !bypassVariantSelection ? (
         <div>
@@ -274,7 +332,7 @@ export function ProductBuyBox({
         </p>
       </div>
 
-      <div className="rounded-2xl border border-black/[0.08] bg-white p-3">
+      <div className="hidden">
         <div className="mb-3 flex items-center justify-between gap-3 px-1">
           <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-neutral-950">
             Dodaj do koszyka minimum
