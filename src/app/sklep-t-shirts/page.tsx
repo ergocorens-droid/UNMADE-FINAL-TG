@@ -22,21 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type Props = {
-  searchParams: Promise<{
-    sort?: string;
-  }>;
-};
-
-export default async function TshirtsPage({ searchParams }: Props) {
-  const sp = await searchParams;
-
+export default async function TshirtsPage() {
   return (
     <ShopPageContent
       basePath="/sklep-t-shirts"
       active={{
         typ: "t-shirts",
-        sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />
   );

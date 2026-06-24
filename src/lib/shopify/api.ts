@@ -398,7 +398,7 @@ export async function getCollectionByHandle(
     title: c.title,
     description: c.description,
     image: mapImage(c.image),
-    products,
+    products: sort === "losowo" ? hourlyShuffleProducts(products) : products,
   };
 }
 

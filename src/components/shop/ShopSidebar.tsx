@@ -9,7 +9,6 @@ export type ShopFilterState = {
   kolor?: string;
   typ?: string;
   kolekcja?: string;
-  sort?: string;
   q?: string;
 };
 
@@ -20,9 +19,9 @@ function hrefToggleKind(
 ): string {
   const key = kind;
   if (active[key] === handle) {
-    return sklepHref({ sort: active.sort });
+    return sklepHref({});
   } else {
-    return sklepHref({ [key]: handle, sort: active.sort });
+    return sklepHref({ [key]: handle });
   }
 }
 

@@ -7,15 +7,6 @@ import { useT } from "@/i18n/I18nContext";
 import { formatPrice } from "@/lib/format";
 import type { Image as ShopifyImage, Product, ProductOption } from "@/lib/shopify/types";
 
-function shouldShowCompare(product: Product): boolean {
-  const price = product.priceRange.minVariantPrice;
-  const compare = product.compareAtPriceRange.minVariantPrice;
-  if (!price || !compare) return false;
-  const p = Number.parseFloat(price.amount);
-  const c = Number.parseFloat(compare.amount);
-  return Number.isFinite(c) && Number.isFinite(p) && c > p;
-}
-
 const SIZES =
   "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw";
 
@@ -84,8 +75,6 @@ export function ProductCard({ product }: { product: Product }) {
   );
   const img = selectedImage?.url ?? product.featuredImage?.url;
   const price = product.priceRange.minVariantPrice;
-  const compare = product.compareAtPriceRange.minVariantPrice;
-  const showCompare = shouldShowCompare(product);
   const showPrice = Boolean(price);
   const href = `/produkt/${product.handle}`;
 
@@ -130,15 +119,6 @@ export function ProductCard({ product }: { product: Product }) {
               <span className="text-xs font-semibold uppercase text-neutral-500 md:text-sm">
                 {t("product.unavailableInRegion")}
               </span>
-            ) : showCompare && compare && price ? (
-              <>
-                <span className="text-xs text-neutral-500 line-through md:text-sm">
-                  {formatPrice(compare)}
-                </span>
-                <span className="text-xs font-semibold uppercase text-neutral-950 md:text-sm">
-                  {formatPrice(price)}
-                </span>
-              </>
             ) : (
               <span className="text-xs font-semibold uppercase text-neutral-950 md:text-sm">
                 {formatPrice(price!)}
@@ -149,7 +129,7 @@ export function ProductCard({ product }: { product: Product }) {
         {colors.length > 1 ? (
           <div
             className="mt-3 flex items-center gap-1.5"
-            aria-label="Dostepne kolory"
+            aria-label="Dostępne kolory"
           >
             {colors.map((color) => {
               const active = selectedColor === color;

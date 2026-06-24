@@ -39,7 +39,7 @@ export function SizeGuideAccordion() {
           Tabela rozmiarów
         </span>
         <span className="text-sm font-black uppercase tracking-[0.16em]" aria-hidden="true">
-          {open ? "Zwin" : "Rozwin"}
+          {open ? "Zwiń" : "Rozwiń"}
         </span>
       </button>
 
@@ -61,13 +61,13 @@ export function SizeGuideAccordion() {
                   {row.size}
                 </div>
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  <dt className="font-bold text-neutral-500">Dlugosc calkowita</dt>
+                  <dt className="font-bold text-neutral-500">Długość całkowita</dt>
                   <dd className="text-right font-black text-neutral-950">{row.length}</dd>
-                  <dt className="font-bold text-neutral-500">Szerokosc pod pachami</dt>
+                  <dt className="font-bold text-neutral-500">Szerokość pod pachami</dt>
                   <dd className="text-right font-black text-neutral-950">{row.chest}</dd>
-                  <dt className="font-bold text-neutral-500">Szerokosc ramion</dt>
+                  <dt className="font-bold text-neutral-500">Szerokość ramion</dt>
                   <dd className="text-right font-black text-neutral-950">{row.shoulders}</dd>
-                  <dt className="font-bold text-neutral-500">Dlugosc rekawa</dt>
+                  <dt className="font-bold text-neutral-500">Długość rękawa</dt>
                   <dd className="text-right font-black text-neutral-950">{row.sleeve}</dd>
                 </dl>
               </div>
@@ -82,16 +82,16 @@ export function SizeGuideAccordion() {
                     Rozmiar
                   </th>
                   <th className="border-r border-b border-black/[0.08] px-4 py-4 text-xs font-black uppercase tracking-[0.12em]">
-                    Dlugosc calkowita
+                    Długość całkowita
                   </th>
                   <th className="border-r border-b border-black/[0.08] px-4 py-4 text-xs font-black uppercase tracking-[0.12em]">
-                    Szerokosc pod pachami
+                    Szerokość pod pachami
                   </th>
                   <th className="border-r border-b border-black/[0.08] px-4 py-4 text-xs font-black uppercase tracking-[0.12em]">
-                    Szerokosc ramion
+                    Szerokość ramion
                   </th>
                   <th className="border-b border-black/[0.08] px-4 py-4 text-xs font-black uppercase tracking-[0.12em]">
-                    Dlugosc rekawa
+                    Długość rękawa
                   </th>
                 </tr>
               </thead>

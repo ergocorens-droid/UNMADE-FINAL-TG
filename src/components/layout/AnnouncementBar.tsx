@@ -3,9 +3,9 @@
 import Link from "next/link";
 
 const ITEMS = [
-  { icon: "flag-pl", text: "Wysylka z Polski", tone: "flag" },
-  { icon: "★", text: "500+ zadowolonych klientow", tone: "star" },
-  { icon: "🚚", text: "Darmowa wysylka od 190 zl", tone: "delivery" },
+  { icon: "flag-pl", text: "Wysyłka z Polski", tone: "flag" },
+  { icon: "★", text: "500+ zadowolonych klientów", tone: "star" },
+  { icon: "🚚", text: "Darmowa wysyłka od 150 zł", tone: "delivery" },
 ] as const;
 
 export function AnnouncementBar() {
@@ -14,7 +14,7 @@ export function AnnouncementBar() {
       <Link
         href="/sklep"
         className="group relative flex min-h-[2.35rem] items-center overflow-hidden whitespace-nowrap text-[11px] font-black uppercase tracking-[0.14em] md:min-h-[2.5rem] md:text-xs"
-        aria-label="Informacje sklepu: wysylka z Polski, ponad 500 zadowolonych klientow, darmowa wysylka od 190 zl"
+        aria-label="Informacje sklepu: wysyłka z Polski, ponad 500 zadowolonych klientów, darmowa wysyłka od 150 zł"
       >
         <InfoMarquee />
         <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black to-transparent" />

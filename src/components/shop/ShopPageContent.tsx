@@ -1,29 +1,24 @@
-import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { FiltersDrawer } from "@/components/shop/FiltersDrawer";
 import {
   ShopSidebar,
   type ShopFilterState,
 } from "@/components/shop/ShopSidebar";
-import { SortSelect } from "@/components/shop/SortSelect";
 import { getServerT } from "@/i18n/server";
 import { getShopPageProducts, getSidebarCollectionCounts } from "@/lib/shopify/api";
 
 export async function ShopPageContent({
   active,
-  basePath = "/sklep",
 }: {
   active: ShopFilterState;
   basePath?: string;
 }) {
-  const sortParam = active.sort ?? "losowo";
-
   const [products, counts, t] = await Promise.all([
     getShopPageProducts({
       kolor: active.kolor,
       typ: active.typ,
       kolekcja: active.kolekcja,
-      sort: sortParam,
+      sort: "losowo",
       q: active.q,
     }),
     getSidebarCollectionCounts(),
@@ -48,21 +43,12 @@ export async function ShopPageContent({
           </aside>
 
           <div className="min-w-0 flex-1">
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+            <div className="mb-8 flex items-center lg:hidden">
               <div className="lg:hidden">
                 <FiltersDrawer>
                   <ShopSidebar counts={counts} active={active} />
                 </FiltersDrawer>
               </div>
-              <Suspense
-                fallback={
-                  <div className="h-10 w-full max-w-xs animate-pulse bg-black/[0.06] lg:ml-auto" />
-                }
-              >
-                <div className="w-full sm:w-auto lg:ml-auto">
-                  <SortSelect basePath={basePath} />
-                </div>
-              </Suspense>
             </div>
 
             {products.length === 0 ? (

@@ -231,6 +231,37 @@ export function VariantSelector({
               ) : null}
             </div>
 
+            {size ? (
+              <select
+                value={selectedValue ?? ""}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  setSelectedOptions((prev) => {
+                    if (!value) {
+                      const next = { ...prev };
+                      delete next[option.name];
+                      return next;
+                    }
+                    return {
+                      ...prev,
+                      [option.name]: value,
+                    };
+                  });
+                }}
+                className="h-12 w-full border border-black/25 bg-white px-4 text-sm font-medium text-neutral-950 outline-none transition hover:border-neutral-500 focus:border-neutral-950"
+              >
+                <option value="">{t("product.chooseSize")}</option>
+                {option.values.map((value) => {
+                  const v = optionAvailability.get(option.id)?.get(value) ?? null;
+                  const unavailable = v !== null && !v.availableForSale;
+                  return (
+                    <option key={value} value={value} disabled={v === null}>
+                      {unavailable ? `${value} - niedostępny` : value}
+                    </option>
+                  );
+                })}
+              </select>
+            ) : (
             <div className={color ? "flex flex-wrap gap-2.5" : "grid grid-cols-4 gap-2 sm:flex sm:flex-wrap"}>
               {option.values.map((value) => {
                 const v = optionAvailability.get(option.id)?.get(value) ?? null;
@@ -286,6 +317,7 @@ export function VariantSelector({
                 );
               })}
             </div>
+            )}
           </div>
         );
       })}

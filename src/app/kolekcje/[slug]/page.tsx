@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CollectionSlugPage({ params }: Props) {
   const { slug } = await params;
   const [col, t] = await Promise.all([
-    getCollectionByHandle(slug, 48),
+    getCollectionByHandle(slug, 48, "losowo"),
     getServerT(),
   ]);
 

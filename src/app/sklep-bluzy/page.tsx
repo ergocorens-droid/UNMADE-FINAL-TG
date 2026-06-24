@@ -22,21 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type Props = {
-  searchParams: Promise<{
-    sort?: string;
-  }>;
-};
-
-export default async function HoodiesPage({ searchParams }: Props) {
-  const sp = await searchParams;
-
+export default async function HoodiesPage() {
   return (
     <ShopPageContent
       basePath="/sklep-bluzy"
       active={{
         typ: "bluzy",
-        sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />
   );

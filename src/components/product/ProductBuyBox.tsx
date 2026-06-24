@@ -52,72 +52,6 @@ function hasColorOption(product: Product): boolean {
   );
 }
 
-function savingsPercent(variant: ProductVariant | null): number | null {
-  if (!variant?.compareAtPrice) return null;
-  const oldPrice = Number.parseFloat(variant.compareAtPrice.amount);
-  const price = Number.parseFloat(variant.price.amount);
-  if (!Number.isFinite(oldPrice) || !Number.isFinite(price) || oldPrice <= price) {
-    return null;
-  }
-  return Math.round(((oldPrice - price) / oldPrice) * 100);
-}
-
-function ProductPromoOffers() {
-  const offers = [
-    { title: "Kup 2 i odbierz -25%", detail: "na drugi produkt", badge: "x2" },
-    { title: "Kup 3 i odbierz -50%", detail: "na trzeci produkt", badge: "x3" },
-    { title: "Kup 4 i odbierz gratis", detail: "czwarty produkt", badge: "x4" },
-  ] as const;
-
-  return (
-    <div className="space-y-2">
-      {offers.map((offer) => (
-        <div
-          key={offer.badge}
-          className="group flex items-center gap-3 rounded-xl border border-red-100 bg-red-50/70 px-4 py-3 text-red-700 transition hover:border-red-200 hover:bg-red-50"
-        >
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-red-600 ring-1 ring-red-100">
-            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
-              <path
-                d="M20 12.5 12.5 20 4 11.5V4h7.5L20 12.5Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 8h.01"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="text-sm font-black leading-tight text-red-700">
-                {offer.title}
-              </p>
-              <span className="rounded-md bg-neutral-900 px-2 py-0.5 text-[10px] font-black uppercase tracking-[0.08em] text-white">
-                {offer.badge}
-              </span>
-            </div>
-            <p className="mt-0.5 text-xs font-semibold text-red-600">
-              {offer.detail} - rabat nalicza sie automatycznie w koszyku
-            </p>
-          </div>
-          <span
-            className="text-xl leading-none text-red-500 transition group-hover:translate-x-0.5"
-            aria-hidden
-          >
-            &rsaquo;
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function ProductBuyBox({
   product,
   onSelectedVariantChange,
@@ -173,7 +107,6 @@ export function ProductBuyBox({
     selectedVariant.availableForSale &&
     !isLoading;
   const needsVariantSelection = selectedVariant === null;
-  const percentSaved = savingsPercent(displayVariant);
 
   return (
     <div className="space-y-6">
@@ -183,18 +116,6 @@ export function ProductBuyBox({
             <span className="text-3xl font-black text-neutral-950">
               {formatPrice(displayVariant.price)}
             </span>
-            {displayVariant.compareAtPrice &&
-            Number.parseFloat(displayVariant.compareAtPrice.amount) >
-              Number.parseFloat(displayVariant.price.amount) ? (
-              <span className="text-base font-semibold text-neutral-400 line-through">
-                {formatPrice(displayVariant.compareAtPrice)}
-              </span>
-            ) : null}
-            {percentSaved ? (
-              <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-neutral-950">
-                Oszczedzasz {percentSaved}%
-              </span>
-            ) : null}
           </div>
         ) : null}
         {lowStock ? (
@@ -203,8 +124,6 @@ export function ProductBuyBox({
           </p>
         ) : null}
       </div>
-
-      <ProductPromoOffers />
 
       {false && !productHasColorOption && !bypassVariantSelection ? (
         <div>
@@ -245,12 +164,51 @@ export function ProductBuyBox({
         />
       ) : null}
 
-      <div className="space-y-1 rounded-2xl border border-black/[0.06] bg-neutral-50 px-4 py-3 text-xs uppercase tracking-[0.18em] text-neutral-700">
+      <div className="space-y-1 border-y border-black/[0.06] py-3 text-xs uppercase tracking-[0.18em] text-neutral-700">
         <p className="font-black text-neutral-950">Made in Poland</p>
         <p>{t("product.shippingInfo")}</p>
+        <p>{t("product.freeShippingInfo")}</p>
       </div>
 
       <div className="space-y-2">
+        {selectionNotice ? (
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
+            Wybierz najpierw rozmiar
+          </p>
+        ) : selectedVariant && !selectedVariant.availableForSale ? (
+          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
+            Ten wariant jest niedostępny
+          </p>
+        ) : null}
+
+        <button
+          type="button"
+          disabled={isLoading}
+          onClick={() => {
+            if (needsVariantSelection) {
+              setSelectionNotice(true);
+              return;
+            }
+            if (!canAdd || !selectedVariant) return;
+            void (async () => {
+              await addItem(selectedVariant.id, 1);
+              trackEvent("AddToCart", {
+                content_ids: [selectedVariant.id],
+                content_name: product.title,
+                content_type: "product",
+                value: Number.parseFloat(selectedVariant.price.amount),
+                currency: selectedVariant.price.currencyCode,
+              });
+              openCart();
+            })();
+          }}
+          className="min-h-12 w-full bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
+        >
+          {t("product.addToCart")}
+        </button>
+      </div>
+
+      <div className="hidden">
         {selectionNotice ? (
           <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:hidden">
             Wybierz najpierw rozmiar
@@ -260,8 +218,8 @@ export function ProductBuyBox({
             Ten wariant jest niedostępny
           </p>
         ) : null}
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <div className="flex h-14 overflow-hidden rounded-2xl border border-black/15 bg-white sm:w-36">
+        <div className="space-y-2">
+          <div className="hidden">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -316,20 +274,13 @@ export function ProductBuyBox({
               openCart();
             })();
           }}
-          className="min-h-14 w-full rounded-2xl bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
+          className="min-h-12 w-full bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
         >
           {t("product.addToCart")}
           </button>
 
-            <p className="hidden text-center text-xs uppercase tracking-[0.18em] text-neutral-700 sm:block">
-              {t("product.freeShippingInfo")}
-            </p>
           </div>
         </div>
-
-        <p className="text-center text-xs uppercase tracking-[0.18em] text-neutral-700 sm:hidden">
-          {t("product.freeShippingInfo")}
-        </p>
       </div>
 
       <div className="hidden">
@@ -361,7 +312,7 @@ export function ProductBuyBox({
       </div>
 
       <div
-        className="grid grid-cols-4 items-center overflow-hidden rounded-2xl border border-black/[0.06] bg-white"
+        className="grid grid-cols-4 items-center overflow-hidden border border-black/[0.06] bg-white"
         aria-label="Dostępne metody płatności"
       >
         {PAYMENT_METHODS.map((method) => (
@@ -378,6 +329,21 @@ export function ProductBuyBox({
             />
           </div>
         ))}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 text-center text-[11px] uppercase tracking-[0.12em] text-neutral-700">
+        <div className="border border-black/[0.08] bg-white px-2 py-3">
+          <p className="font-black text-neutral-950">2 produkty</p>
+          <p className="mt-1">-5% na całe zamówienie</p>
+        </div>
+        <div className="border border-black/[0.08] bg-white px-2 py-3">
+          <p className="font-black text-neutral-950">3 produkty</p>
+          <p className="mt-1">-10% na całe zamówienie</p>
+        </div>
+        <div className="border border-black/[0.08] bg-white px-2 py-3">
+          <p className="font-black text-neutral-950">4 produkty</p>
+          <p className="mt-1">-20% na całe zamówienie</p>
+        </div>
       </div>
     </div>
   );

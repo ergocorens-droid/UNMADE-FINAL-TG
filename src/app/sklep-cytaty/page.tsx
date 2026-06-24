@@ -22,21 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type Props = {
-  searchParams: Promise<{
-    sort?: string;
-  }>;
-};
-
-export default async function QuotesPage({ searchParams }: Props) {
-  const sp = await searchParams;
-
+export default async function QuotesPage() {
   return (
     <ShopPageContent
       basePath="/sklep-cytaty"
       active={{
         kolekcja: "cytaty",
-        sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />
   );

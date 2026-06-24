@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { CollectionHeader } from "@/components/sections/CollectionHeader";
-import { SortSelect } from "@/components/shop/SortSelect";
 import { getServerLocale, getServerT } from "@/i18n/server";
 import { formatProductCount } from "@/lib/format";
 import { getCollectionByHandle } from "@/lib/shopify/api";
@@ -13,7 +11,6 @@ export const revalidate = 60;
 
 type Props = {
   params: Promise<{ handle: string }>;
-  searchParams: Promise<{ sort?: string }>;
 };
 
 export async function generateMetadata({
@@ -45,14 +42,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function CollectionPage({ params, searchParams }: Props) {
+export default async function CollectionPage({ params }: Props) {
   const { handle } = await params;
-  const sp = await searchParams;
-  const sort = sp.sort;
   const locale = await getServerLocale();
 
   const [collection, t] = await Promise.all([
-    getCollectionByHandle(handle, 100, sort),
+    getCollectionByHandle(handle, 100, "losowo"),
     getServerT(),
   ]);
 
@@ -69,13 +64,6 @@ export default async function CollectionPage({ params, searchParams }: Props) {
           <p className="text-sm font-medium uppercase tracking-wide text-neutral-600">
             {formatProductCount(locale, count)}
           </p>
-          <Suspense
-            fallback={
-              <div className="h-10 w-full max-w-xs animate-pulse bg-black/[0.06] sm:ml-auto" />
-            }
-          >
-            <SortSelect basePath={`/kolekcja/${handle}`} />
-          </Suspense>
         </div>
 
         {count === 0 ? (

@@ -22,21 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type Props = {
-  searchParams: Promise<{
-    sort?: string;
-  }>;
-};
-
-export default async function NeedMoneyPage({ searchParams }: Props) {
-  const sp = await searchParams;
-
+export default async function NeedMoneyPage() {
   return (
     <ShopPageContent
       basePath="/sklep-need-money"
       active={{
         kolekcja: "need-money-for",
-        sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />
   );

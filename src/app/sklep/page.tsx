@@ -28,21 +28,18 @@ type Props = {
     kolor?: string;
     typ?: string;
     kolekcja?: string;
-    sort?: string;
     q?: string;
   }>;
 };
 
 export default async function ShopPage({ searchParams }: Props) {
   const sp = await searchParams;
-  const sortParam = sp.sort ?? "losowo";
   const searchQuery = typeof sp.q === "string" ? sp.q : undefined;
 
   const active: ShopFilterState = {
     kolor: typeof sp.kolor === "string" ? sp.kolor : undefined,
     typ: typeof sp.typ === "string" ? sp.typ : undefined,
     kolekcja: typeof sp.kolekcja === "string" ? sp.kolekcja : undefined,
-    sort: sortParam,
     q: searchQuery,
   };
 

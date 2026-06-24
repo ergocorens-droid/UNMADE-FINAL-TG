@@ -23,6 +23,50 @@ function stripHeading(html: string, heading: string): string {
     .trim();
 }
 
+function htmlText(fragment: string): string {
+  return fragment
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function hasFrontLogoText(fragment: string): boolean {
+  const text = htmlText(fragment);
+  return text.includes("logo") && text.includes("przodu");
+}
+
+function removeFrontLogoListItems(html: string): string {
+  return html
+    .replace(/<li\b[^>]*>[\s\S]*?<\/li>/gi, (item) =>
+      hasFrontLogoText(item) ? "" : item,
+    )
+    .split(/(<br\s*\/?>|\r?\n)/gi)
+    .filter((part) => !hasFrontLogoText(part))
+    .join("");
+}
+
+function normalizeProductDetails(html: string): string {
+  return removeFrontLogoListItems(html)
+    .replace(
+      /<li[^>]*>\s*małe\s+logo\s+z\s+przodu\s*<\/li>/gi,
+      "",
+    )
+    .replace(
+      /<li[^>]*>\s*ma(?:l|ł|Ĺ‚)e\s+logo\s+z\s+przodu\s*<\/li>/gi,
+      "",
+    )
+    .replace(
+      /(gramatura\s*:\s*)(?:<strong[^>]*>)?\s*(?:180\s*[-–]\s*)?190\s*GSM\s*(?:<\/strong>)?/gi,
+      "$1midweight",
+    )
+    .replace(
+      /(materia(?:l|ł|Ĺ‚)\s*:\s*)(?:<strong[^>]*>)?\s*(100%\s*bawe(?:l|ł|Ĺ‚)na)\s*(?:<\/strong>)?/gi,
+      "$1<strong>$2</strong>",
+    );
+}
+
 function splitProductDescription(html: string): {
   detailsHtml: string;
   careHtml: string;
@@ -33,10 +77,10 @@ function splitProductDescription(html: string): {
 
   if (!careMatch || careMatch.index === undefined) {
     return {
-      detailsHtml: stripHeading(
+      detailsHtml: normalizeProductDetails(stripHeading(
         stripHeading(html, "Szczegóły produktu"),
         "SzczegĂłĹ‚y produktu",
-      ),
+      )),
       careHtml: "",
     };
   }
@@ -45,10 +89,10 @@ function splitProductDescription(html: string): {
   const carePart = html.slice(careMatch.index);
 
   return {
-    detailsHtml: stripHeading(
+    detailsHtml: normalizeProductDetails(stripHeading(
       stripHeading(detailsPart, "Szczegóły produktu"),
       "SzczegĂłĹ‚y produktu",
-    ),
+    )),
     careHtml: stripHeading(stripHeading(carePart, "Pielęgnacja"), "PielÄ™gnacja"),
   };
 }
@@ -154,7 +198,7 @@ export function ProductInfoAccordions({ html }: { html: string }) {
     <div className="mt-7 border-t border-black/[0.08]">
       <AccordionItem
         icon="details"
-        title="Szczegoly produktu"
+        title="Szczegóły produktu"
         open={open === "details"}
         onToggle={() => setOpen(open === "details" ? null : "details")}
       >
@@ -165,7 +209,7 @@ export function ProductInfoAccordions({ html }: { html: string }) {
           {careHtml ? (
             <div>
               <p className="mb-2 text-xs font-black uppercase tracking-[0.14em] text-neutral-950">
-                Pielegnacja
+                Pielęgnacja
               </p>
               <div dangerouslySetInnerHTML={{ __html: careHtml }} />
             </div>
@@ -175,21 +219,21 @@ export function ProductInfoAccordions({ html }: { html: string }) {
 
       <AccordionItem
         icon="shipping"
-        title="Wysylka"
+        title="Wysyłka"
         open={open === "shipping"}
         onToggle={() => setOpen(open === "shipping" ? null : "shipping")}
       >
         <div className="space-y-2 text-sm leading-7 text-neutral-800">
-          <p>Wysylamy z Polski w 24-48h.</p>
-          <p>Dostepne metody: kurier InPost oraz Paczkomaty InPost.</p>
-          <p>Latwe zwroty w ciagu 14 dni od odbioru.</p>
+          <p>Wysyłamy z Polski w 24-48h.</p>
+          <p>Dostępne metody: kurier InPost oraz Paczkomaty InPost.</p>
+          <p>Łatwe zwroty w ciągu 14 dni od odbioru.</p>
         </div>
       </AccordionItem>
 
       <AccordionItem
         id="size-guide"
         icon="size"
-        title="Tabela rozmiarow"
+        title="Tabela rozmiarów"
         open={open === "size"}
         onToggle={() => setOpen(open === "size" ? null : "size")}
       >
@@ -204,13 +248,13 @@ export function ProductInfoAccordions({ html }: { html: string }) {
                   {row.size}
                 </div>
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                  <dt className="font-bold text-neutral-500">Dlugosc calkowita</dt>
+                  <dt className="font-bold text-neutral-500">Długość całkowita</dt>
                   <dd className="text-right font-black text-neutral-950">{row.length}</dd>
-                  <dt className="font-bold text-neutral-500">Szerokosc pod pachami</dt>
+                  <dt className="font-bold text-neutral-500">Szerokość pod pachami</dt>
                   <dd className="text-right font-black text-neutral-950">{row.chest}</dd>
-                  <dt className="font-bold text-neutral-500">Szerokosc ramion</dt>
+                  <dt className="font-bold text-neutral-500">Szerokość ramion</dt>
                   <dd className="text-right font-black text-neutral-950">{row.shoulders}</dd>
-                  <dt className="font-bold text-neutral-500">Dlugosc rekawa</dt>
+                  <dt className="font-bold text-neutral-500">Długość rękawa</dt>
                   <dd className="text-right font-black text-neutral-950">{row.sleeve}</dd>
                 </dl>
               </div>
@@ -220,7 +264,7 @@ export function ProductInfoAccordions({ html }: { html: string }) {
             <table className="w-full border-collapse text-left text-sm">
               <thead>
                 <tr className="bg-white text-neutral-950">
-                  {["Rozmiar", "Dlugosc calkowita", "Szerokosc pod pachami", "Szerokosc ramion", "Dlugosc rekawa"].map((head) => (
+                  {["Rozmiar", "Długość całkowita", "Szerokość pod pachami", "Szerokość ramion", "Długość rękawa"].map((head) => (
                     <th key={head} className="border-b border-r border-black/[0.08] px-3 py-3 text-xs font-black uppercase tracking-[0.08em] last:border-r-0">
                       {head}
                     </th>

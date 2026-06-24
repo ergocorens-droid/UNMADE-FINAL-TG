@@ -9,7 +9,7 @@ import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
 import type { CartLineMerchandise } from "@/lib/shopify/types";
 
-const FREE_SHIPPING_THRESHOLD_PLN = 190;
+const FREE_SHIPPING_THRESHOLD_PLN = 150;
 
 function variantLabel(
   merch: { title: string; selectedOptions: { name: string; value: string }[] },

@@ -22,21 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-type Props = {
-  searchParams: Promise<{
-    sort?: string;
-  }>;
-};
-
-export default async function CapsPage({ searchParams }: Props) {
-  const sp = await searchParams;
-
+export default async function CapsPage() {
   return (
     <ShopPageContent
       basePath="/sklep-czapki"
       active={{
         typ: "baseball-cap",
-        sort: typeof sp.sort === "string" ? sp.sort : "najnowsze",
       }}
     />
   );
