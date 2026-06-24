@@ -7,6 +7,7 @@ import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
+import { getTshirtDisplayComparePrice } from "@/lib/product-pricing";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 const PAYMENT_METHODS = [
@@ -80,6 +81,10 @@ export function ProductBuyBox({
     product.variants.find((v) => v.availableForSale) ??
     product.variants[0] ??
     null;
+  const displayComparePrice = getTshirtDisplayComparePrice(
+    product,
+    displayVariant?.price,
+  );
 
   const onVariantChange = useCallback((v: ProductVariant | null) => {
     setSelectedVariant(v);
@@ -113,6 +118,11 @@ export function ProductBuyBox({
       <div className="border-b border-black/[0.06] py-5">
         {displayVariant ? (
           <div className="flex flex-wrap items-center gap-3">
+            {displayComparePrice ? (
+              <span className="text-lg font-semibold text-neutral-400 line-through md:text-xl">
+                {formatPrice(displayComparePrice)}
+              </span>
+            ) : null}
             <span className="text-3xl font-black text-neutral-950">
               {formatPrice(displayVariant.price)}
             </span>
