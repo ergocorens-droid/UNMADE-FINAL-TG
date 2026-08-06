@@ -48,7 +48,7 @@ export function HeroSection() {
             <p className="text-[12px] font-black uppercase tracking-[0.18em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-sm">
               {t("home.heroPromoLabel")}
             </p>
-            <h1 className="mt-3 w-full text-[clamp(25px,7.4vw,58px)] font-black uppercase leading-[0.95] tracking-[-0.025em] drop-shadow-[0_5px_22px_rgba(0,0,0,0.55)] md:mt-4 md:text-[clamp(48px,5.2vw,92px)]">
+            <h1 className="mt-3 w-full text-[clamp(25px,7.4vw,58px)] font-black uppercase leading-[1.02] tracking-[-0.025em] drop-shadow-[0_5px_22px_rgba(0,0,0,0.55)] md:mt-4 md:text-[clamp(48px,5.2vw,92px)] md:leading-[1.08]">
               <span className="block">{t("home.heroPromoTitleLineOne")}</span>
               <span className="block">{t("home.heroPromoTitleLineTwo")}</span>
             </h1>
