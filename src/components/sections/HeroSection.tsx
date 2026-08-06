@@ -13,7 +13,7 @@ export function HeroSection() {
   return (
     <section className="relative aspect-[4/5] min-h-[520px] w-full md:h-auto md:min-h-0 md:aspect-auto">
       <Link
-        href="/sklep"
+        href="/sklep-t-shirts"
         className="block h-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--unmade-accent)] md:h-auto"
         aria-label={t("home.heroCtaAria")}
       >
@@ -41,19 +41,23 @@ export function HeroSection() {
         </div>
 
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex flex-col items-center px-5 pb-10 pt-20 text-center text-white md:px-10 md:pb-10"
-          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex flex-col items-center px-5 pb-8 pt-28 text-center text-white md:px-10 md:pb-10"
         >
-          <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
-          <div className="relative flex flex-col items-center">
-            <span className="text-[13px] font-black lowercase tracking-[0.16em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] md:text-[15px]">
-              clth
-            </span>
-            <span className="mt-3 rounded-full border border-white/80 px-5 py-2 text-[11px] font-black uppercase tracking-[0.12em] shadow-[0_8px_28px_rgba(0,0,0,0.22)] backdrop-blur-sm md:px-7 md:py-3 md:text-[12px]">
-              Sprawd&#x17A; ofert&#x119;
-            </span>
-            <span className="mt-5 max-w-[94vw] text-[clamp(34px,9.6vw,82px)] font-black uppercase leading-[1] tracking-[0.02em] drop-shadow-[0_5px_22px_rgba(0,0,0,0.45)] md:mt-6 md:max-w-[90vw] md:text-[clamp(64px,6.3vw,118px)] md:leading-[0.9]">
-              Wakacyjna wyprzeda&#x17C;
+          <div className="absolute inset-x-0 bottom-0 h-[28rem] bg-gradient-to-t from-black/80 via-black/35 to-transparent md:h-80" />
+          <div className="relative flex w-[calc(100vw-2.5rem)] max-w-5xl flex-col items-center md:w-full">
+            <p className="text-[12px] font-black uppercase tracking-[0.18em] drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-sm">
+              {t("home.heroPromoLabel")}
+            </p>
+            <h1 className="mt-3 w-full text-[clamp(25px,7.4vw,58px)] font-black uppercase leading-[0.95] tracking-[-0.025em] drop-shadow-[0_5px_22px_rgba(0,0,0,0.55)] md:mt-4 md:text-[clamp(48px,5.2vw,92px)]">
+              <span className="block">{t("home.heroPromoTitleLineOne")}</span>
+              <span className="block">{t("home.heroPromoTitleLineTwo")}</span>
+            </h1>
+            <p className="mt-4 w-full max-w-xl text-[13px] font-semibold leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] sm:text-base md:max-w-2xl md:text-lg">
+              <span className="block sm:inline">{t("home.heroPromoSubtitleLead")}</span>{" "}
+              <span className="block sm:inline">{t("home.heroPromoSubtitleMix")}</span>
+            </p>
+            <span className="mt-5 border border-white bg-white px-6 py-3 text-[11px] font-black uppercase tracking-[0.14em] text-black shadow-[0_8px_28px_rgba(0,0,0,0.25)] md:px-8 md:text-xs">
+              {t("home.heroPromoCta")}
             </span>
           </div>
         </div>

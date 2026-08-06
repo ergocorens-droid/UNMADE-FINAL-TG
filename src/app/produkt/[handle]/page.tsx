@@ -248,7 +248,7 @@ export default async function ProductPage({ params }: Props) {
   const trackingPrice = product.priceRange.minVariantPrice;
 
   return (
-    <div className="min-h-screen bg-white pb-20 pt-8 md:pt-12">
+    <div className="min-h-screen bg-white pb-20 pt-5 md:pt-7">
       {trackingPrice ? (
         <ViewContentTracker
           id={product.id}
@@ -261,7 +261,7 @@ export default async function ProductPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav className="mx-auto max-w-[1500px] px-4 text-[11px] uppercase tracking-wide text-neutral-500 md:px-8">
+      <nav className="mx-auto hidden max-w-[1320px] px-4 text-[11px] uppercase tracking-wide text-neutral-500 md:block md:px-8">
         <Link href="/sklep" className="transition hover:text-neutral-900">
           {t("shop.breadcrumbShop")}
         </Link>
@@ -269,7 +269,7 @@ export default async function ProductPage({ params }: Props) {
         <span className="text-neutral-900">{product.title}</span>
       </nav>
 
-      <div className="mx-auto mt-8 max-w-[1500px] px-4 md:mt-12 md:px-8">
+      <div className="mx-auto max-w-[1320px] px-4 md:mt-6 md:px-8">
         <ProductPageClient product={product} />
       </div>
     </div>

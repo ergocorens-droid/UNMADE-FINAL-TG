@@ -206,16 +206,22 @@ export function VariantSelector({
 
         return (
           <div key={option.id}>
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-neutral-500">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <div
+                className={`flex items-center ${
+                  size
+                    ? "w-full justify-between gap-2"
+                    : "flex-wrap gap-x-4 gap-y-2"
+                }`}
+              >
+                <p className="shrink-0 text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-500 sm:text-xs sm:tracking-[0.18em]">
                   {color ? "Kolor" : label}
                 </p>
                 {size ? (
                   <button
                     type="button"
                     onClick={openSizeGuide}
-                    className="inline-flex items-center gap-1.5 border-b border-black/25 pb-0.5 text-xs font-bold text-neutral-950 transition hover:border-black"
+                    className="inline-flex shrink-0 items-center gap-1 border-b border-black/25 pb-0.5 text-[11px] font-bold text-neutral-950 transition hover:border-black sm:gap-1.5 sm:text-xs"
                   >
                     <span className="text-sm leading-none" aria-hidden>
                       ↔
@@ -224,7 +230,7 @@ export function VariantSelector({
                   </button>
                 ) : null}
               </div>
-              {selectedValue ? (
+              {selectedValue && !size ? (
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-950">
                   {color ? colorLabel(selectedValue) : selectedValue}
                 </p>
@@ -248,7 +254,7 @@ export function VariantSelector({
                     };
                   });
                 }}
-                className="h-12 w-full border border-black/25 bg-white px-4 text-sm font-medium text-neutral-950 outline-none transition hover:border-neutral-500 focus:border-neutral-950"
+                className="h-11 w-full border border-black/25 bg-white px-3 text-sm font-medium text-neutral-950 outline-none transition hover:border-neutral-500 focus:border-neutral-950 sm:h-12 sm:px-4"
               >
                 <option value="">{t("product.chooseSize")}</option>
                 {option.values.map((value) => {

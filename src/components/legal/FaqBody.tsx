@@ -4,6 +4,15 @@ import { COMPANY } from "@/lib/legal/company";
 export function FaqBody() {
   return (
     <>
+      <h2 id="promocja-2-plus-1" className="legal-h2 scroll-mt-24">
+        FAQ — promocja 2+1 gratis
+      </h2>
+      <h3 className="legal-h3">Jak działa promocja 2+1 gratis?</h3>
+      <p>
+        Dodaj do koszyka 3 dowolne koszulki objęte promocją. Możesz mieszać wzory, kolory i rozmiary. Kupujesz 2 koszulki,
+        a za trzecią płacisz 0 zł. Promocja nie obejmuje bluz, czapek ani innych produktów.
+      </p>
+
       <h2 id="wysylka" className="legal-h2 scroll-mt-24">
         FAQ — wysyłka
       </h2>

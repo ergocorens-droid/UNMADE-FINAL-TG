@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useT } from "@/i18n/I18nContext";
 import { formatPrice } from "@/lib/format";
-import { getTshirtDisplayComparePrice } from "@/lib/product-pricing";
 import type { Image as ShopifyImage, Product, ProductOption } from "@/lib/shopify/types";
 
 const SIZES =
@@ -76,7 +75,6 @@ export function ProductCard({ product }: { product: Product }) {
   );
   const img = selectedImage?.url ?? product.featuredImage?.url;
   const price = product.priceRange.minVariantPrice;
-  const comparePrice = getTshirtDisplayComparePrice(product, price);
   const showPrice = Boolean(price);
   const href = `/produkt/${product.handle}`;
 
@@ -122,16 +120,9 @@ export function ProductCard({ product }: { product: Product }) {
                 {t("product.unavailableInRegion")}
               </span>
             ) : (
-              <>
-                {comparePrice ? (
-                  <span className="text-xs font-medium uppercase text-neutral-400 line-through md:text-sm">
-                    {formatPrice(comparePrice)}
-                  </span>
-                ) : null}
-                <span className="text-xs font-semibold uppercase text-neutral-950 md:text-sm">
-                  {formatPrice(price!)}
-                </span>
-              </>
+              <span className="text-xs font-semibold uppercase text-neutral-950 md:text-sm">
+                {formatPrice(price!)}
+              </span>
             )}
           </div>
         </Link>

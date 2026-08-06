@@ -228,19 +228,19 @@ export function ProductGallery({
     <div>
       <div
         id="product-mobile-gallery"
-        className="flex snap-x snap-mandatory overflow-x-auto border border-black/[0.06] bg-white md:hidden"
+        className="flex snap-x snap-mandatory overflow-x-auto border border-black/[0.06] bg-[#f5f5f5] md:hidden"
         onScroll={handleMobileScroll}
       >
         {list.map((img, i) => (
           <div
             key={`${img.url}-mobile-${i}`}
-            className="relative aspect-square w-full shrink-0 snap-center"
+            className="relative aspect-[4/3] w-full shrink-0 snap-center"
           >
             <Image
               src={img.url}
               alt={i === 0 ? alt : ""}
               fill
-              className="object-cover"
+              className="object-contain p-2"
               sizes="100vw"
               priority={i === 0}
             />
@@ -249,26 +249,26 @@ export function ProductGallery({
       </div>
 
       <div
-        className="relative hidden aspect-square overflow-hidden border border-black/[0.06] bg-white [--zoom-x:50%] [--zoom-y:50%] md:block md:cursor-zoom-in"
+        className="relative hidden aspect-square w-full max-w-[500px] overflow-hidden border border-black/[0.06] bg-[#f5f5f5] [--zoom-x:50%] [--zoom-y:50%] md:block md:cursor-zoom-in"
         onPointerMove={updateZoomOrigin}
       >
         <Image
           src={main.url}
           alt={alt}
           fill
-          className="object-cover transition-transform duration-500 ease-out [transform-origin:var(--zoom-x)_var(--zoom-y)] md:hover:scale-[1.85]"
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-contain p-3 transition-transform duration-500 ease-out [transform-origin:var(--zoom-x)_var(--zoom-y)] md:hover:scale-[1.45]"
+          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 44vw, 500px"
           priority
         />
       </div>
       {list.length > 1 ? (
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+        <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
           {list.map((img, i) => (
             <button
               key={`${img.url}-${i}`}
               type="button"
               onClick={() => scrollToImage(i)}
-              className={`relative h-16 w-16 shrink-0 overflow-hidden border bg-white ${
+              className={`relative h-14 w-14 shrink-0 overflow-hidden border bg-[#f5f5f5] ${
                 i === current ? "border-neutral-900" : "border-black/[0.06]"
               }`}
             >
@@ -276,8 +276,8 @@ export function ProductGallery({
                 src={img.url}
                 alt=""
                 fill
-                className="object-cover"
-                sizes="64px"
+                className="object-contain p-1"
+                sizes="56px"
               />
             </button>
           ))}

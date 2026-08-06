@@ -7,7 +7,7 @@ import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
-import { getTshirtDisplayComparePrice } from "@/lib/product-pricing";
+import { isTshirtProduct } from "@/lib/product-pricing";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 const PAYMENT_METHODS = [
@@ -53,6 +53,17 @@ function hasColorOption(product: Product): boolean {
   );
 }
 
+function isTshirtCartProduct(product: { handle: string; title: string }): boolean {
+  const text = `${product.handle} ${product.title}`.toLowerCase();
+  return (
+    text.includes("t-shirts") ||
+    text.includes("t-shirt") ||
+    text.includes("tshirt") ||
+    text.includes("tee") ||
+    text.includes("koszul")
+  );
+}
+
 export function ProductBuyBox({
   product,
   onSelectedVariantChange,
@@ -61,10 +72,18 @@ export function ProductBuyBox({
   onSelectedVariantChange?: (variant: ProductVariant | null) => void;
 }) {
   const { t } = useT();
-  const { addItem, openCart, isLoading } = useCart();
+  const { addItem, openCart, isLoading, cart } = useCart();
   const bypassVariantSelection = product.handle === "test1" || isCapProduct(product);
   const allowColorSelection = isApparelWithColorProduct(product);
   const productHasColorOption = allowColorSelection && hasColorOption(product);
+  const showTshirtPromotion = isTshirtProduct(product);
+  const tshirtCartQuantity =
+    cart?.lines.reduce((quantity, line) => {
+      if (!isTshirtCartProduct(line.merchandise.product)) return quantity;
+      return quantity + line.quantity;
+    }, 0) ?? 0;
+  const activePromoStep =
+    tshirtCartQuantity >= 3 ? 3 : tshirtCartQuantity === 2 ? 2 : 1;
 
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
     () =>
@@ -74,17 +93,12 @@ export function ProductBuyBox({
           null)
         : null,
   );
-  const [quantity, setQuantity] = useState(1);
   const [selectionNotice, setSelectionNotice] = useState(false);
   const displayVariant =
     selectedVariant ??
     product.variants.find((v) => v.availableForSale) ??
     product.variants[0] ??
     null;
-  const displayComparePrice = getTshirtDisplayComparePrice(
-    product,
-    displayVariant?.price,
-  );
 
   const onVariantChange = useCallback((v: ProductVariant | null) => {
     setSelectedVariant(v);
@@ -114,17 +128,23 @@ export function ProductBuyBox({
   const needsVariantSelection = selectedVariant === null;
 
   return (
-    <div className="space-y-6">
-      <div className="border-b border-black/[0.06] py-5">
+    <div className="space-y-3 sm:space-y-4">
+      <div className="border-b border-black/[0.06] pb-3 pt-0 sm:py-3.5">
         {displayVariant ? (
           <div className="flex flex-wrap items-center gap-3">
-            {displayComparePrice ? (
-              <span className="text-lg font-semibold text-neutral-400 line-through md:text-xl">
-                {formatPrice(displayComparePrice)}
-              </span>
-            ) : null}
-            <span className="text-3xl font-black text-neutral-950">
+            <span className="text-2xl font-black text-neutral-950 sm:text-[28px]">
               {formatPrice(displayVariant.price)}
+            </span>
+            <span
+              className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[8px] font-bold uppercase tracking-[0.07em] sm:text-[9px]"
+              style={{
+                backgroundColor: "#EAF8F1",
+                borderColor: "#B8E6CF",
+                color: "#0B7A4B",
+              }}
+            >
+              <span aria-hidden>✓</span>
+              {t("product.freeShippingBadge")}
             </span>
           </div>
         ) : null}
@@ -134,6 +154,146 @@ export function ProductBuyBox({
           </p>
         ) : null}
       </div>
+
+      {showTshirtPromotion ? (
+        <section
+          className="overflow-hidden rounded-xl border border-[#D3D3D3] bg-white sm:rounded-lg"
+          style={{
+            borderColor: "#D3D3D3",
+            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.07)",
+          }}
+          aria-label={t("product.promoTitle")}
+        >
+          <div
+            className="border-b px-4 py-3.5 sm:py-2.5"
+            style={{ backgroundColor: "#FFFFFF", borderColor: "#D9D9D9" }}
+          >
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.07em] text-[#111111] sm:tracking-[0.08em]">
+                {t("product.promoTitle")}
+              </p>
+              <p className="mt-1 text-[11px] font-medium leading-relaxed text-[#6B6B6B]">
+                {t("product.promoBody")}
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="divide-x-2 divide-[#D9D9D9]"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+            }}
+          >
+            <div
+              className={`relative flex min-h-[82px] flex-col justify-center px-1.5 py-3 text-center transition-colors sm:min-h-[64px] sm:px-2 sm:py-2.5 ${
+                activePromoStep === 1 ? "bg-[#FAFAFA]" : "bg-white"
+              }`}
+              style={{
+                backgroundColor: activePromoStep === 1 ? "#FAFAFA" : "#FFFFFF",
+              }}
+              aria-current={activePromoStep === 1 ? "step" : undefined}
+            >
+              <span
+                className={`absolute inset-x-0 top-0 h-[3px] sm:h-0.5 ${
+                  activePromoStep === 1 ? "bg-[#D2D2D2]" : "bg-[#D9D9D9]"
+                }`}
+                style={{
+                  backgroundColor: activePromoStep === 1 ? "#D2D2D2" : "#D9D9D9",
+                }}
+                aria-hidden
+              />
+              <p
+                className="text-[11px] font-black uppercase leading-tight text-[#111111]"
+                style={{ wordSpacing: "0.18em" }}
+              >
+                {t("product.promoOne")}
+              </p>
+              <p
+                className={`mt-1.5 whitespace-nowrap text-[8px] font-black uppercase leading-tight tracking-[0.02em] sm:text-[9px] sm:tracking-[0.03em] ${
+                  activePromoStep === 1 ? "text-[#6B6B6B]" : "text-[#6B6B6B]"
+                }`}
+              >
+                {tshirtCartQuantity >= 1
+                  ? t("product.promoOneSelected")
+                  : t("product.promoOneDetail")}
+              </p>
+            </div>
+            <div
+              className={`relative flex min-h-[82px] flex-col justify-center px-1.5 py-3 text-center transition-colors sm:min-h-[64px] sm:px-2 sm:py-2.5 ${
+                activePromoStep === 2 ? "bg-[#E8F3ED]" : "bg-[#F2F2F2]"
+              }`}
+              style={{
+                backgroundColor: activePromoStep === 2 ? "#E4F2EA" : "#F2F2F2",
+              }}
+              aria-current={activePromoStep === 2 ? "step" : undefined}
+            >
+              <span
+                className={`absolute inset-x-0 top-0 h-[3px] sm:h-0.5 ${
+                  activePromoStep === 2 ? "bg-[#4F8069]" : "bg-[#8A8A8A]"
+                }`}
+                style={{
+                  backgroundColor: activePromoStep === 2 ? "#4F8069" : "#8A8A8A",
+                }}
+                aria-hidden
+              />
+              <p
+                className="text-[11px] font-black uppercase leading-tight text-[#111111]"
+                style={{ wordSpacing: "0.18em" }}
+              >
+                {t("product.promoTwo")}
+              </p>
+              <p
+                className={`mt-1.5 text-[9px] font-black uppercase leading-tight tracking-[0.03em] ${
+                  activePromoStep === 2 ? "text-[#111111]" : "text-[#6B6B6B]"
+                }`}
+                style={{ color: activePromoStep === 2 ? "#2F5F49" : "#4A4A4A" }}
+              >
+                {tshirtCartQuantity >= 2
+                  ? t("product.promoTwoSelected")
+                  : tshirtCartQuantity === 1
+                    ? t("product.promoTwoNext")
+                    : t("product.promoTwoDetail")}
+              </p>
+            </div>
+            <div
+              className={`relative flex min-h-[82px] flex-col justify-center px-1.5 py-3 text-center transition-colors sm:min-h-[64px] sm:px-2 sm:py-2.5 ${
+                activePromoStep === 3 ? "bg-[#DDF4E8]" : "bg-[#EAF8F1]"
+              }`}
+              style={{
+                backgroundColor: activePromoStep === 3 ? "#D8F1E4" : "#E5F7EE",
+              }}
+              aria-current={activePromoStep === 3 ? "step" : undefined}
+            >
+              <span
+                className={`absolute inset-x-0 top-0 h-[3px] sm:h-0.5 ${
+                  activePromoStep === 3 ? "bg-[#0B7A4B]" : "bg-[#7FC5A1]"
+                }`}
+                style={{
+                  backgroundColor: activePromoStep === 3 ? "#0B7A4B" : "#7FC5A1",
+                }}
+                aria-hidden
+              />
+              <p
+                className="text-[11px] font-black uppercase leading-tight text-[#111111]"
+                style={{ color: "#0B7A4B", wordSpacing: "0.18em" }}
+              >
+                {t("product.promoThree")}
+              </p>
+              <p
+                className={`mt-1.5 text-[9px] font-black uppercase leading-tight tracking-[0.03em] transition-colors ${
+                  activePromoStep === 3 ? "text-[#0B7A4B]" : "text-[#6B6B6B]"
+                }`}
+                style={{ color: activePromoStep === 3 ? "#075E3A" : "#0B7A4B" }}
+              >
+                {tshirtCartQuantity === 2
+                  ? t("product.promoThreeNext")
+                  : t("product.promoThreeDetail")}
+              </p>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {false && !productHasColorOption && !bypassVariantSelection ? (
         <div>
@@ -174,12 +334,6 @@ export function ProductBuyBox({
         />
       ) : null}
 
-      <div className="space-y-1 border-y border-black/[0.06] py-3 text-xs uppercase tracking-[0.18em] text-neutral-700">
-        <p className="font-black text-neutral-950">Made in Poland</p>
-        <p>{t("product.shippingInfo")}</p>
-        <p>{t("product.freeShippingInfo")}</p>
-      </div>
-
       <div className="space-y-2">
         {selectionNotice ? (
           <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
@@ -218,106 +372,23 @@ export function ProductBuyBox({
         </button>
       </div>
 
-      <div className="hidden">
-        {selectionNotice ? (
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:hidden">
-            Wybierz najpierw rozmiar
-          </p>
-        ) : selectedVariant && !selectedVariant.availableForSale ? (
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:hidden">
-            Ten wariant jest niedostępny
-          </p>
-        ) : null}
-        <div className="space-y-2">
-          <div className="hidden">
-          <button
-            type="button"
-            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="flex w-12 items-center justify-center bg-neutral-100 text-xl font-black text-neutral-950 transition hover:bg-neutral-200"
-            aria-label="Zmniejsz ilość"
+      <div className="space-y-1 border-y border-black/[0.06] py-2.5 text-[11px] uppercase tracking-[0.16em] text-neutral-700">
+        <p className="font-black text-neutral-950">Made in Poland</p>
+        <p>{t("product.shippingInfo")}</p>
+        <p className="flex items-center gap-2 pt-1">
+          <span
+            className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black"
+            style={{ backgroundColor: "#EAF8F1", color: "#0B7A4B" }}
+            aria-hidden
           >
-            -
-          </button>
-          <span className="flex flex-1 items-center justify-center text-sm font-black tabular-nums text-neutral-950">
-            {quantity}
+            ✓
           </span>
-          <button
-            type="button"
-            onClick={() => setQuantity((q) => q + 1)}
-            className="flex w-12 items-center justify-center bg-neutral-100 text-xl font-black text-neutral-950 transition hover:bg-neutral-200"
-            aria-label="Zwiększ ilość"
+          <span
+            className="font-black tracking-[0.12em]"
+            style={{ color: "#0B7A4B" }}
           >
-            +
-          </button>
-        </div>
-
-          <div className="flex-1 space-y-2">
-            {selectionNotice ? (
-              <p className="hidden text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:block">
-                Wybierz najpierw rozmiar
-              </p>
-            ) : selectedVariant && !selectedVariant.availableForSale ? (
-              <p className="hidden text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600 sm:block">
-                Ten wariant jest niedostępny
-              </p>
-            ) : null}
-
-        <button
-          type="button"
-          disabled={isLoading}
-          onClick={() => {
-            if (needsVariantSelection) {
-              setSelectionNotice(true);
-              return;
-            }
-            if (!canAdd || !selectedVariant) return;
-            void (async () => {
-              await addItem(selectedVariant.id, quantity);
-              trackEvent("AddToCart", {
-                content_ids: [selectedVariant.id],
-                content_name: product.title,
-                content_type: "product",
-                value:
-                  Number.parseFloat(selectedVariant.price.amount) * quantity,
-                currency: selectedVariant.price.currencyCode,
-              });
-              openCart();
-            })();
-          }}
-          className="min-h-12 w-full bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
-        >
-          {t("product.addToCart")}
-          </button>
-
-          </div>
-        </div>
-      </div>
-
-      <div className="hidden">
-        <div className="mb-3 flex items-center justify-between gap-3 px-1">
-          <p className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] text-neutral-950">
-            Dodaj do koszyka minimum
-            <span className="text-base leading-none text-neutral-500" aria-hidden>
-              ↓
-            </span>
-          </p>
-        </div>
-        <div className="grid gap-2 text-xs uppercase tracking-[0.14em] text-neutral-700 sm:grid-cols-3">
-          <div className="rounded-xl bg-neutral-100 px-3 py-3">
-            <p className="font-black text-neutral-950">2 produkty</p>
-            <p className="mt-1">-25% na drugi</p>
-          </div>
-          <div className="rounded-xl bg-neutral-50 px-3 py-3">
-            <p className="font-black text-neutral-950">3 produkty</p>
-            <p className="mt-1">-50% na trzeci</p>
-          </div>
-          <div className="rounded-xl bg-neutral-50 px-3 py-3">
-            <p className="font-black text-neutral-950">4 produkty</p>
-            <p className="mt-1">czwarty gratis</p>
-          </div>
-        </div>
-        <p className="mt-3 px-1 text-[11px] uppercase leading-relaxed tracking-[0.14em] text-neutral-500">
-          Promocja obejmuje koszulki, bluzy i czapki. Rabat nalicza się automatycznie.
+            {t("product.freeShippingInfo")}
+          </span>
         </p>
       </div>
 
@@ -341,20 +412,6 @@ export function ProductBuyBox({
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-center text-[11px] uppercase tracking-[0.12em] text-neutral-700">
-        <div className="border border-black/[0.08] bg-white px-2 py-3">
-          <p className="font-black text-neutral-950">2 produkty</p>
-          <p className="mt-1">-5% na całe zamówienie</p>
-        </div>
-        <div className="border border-black/[0.08] bg-white px-2 py-3">
-          <p className="font-black text-neutral-950">3 produkty</p>
-          <p className="mt-1">-10% na całe zamówienie</p>
-        </div>
-        <div className="border border-black/[0.08] bg-white px-2 py-3">
-          <p className="font-black text-neutral-950">4 produkty</p>
-          <p className="mt-1">-20% na całe zamówienie</p>
-        </div>
-      </div>
     </div>
   );
 }

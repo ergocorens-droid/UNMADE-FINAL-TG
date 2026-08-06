@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useT } from "@/i18n/I18nContext";
 import { formatPrice } from "@/lib/format";
-import { getTshirtDisplayComparePrice } from "@/lib/product-pricing";
 import { clientSearchProducts } from "@/lib/shopify/search-products-client";
 import { currencyToCountryCode } from "@/lib/shopify/markets";
 import { useCurrency } from "@/context/CurrencyContext";
@@ -135,7 +134,6 @@ export function SearchOverlay({
           {results.map((p) => {
             const img = p.featuredImage?.url;
             const price = p.priceRange.minVariantPrice;
-            const comparePrice = getTshirtDisplayComparePrice(p, price);
             return (
               <li key={p.id}>
                 <Link
@@ -159,13 +157,8 @@ export function SearchOverlay({
                       {p.title}
                     </p>
                     {price ? (
-                      <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-neutral-600">
-                        {comparePrice ? (
-                          <span className="text-neutral-400 line-through">
-                            {formatPrice(comparePrice)}
-                          </span>
-                        ) : null}
-                        <span>{formatPrice(price)}</span>
+                      <p className="mt-1 text-xs text-neutral-600">
+                        {formatPrice(price)}
                       </p>
                     ) : (
                       <p className="mt-1 text-xs text-neutral-600">

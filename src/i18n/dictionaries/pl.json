@@ -28,21 +28,20 @@
     "cart": "Koszyk"
   },
   "announcement": {
-    "firstDrop": "PIERWSZY DROP — DO -15% Z KODEM IGNITION"
-  },
-  "promo": {
-    "label": "PIERWSZY DROP — PROMOCJA",
-    "discount": "-{percent}%",
-    "endsIn": "KOŃCZY SIĘ ZA",
-    "days": "d",
-    "hours": "h",
-    "minutes": "m",
-    "seconds": "s"
+    "active": "PROMOCJA AKTYWNA",
+    "full": "2+1 GRATIS — KUP 2 KOSZULKI, TRZECIĄ OTRZYMASZ GRATIS",
+    "short": "2+1 GRATIS NA WSZYSTKIE KOSZULKI"
   },
   "home": {
     "viewCollection": "ZOBACZ CAŁĄ KOLEKCJĘ",
-    "heroCtaAria": "Przejdź do sklepu — 2026 Collection",
+    "heroCtaAria": "Wybierz koszulki objęte promocją 2+1 gratis",
     "heroImageAlt": "CLTH.PL — limitowany streetwear",
+    "heroPromoLabel": "2+1 GRATIS",
+    "heroPromoTitleLineOne": "KUP 2, TRZECIĄ",
+    "heroPromoTitleLineTwo": "ZGARNIJ GRATIS",
+    "heroPromoSubtitleLead": "Wybierz 3 dowolne koszulki.",
+    "heroPromoSubtitleMix": "Możesz mieszać wzory, kolory i rozmiary.",
+    "heroPromoCta": "WYBIERAM KOSZULKI",
     "scrollHint": "Przewijaj"
   },
   "carousel": {
@@ -50,7 +49,7 @@
   },
   "metadata": {
     "homeTitle": "CLTH.PL — limitowane koszulki streetwear i dropy",
-    "homeDescription": "CLTH.PL to oficjalny sklep streetwear. Koszulki z mocnymi hasłami, bluzy, autorskie nadruki i krótkie dropy dostępne online.",
+    "homeDescription": "CLTH.PL to oficjalny sklep streetwear. Wybierz 3 dowolne koszulki — za trzecią zapłacisz 0 zł w promocji 2+1.",
     "shopTitle": "Sklep | CLTH.PL — koszulki, bluzy i limitowane dropy",
     "shopDescription": "Oficjalny sklep CLTH.PL. Koszulki, bluzy, koszulki z cytatami i limitowane dropy tworzone w czystym streetwearowym stylu.",
     "collectionFallback": "Kolekcja — CLTH.PL",
@@ -58,7 +57,7 @@
     "kontaktTitle": "Kontakt",
     "kontaktDescription": "Skontaktuj się z CLTH.PL — napisz do nas mailowo w sprawie zamówienia, współpracy lub dropu.",
     "wysylkaTitle": "Wysyłka",
-    "wysylkaDescription": "Wysyłka CLTH.PL — darmowa od 300 zł, InPost, DPD, czas dostawy i koszty.",
+    "wysylkaDescription": "Wysyłka CLTH.PL — darmowa już od pierwszego produktu. InPost, DPD, czas dostawy i dostępne metody.",
     "kolekcjeListTitle": "Kolekcje",
     "kolekcjeListDescription": "Kolekcje CLTH.PL — limitowane dropy, koszulki z cytatami i streetwearowe essentials.",
     "kolekcjeFallbackDescription": "Kolekcje CLTH.PL.",
@@ -119,11 +118,31 @@
     "chooseSize": "Wybierz rozmiar",
     "color": "Kolor",
     "shippingInfo": "Wysyłka z Polski 24H–48H",
-    "freeShippingInfo": "Darmowa wysyłka od 150 zł",
+    "freeShippingInfo": "Darmowa wysyłka od pierwszego produktu",
+    "freeShippingBadge": "DARMOWA WYSYŁKA",
     "unavailable": "Niedostępne",
     "description": "Opis",
     "tagsLabel": "Tagi:",
     "collectionsLabel": "Kolekcje:",
+    "promoTitle": "2+1 GRATIS",
+    "promoEyebrow": "TYLKO KOSZULKI",
+    "promoBody": "Dodaj 3 dowolne koszulki do koszyka — trzecia będzie GRATIS.",
+    "promoAddThree": "DODAJ 3 DOWOLNE KOSZULKI DO KOSZYKA",
+    "promoMix": "Możesz łączyć różne wzory, kolory i rozmiary.",
+    "promoOne": "1 KOSZULKA",
+    "promoOneDetail": "WYBIERZ PIERWSZĄ",
+    "promoOneSelected": "WYBRANO 1",
+    "promoTwo": "2 KOSZULKI",
+    "promoTwoDetail": "DODAJ DRUGĄ",
+    "promoTwoNext": "DODAJ JESZCZE 1",
+    "promoTwoSelected": "WYBRANO 2",
+    "promoThree": "3 KOSZULKI",
+    "promoThreeDetail": "TRZECIA GRATIS",
+    "promoThreeNext": "DODAJ JESZCZE 1",
+    "promoStepChoose": "WYBIERZ 3 KOSZULKI",
+    "promoStepMix": "ŁĄCZ DOWOLNIE",
+    "promoStepFree": "TRZECIA ZA 0 ZŁ",
+    "promoFreeLine": "TRZECIA KOSZULKA KOSZTUJE 0 ZŁ",
     "unavailableInRegion": "Niedostępne w Twoim regionie"
   },
   "cart": {
@@ -138,9 +157,11 @@
     "qtyDecrease": "Zmniejsz ilość",
     "qtyIncrease": "Zwiększ ilość",
     "currencyChangeWarning": "Zmiana waluty wyczyści koszyk. Kontynuować?",
-    "freeShippingThreshold": "Darmowa wysyłka od 150 zł",
-    "freeShippingRemaining": "Do darmowej wysyłki brakuje Ci {amount}",
-    "freeShippingUnlocked": "Masz darmową wysyłkę",
+    "freeShippingTitle": "DARMOWA WYSYŁKA",
+    "freeShippingBody": "Obowiązuje już od pierwszego produktu w zamówieniu.",
+    "freeShippingShort": "DARMOWA WYSYŁKA OD 1 PRODUKTU",
+    "promoTitle": "2+1 GRATIS",
+    "promoBody": "Wybierz 3 dowolne koszulki. Za trzecią zapłacisz 0 zł.",
     "units": "szt."
   },
   "search": {
@@ -204,14 +225,14 @@
     "tiktokLabel": "TikTok:"
   },
   "wysylkaPage": {
-    "tagline": "🔥 Darmowa dostawa od 300 zł",
+    "tagline": "🔥 Darmowa dostawa od pierwszego produktu",
     "title": "WYSYŁKA",
-    "bulletFreeShipping": "Darmowa wysyłka od 300 zł",
+    "bulletFreeShipping": "Darmowa wysyłka od pierwszego produktu",
     "bulletDispatched24h": "Wysyłka w 24h po złożeniu zamówienia",
     "bulletDeliveryTime": "Czas dostawy: 2–4 dni robocze (Polska)",
     "bulletCourier": "Kurier: InPost / DPD",
     "bulletPaczkomaty": "Paczkomaty InPost dostępne",
-    "bulletCostBelowFree": "Koszt wysyłki poniżej 300 zł: 14,99 zł",
+    "bulletCostBelowFree": "Koszt wysyłki na terenie Polski: 0 zł",
     "bulletInternationalPrefix": "Wysyłka międzynarodowa: na zapytanie (",
     "bulletInternationalSuffix": ")"
   },
@@ -251,24 +272,24 @@
     "sent": "Dziękujemy za wiadomość. Odpowiemy możliwie szybko."
   },
   "emailPopup": {
-    "title": "ODBIERZ -10% NA PIERWSZY ZAKUP",
-    "body": "Zapisz się do newslettera i odbierz kod rabatowy na maila. Dołącz do 500+ osób, które nie przegapiają dropów.",
+    "title": "DOŁĄCZ DO CLTH.PL",
+    "body": "Zapisz się do newslettera i jako pierwszy dowiaduj się o nowych dropach i limitowanych seriach.",
     "emailLabel": "Twój adres e-mail",
     "placeholder": "Twój adres e-mail",
-    "submit": "CHCĘ RABAT",
-    "footer": "Brak spamu. Tylko dropy i kody rabatowe."
+    "submit": "ZAPISUJĘ SIĘ",
+    "footer": "Brak spamu. Tylko nowe dropy i informacje od CLTH.PL."
   },
   "trustBadges": {
     "nationwideTitle": "WYSYŁKA W CAŁEJ POLSCE",
     "nationwideSub": "DOSTARCZYMY POD TWOJE DRZWI",
-    "freeTitle": "DARMOWA DOSTAWA OD 300 ZŁ",
+    "freeTitle": "DARMOWA DOSTAWA OD 1 PRODUKTU",
     "freeSub": "BEZ UKRYTYCH KOSZTÓW",
     "returnsTitle": "14 DNI NA ZWROT",
     "returnsSub": "SKONTAKTUJ SIĘ Z NAMI LUB ZWRÓĆ PRZEZ KONTO"
   },
   "newsletterSection": {
     "title": "ZAPISZ SIĘ NA NEWSLETTER",
-    "subtitle": "BĄDŹ PIERWSZY — NOWE DROPY, KODY RABATOWE I LIMITOWANE SERIE PROSTO NA MAILA",
+    "subtitle": "BĄDŹ PIERWSZY — NOWE DROPY I LIMITOWANE SERIE PROSTO NA MAILA",
     "emailLabel": "Adres e-mail",
     "placeholder": "Twój e-mail",
     "submit": "ZAPISZ SIĘ",

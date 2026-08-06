@@ -9,8 +9,6 @@ import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
 import type { CartLineMerchandise } from "@/lib/shopify/types";
 
-const FREE_SHIPPING_THRESHOLD_PLN = 150;
-
 function variantLabel(
   merch: { title: string; selectedOptions: { name: string; value: string }[] },
 ): string {
@@ -145,16 +143,6 @@ export function CartDrawer() {
   if (!mounted) return null;
 
   const lines = cart?.lines ?? [];
-  const subtotal = cart?.cost.subtotalAmount;
-  const subtotalValue = Number.parseFloat(subtotal?.amount ?? "0");
-  const remainingToFreeShipping =
-    subtotal?.currencyCode === "PLN"
-      ? Math.max(0, FREE_SHIPPING_THRESHOLD_PLN - subtotalValue)
-      : null;
-  const freeShippingProgress =
-    subtotal?.currencyCode === "PLN"
-      ? Math.min(100, (subtotalValue / FREE_SHIPPING_THRESHOLD_PLN) * 100)
-      : 0;
 
   return (
     <div className="fixed inset-0 z-[250]">
@@ -188,6 +176,23 @@ export function CartDrawer() {
             ✕
           </button>
         </div>
+
+        <Link
+          href="/sklep-t-shirts"
+          onClick={closeCart}
+          className="border-b border-neutral-200 border-l-4 border-l-[var(--unmade-accent)] bg-neutral-950 px-4 py-3 text-white transition hover:bg-neutral-800"
+        >
+          <p className="text-xs font-black uppercase tracking-[0.16em]">
+            {t("cart.promoTitle")}
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-white/75">
+            {t("cart.promoBody")}
+          </p>
+          <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-emerald-950">
+            <span aria-hidden>✓</span>
+            {t("cart.freeShippingShort")}
+          </p>
+        </Link>
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 text-center">
@@ -290,33 +295,13 @@ export function CartDrawer() {
               })}
             </ul>
             <div className="border-t border-neutral-200 bg-neutral-50 px-4 py-5">
-              <div className="mb-4 border border-black/[0.08] bg-white px-4 py-3">
-                {remainingToFreeShipping === null ? (
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
-                    {t("cart.freeShippingThreshold")}
-                  </p>
-                ) : remainingToFreeShipping > 0 ? (
-                  <>
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
-                      {t("cart.freeShippingRemaining", {
-                        amount: formatPrice({
-                          amount: remainingToFreeShipping.toFixed(2),
-                          currencyCode: "PLN",
-                        }),
-                      })}
-                    </p>
-                    <div className="mt-3 h-1.5 bg-neutral-200">
-                      <div
-                        className="h-full bg-neutral-950"
-                        style={{ width: `${freeShippingProgress}%` }}
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-900">
-                    {t("cart.freeShippingUnlocked")}
-                  </p>
-                )}
+              <div className="mb-4 border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-950">
+                <p className="text-xs font-black uppercase tracking-[0.14em]">
+                  ✓ {t("cart.freeShippingTitle")}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-emerald-800">
+                  {t("cart.freeShippingBody")}
+                </p>
               </div>
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-xs uppercase tracking-wide text-neutral-500">

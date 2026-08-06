@@ -1,6 +1,4 @@
-import type { Money, Product } from "@/lib/shopify/types";
-
-const TSHIRT_COMPARE_PRICE_PLN = 109;
+import type { Product } from "@/lib/shopify/types";
 
 function normalize(value: string): string {
   return value
@@ -27,23 +25,4 @@ export function isTshirtProduct(product: Product): boolean {
     text.includes("tee") ||
     text.includes("koszul")
   );
-}
-
-export function getTshirtDisplayComparePrice(
-  product: Product,
-  price: Money | null | undefined,
-): Money | null {
-  if (!price || price.currencyCode !== "PLN" || !isTshirtProduct(product)) {
-    return null;
-  }
-
-  const currentPrice = Number.parseFloat(price.amount);
-  if (!Number.isFinite(currentPrice) || currentPrice >= TSHIRT_COMPARE_PRICE_PLN) {
-    return null;
-  }
-
-  return {
-    amount: TSHIRT_COMPARE_PRICE_PLN.toFixed(2),
-    currencyCode: price.currencyCode,
-  };
 }

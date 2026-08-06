@@ -28,21 +28,20 @@
     "cart": "Cart"
   },
   "announcement": {
-    "firstDrop": "FIRST DROP — UP TO -15% OFF WITH CODE IGNITION"
-  },
-  "promo": {
-    "label": "FIRST DROP — SALE",
-    "discount": "{percent}% OFF",
-    "endsIn": "ENDS IN",
-    "days": "d",
-    "hours": "h",
-    "minutes": "m",
-    "seconds": "s"
+    "active": "OFFER LIVE",
+    "full": "BUY 2 TEES, GET THE THIRD FREE",
+    "short": "2+1 FREE ON ALL TEES"
   },
   "home": {
     "viewCollection": "VIEW FULL COLLECTION",
-    "heroCtaAria": "Go to shop — 2026 Collection",
+    "heroCtaAria": "Choose tees included in the buy 2, get 1 free offer",
     "heroImageAlt": "CLTH.PL — limited streetwear",
+    "heroPromoLabel": "BUY 2, GET 1 FREE",
+    "heroPromoTitleLineOne": "BUY 2, GET THE",
+    "heroPromoTitleLineTwo": "THIRD FREE",
+    "heroPromoSubtitleLead": "Choose any 3 tees.",
+    "heroPromoSubtitleMix": "Mix designs, colors and sizes.",
+    "heroPromoCta": "CHOOSE TEES",
     "scrollHint": "Scroll"
   },
   "carousel": {
@@ -50,7 +49,7 @@
   },
   "metadata": {
     "homeTitle": "CLTH.PL — limited streetwear drops, quote tees and essentials",
-    "homeDescription": "CLTH.PL is limited streetwear: quote tees, original graphics, essentials and short online drops.",
+    "homeDescription": "CLTH.PL streetwear. Choose any 3 tees and pay 0 for the third in our buy 2, get 1 free offer.",
     "shopTitle": "Shop | CLTH.PL — tees, hoodies and limited drops",
     "shopDescription": "The official CLTH.PL store. Tees, hoodies, quote tees and limited drops in a clean streetwear direction.",
     "collectionFallback": "Collection — CLTH.PL",
@@ -58,7 +57,7 @@
     "kontaktTitle": "Contact",
     "kontaktDescription": "Contact CLTH.PL by email about orders, sizing, drops or collaborations.",
     "wysylkaTitle": "Shipping",
-    "wysylkaDescription": "CLTH.PL shipping — free from 300 PLN, InPost, DPD, delivery time and costs.",
+    "wysylkaDescription": "CLTH.PL shipping — free from the first product. InPost, DPD, delivery times and available methods.",
     "kolekcjeListTitle": "Collections",
     "kolekcjeListDescription": "CLTH.PL collections — limited drops, quote tees and streetwear essentials.",
     "kolekcjeFallbackDescription": "CLTH.PL collections.",
@@ -119,11 +118,31 @@
     "chooseSize": "Choose size",
     "color": "Color",
     "shippingInfo": "Ships from Poland in 24H–48H",
-    "freeShippingInfo": "Free shipping from 150 PLN",
+    "freeShippingInfo": "Free shipping from the first product",
+    "freeShippingBadge": "FREE SHIPPING",
     "unavailable": "Unavailable",
     "description": "Description",
     "tagsLabel": "Tags:",
     "collectionsLabel": "Collections:",
+    "promoTitle": "BUY 2, GET 1 FREE",
+    "promoEyebrow": "TEES ONLY",
+    "promoBody": "Add any 3 tees to your cart — the third one will be FREE.",
+    "promoAddThree": "ADD ANY 3 TEES TO YOUR CART",
+    "promoMix": "Mix designs, colors and sizes.",
+    "promoOne": "1 TEE",
+    "promoOneDetail": "CHOOSE THE FIRST",
+    "promoOneSelected": "1 SELECTED",
+    "promoTwo": "2 TEES",
+    "promoTwoDetail": "ADD THE SECOND",
+    "promoTwoNext": "ADD 1 MORE",
+    "promoTwoSelected": "2 SELECTED",
+    "promoThree": "3 TEES",
+    "promoThreeDetail": "THIRD FREE",
+    "promoThreeNext": "ADD 1 MORE",
+    "promoStepChoose": "CHOOSE 3 TEES",
+    "promoStepMix": "MIX ANY STYLES",
+    "promoStepFree": "THIRD FOR 0",
+    "promoFreeLine": "THE THIRD TEE COSTS 0",
     "unavailableInRegion": "Not available in your region"
   },
   "cart": {
@@ -138,9 +157,11 @@
     "qtyDecrease": "Decrease quantity",
     "qtyIncrease": "Increase quantity",
     "currencyChangeWarning": "Changing currency will empty your cart. Continue?",
-    "freeShippingThreshold": "Free shipping from 150 PLN",
-    "freeShippingRemaining": "{amount} away from free shipping",
-    "freeShippingUnlocked": "You have free shipping",
+    "freeShippingTitle": "FREE SHIPPING",
+    "freeShippingBody": "Available from the first product in your order.",
+    "freeShippingShort": "FREE SHIPPING FROM 1 PRODUCT",
+    "promoTitle": "BUY 2, GET 1 FREE",
+    "promoBody": "Choose any 3 tees. Pay 0 for the third one.",
     "units": "pcs"
   },
   "search": {
@@ -204,14 +225,14 @@
     "tiktokLabel": "TikTok:"
   },
   "wysylkaPage": {
-    "tagline": "🔥 Free shipping from 300 PLN",
+    "tagline": "🔥 Free shipping from the first product",
     "title": "SHIPPING",
-    "bulletFreeShipping": "Free shipping from 300 PLN",
+    "bulletFreeShipping": "Free shipping from the first product",
     "bulletDispatched24h": "Ships within 24h after placing the order",
     "bulletDeliveryTime": "Delivery time: 2–4 business days (Poland)",
     "bulletCourier": "Courier: InPost / DPD",
     "bulletPaczkomaty": "InPost parcel lockers available",
-    "bulletCostBelowFree": "Shipping below 300 PLN: 14.99 PLN",
+    "bulletCostBelowFree": "Shipping within Poland: 0 PLN",
     "bulletInternationalPrefix": "International shipping: on request (",
     "bulletInternationalSuffix": ")"
   },
@@ -251,24 +272,24 @@
     "sent": "Thank you for your message. We will reply as soon as possible."
   },
   "emailPopup": {
-    "title": "GET -10% ON YOUR FIRST ORDER",
-    "body": "Sign up for our newsletter and get a discount code in your inbox. Join 500+ people who never miss a drop.",
+    "title": "JOIN CLTH.PL",
+    "body": "Subscribe to be the first to hear about new drops and limited runs.",
     "emailLabel": "Your email address",
     "placeholder": "Your email address",
-    "submit": "I WANT THE DISCOUNT",
-    "footer": "No spam — only drops and discount codes."
+    "submit": "SUBSCRIBE",
+    "footer": "No spam — only new drops and news from CLTH.PL."
   },
   "trustBadges": {
     "nationwideTitle": "SHIPPING ACROSS POLAND",
     "nationwideSub": "DELIVERED TO YOUR DOOR",
-    "freeTitle": "FREE SHIPPING FROM 300 PLN",
+    "freeTitle": "FREE SHIPPING FROM 1 PRODUCT",
     "freeSub": "NO HIDDEN COSTS",
     "returnsTitle": "14 DAYS TO RETURN",
     "returnsSub": "CONTACT US OR RETURN THROUGH YOUR ACCOUNT"
   },
   "newsletterSection": {
     "title": "SUBSCRIBE TO THE NEWSLETTER",
-    "subtitle": "BE FIRST — NEW DROPS, DISCOUNT CODES AND LIMITED RUNS IN YOUR INBOX",
+    "subtitle": "BE FIRST — NEW DROPS AND LIMITED RUNS IN YOUR INBOX",
     "emailLabel": "Email address",
     "placeholder": "Your email",
     "submit": "SUBSCRIBE",

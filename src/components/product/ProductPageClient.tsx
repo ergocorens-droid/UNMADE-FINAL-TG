@@ -162,8 +162,12 @@ export function ProductPageClient({ product }: { product: Product }) {
     useState<ProductVariant | null>(() => initialVisualVariant(product));
 
   return (
-    <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-      <div>
+    <div className="grid gap-x-6 gap-y-5 md:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)] md:grid-rows-[auto_1fr] md:items-start md:gap-x-7 md:gap-y-0 lg:gap-x-9 xl:grid-cols-[minmax(0,500px)_minmax(0,1fr)] xl:gap-x-12">
+      <h1 className="order-1 border-b border-black/[0.06] pb-3 text-xl font-black uppercase leading-tight tracking-normal text-neutral-950 md:col-start-2 md:row-start-1 sm:text-2xl lg:text-[28px]">
+        {product.title}
+      </h1>
+
+      <div className="order-2 min-w-0 md:col-start-1 md:row-span-2 md:row-start-1 md:max-w-[500px]">
         <ProductGallery
           images={product.images}
           variants={product.variants}
@@ -172,11 +176,7 @@ export function ProductPageClient({ product }: { product: Product }) {
         />
         <ProductTrustSection className="hidden md:block" />
       </div>
-      <div>
-        <h1 className="border-b border-black/[0.06] pb-5 text-2xl font-black uppercase leading-tight tracking-normal text-neutral-950 sm:text-3xl lg:text-[34px]">
-          {product.title}
-        </h1>
-
+      <div className="order-3 min-w-0 md:col-start-2 md:row-start-2">
         <ProductBuyBox
           key={product.id}
           product={product}

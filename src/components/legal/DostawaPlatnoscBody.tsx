@@ -30,7 +30,10 @@ export function DostawaPlatnoscBody() {
       </p>
 
       <h2 className="legal-h2">4. Koszt dostawy</h2>
-      <p>Koszt dostawy i darmowe progi (np. przy zamówieniach powyżej 300 zł) są widoczne w koszyku przed finalizacją zamówienia.</p>
+      <p>
+        Dostawa zamówień na terenie Polski jest bezpłatna już od pierwszego produktu. Dostępne metody dostawy są widoczne
+        w koszyku i przy finalizacji zamówienia.
+      </p>
 
       <h2 className="legal-h2">5. Metody dostawy</h2>
       <p>
