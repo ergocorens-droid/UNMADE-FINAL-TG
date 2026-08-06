@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getCollections, getProducts } from "@/lib/shopify/api";
+import { isCapsCollection } from "@/lib/shopify/collection-labels";
 
 const SITE_URL = "https://clth.pl";
 
@@ -28,7 +29,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/sklep", 0.95, "daily"),
     entry("/sklep-t-shirts", 0.9, "daily"),
     entry("/sklep-bluzy", 0.85, "weekly"),
-    entry("/sklep-czapki", 0.85, "weekly"),
     entry("/sklep-need-money", 0.9, "daily"),
     entry("/sklep-cytaty", 0.9, "daily"),
     entry("/kolekcje", 0.75, "weekly"),
@@ -50,9 +50,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const productRoutes = products.map((product) =>
       entry(`/produkt/${product.handle}`, 0.85, "daily"),
     );
-    const collectionRoutes = collections.map((collection) =>
-      entry(`/kolekcja/${collection.handle}`, 0.7, "weekly"),
-    );
+    const collectionRoutes = collections
+      .filter((collection) => !isCapsCollection(collection))
+      .map((collection) =>
+        entry(`/kolekcja/${collection.handle}`, 0.7, "weekly"),
+      );
 
     return [...staticRoutes, ...productRoutes, ...collectionRoutes];
   } catch {

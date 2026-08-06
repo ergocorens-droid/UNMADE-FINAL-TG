@@ -4,12 +4,20 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
 import { getServerT } from "@/i18n/server";
 import { getCollectionByHandle } from "@/lib/shopify/api";
+import { isCapsCollection } from "@/lib/shopify/collection-labels";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const t = await getServerT();
+  if (isCapsCollection({ handle: slug })) {
+    return {
+      title: `${t("metadata.collectionFallback")} | CLTH.PL`,
+      robots: { index: false, follow: false },
+    };
+  }
+
   const col = await getCollectionByHandle(slug, 1);
   if (!col) return { title: `${t("metadata.collectionFallback")} | CLTH.PL` };
   const desc =
@@ -23,6 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CollectionSlugPage({ params }: Props) {
   const { slug } = await params;
+  if (isCapsCollection({ handle: slug })) notFound();
+
   const [col, t] = await Promise.all([
     getCollectionByHandle(slug, 48, "losowo"),
     getServerT(),

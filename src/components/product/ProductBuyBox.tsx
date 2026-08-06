@@ -209,15 +209,11 @@ export function ProductBuyBox({
               >
                 {t("product.promoOne")}
               </p>
-              <p
-                className={`mt-1.5 whitespace-nowrap text-[8px] font-black uppercase leading-tight tracking-[0.02em] sm:text-[9px] sm:tracking-[0.03em] ${
-                  activePromoStep === 1 ? "text-[#6B6B6B]" : "text-[#6B6B6B]"
-                }`}
-              >
-                {tshirtCartQuantity >= 1
-                  ? t("product.promoOneSelected")
-                  : t("product.promoOneDetail")}
-              </p>
+              {tshirtCartQuantity < 1 ? (
+                <p className="mt-1.5 whitespace-nowrap text-[8px] font-black uppercase leading-tight tracking-[0.02em] text-[#6B6B6B] sm:text-[9px] sm:tracking-[0.03em]">
+                  {t("product.promoOneDetail")}
+                </p>
+              ) : null}
             </div>
             <div
               className={`relative flex min-h-[82px] flex-col justify-center px-1.5 py-3 text-center transition-colors sm:min-h-[64px] sm:px-2 sm:py-2.5 ${
@@ -243,18 +239,20 @@ export function ProductBuyBox({
               >
                 {t("product.promoTwo")}
               </p>
-              <p
-                className={`mt-1.5 text-[9px] font-black uppercase leading-tight tracking-[0.03em] ${
-                  activePromoStep === 2 ? "text-[#111111]" : "text-[#6B6B6B]"
-                }`}
-                style={{ color: activePromoStep === 2 ? "#2F5F49" : "#4A4A4A" }}
-              >
-                {tshirtCartQuantity >= 2
-                  ? t("product.promoTwoSelected")
-                  : tshirtCartQuantity === 1
+              {tshirtCartQuantity < 2 ? (
+                <p
+                  className={`mt-1.5 text-[9px] font-black uppercase leading-tight tracking-[0.03em] ${
+                    activePromoStep === 2 ? "text-[#111111]" : "text-[#6B6B6B]"
+                  }`}
+                  style={{
+                    color: activePromoStep === 2 ? "#2F5F49" : "#4A4A4A",
+                  }}
+                >
+                  {tshirtCartQuantity === 1
                     ? t("product.promoTwoNext")
                     : t("product.promoTwoDetail")}
-              </p>
+                </p>
+              ) : null}
             </div>
             <div
               className={`relative flex min-h-[82px] flex-col justify-center px-1.5 py-3 text-center transition-colors sm:min-h-[64px] sm:px-2 sm:py-2.5 ${

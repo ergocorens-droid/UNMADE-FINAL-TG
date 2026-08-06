@@ -6,6 +6,7 @@ import { CollectionHeader } from "@/components/sections/CollectionHeader";
 import { getServerLocale, getServerT } from "@/i18n/server";
 import { formatProductCount } from "@/lib/format";
 import { getCollectionByHandle } from "@/lib/shopify/api";
+import { isCapsCollection } from "@/lib/shopify/collection-labels";
 
 export const revalidate = 60;
 
@@ -21,6 +22,13 @@ export async function generateMetadata({
   const { handle } = await params;
   const locale = await getServerLocale();
   const tMeta = await getServerT();
+
+  if (isCapsCollection({ handle })) {
+    return {
+      title: `${tMeta("metadata.collectionFallback")} | CLTH.PL`,
+      robots: { index: false, follow: false },
+    };
+  }
 
   const col = await getCollectionByHandle(handle, 1);
   if (!col) {
@@ -44,6 +52,8 @@ export async function generateMetadata({
 
 export default async function CollectionPage({ params }: Props) {
   const { handle } = await params;
+  if (isCapsCollection({ handle })) notFound();
+
   const locale = await getServerLocale();
 
   const [collection, t] = await Promise.all([

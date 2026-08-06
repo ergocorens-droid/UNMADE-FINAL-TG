@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getServerLocale, getServerT } from "@/i18n/server";
 import { getCollections } from "@/lib/shopify/api";
+import { isCapsCollection } from "@/lib/shopify/collection-labels";
 import { pickHeroPhotoByIndex } from "@/lib/heroPhotos";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,6 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function KolekcjePage() {
   const collections = await getCollections();
+  const visibleCollections = collections.filter(
+    (collection) => !isCapsCollection(collection),
+  );
   const t = await getServerT();
 
   return (
@@ -36,7 +40,7 @@ export default async function KolekcjePage() {
           {t("nav.collections")}
         </h1>
         <div className="mt-12 grid border-l border-t border-black/[0.06] md:grid-cols-3">
-          {collections.map((c, index) => {
+          {visibleCollections.map((c, index) => {
             const img =
               c.image?.url ??
               pickHeroPhotoByIndex(index * 13 + c.handle.length);
@@ -69,7 +73,7 @@ export default async function KolekcjePage() {
             );
           })}
         </div>
-        {collections.length === 0 ? (
+        {visibleCollections.length === 0 ? (
           <p className="mt-12 text-center text-sm text-neutral-600">
             {t("collection.storeEmpty")}
           </p>
