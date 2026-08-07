@@ -18,7 +18,7 @@ export async function ShopPageContent({
       kolor: active.kolor,
       typ: active.typ,
       kolekcja: active.kolekcja,
-      sort: "losowo",
+      sort: active.typ === "t-shirts" ? "bestsellery" : "najnowsze",
       q: active.q,
     }),
     getSidebarCollectionCounts(),

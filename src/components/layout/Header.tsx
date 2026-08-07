@@ -11,7 +11,6 @@ import type { TranslationKey } from "@/i18n/translate";
 const NAV_SPEC: { href: string; key: TranslationKey }[] = [
   { href: "/sklep-t-shirts", key: "nav.tshirts" },
   { href: "/sklep-bluzy", key: "nav.hoodies" },
-  { href: "/kontakt", key: "nav.contact" },
 ];
 
 export function Header({

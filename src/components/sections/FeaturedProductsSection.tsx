@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/ProductCard";
 import { getServerT } from "@/i18n/server";
+import { sortProductsByBestsellers } from "@/lib/product-order";
 import { isTshirtProduct } from "@/lib/product-pricing";
 import { getProducts } from "@/lib/shopify/api";
 import type { Product } from "@/lib/shopify/types";
@@ -41,13 +42,15 @@ function ProductCollectionBlock({
 
 export async function FeaturedProductsSection() {
   const [products, t] = await Promise.all([
-    getProducts({ first: 80, sortKey: "CREATED_AT", reverse: true }),
+    getProducts({ first: 250, sortKey: "CREATED_AT", reverse: true }),
     getServerT(),
   ]);
 
-  const tshirtProducts = products
-    .filter((product) => product.availableForSale && isTshirtProduct(product))
-    .slice(0, 16);
+  const tshirtProducts = sortProductsByBestsellers(
+    products.filter(
+      (product) => product.availableForSale && isTshirtProduct(product),
+    ),
+  ).slice(0, 16);
 
   return (
     <section className="bg-white text-neutral-950">

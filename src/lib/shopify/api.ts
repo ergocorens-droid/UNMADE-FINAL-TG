@@ -1,4 +1,5 @@
 import { shopifyFetch } from "./client";
+import { sortProductsByBestsellers } from "@/lib/product-order";
 import { SIDEBAR_COLLECTION_HANDLES } from "./collection-labels";
 import {
   COLLECTIONS_QUERY,
@@ -195,6 +196,10 @@ function sortShopDisplayProducts(
   sort: string | undefined,
   opts?: { kolekcja?: string; typ?: string },
 ): Product[] {
+  if (sort === "bestsellery") {
+    return sortProductsByBestsellers(products);
+  }
+
   if (sort === "losowo") return hourlyShuffleProducts(products);
 
   if (sort && sort !== "najnowsze") return products;
@@ -255,9 +260,24 @@ export async function getShopPageProducts(opts: {
     else return [];
   }
   if (opts.typ) {
-    const c = await getCollectionByHandle(opts.typ, SHOP_COLLECTION_FETCH, opts.sort);
-    if (c?.products.length) pools.push(c.products);
-    else return [];
+    if (opts.typ === "t-shirts") {
+      const products = await getProducts({
+        first: SHOP_COLLECTION_FETCH,
+        sortKey,
+        reverse,
+        query: opts.q,
+        cache: "no-store",
+      });
+      pools.push(products.filter(isTshirtProduct));
+    } else {
+      const c = await getCollectionByHandle(
+        opts.typ,
+        SHOP_COLLECTION_FETCH,
+        opts.sort,
+      );
+      if (c?.products.length) pools.push(c.products);
+      else return [];
+    }
   }
   if (opts.kolekcja) {
     const c = await getCollectionByHandle(opts.kolekcja, SHOP_COLLECTION_FETCH, opts.sort);
