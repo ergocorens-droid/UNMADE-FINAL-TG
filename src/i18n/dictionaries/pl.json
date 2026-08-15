@@ -143,7 +143,10 @@
     "promoStepMix": "ŁĄCZ DOWOLNIE",
     "promoStepFree": "TRZECIA ZA 0 ZŁ",
     "promoFreeLine": "TRZECIA KOSZULKA KOSZTUJE 0 ZŁ",
-    "unavailableInRegion": "Niedostępne w Twoim regionie"
+    "unavailableInRegion": "Niedostępne w Twoim regionie",
+    "purchaseDisabledTitle": "Produkt niedostępny",
+    "purchaseDisabledBody": "Sprzedaż jest chwilowo wstrzymana.",
+    "purchaseDisabledButton": "PRODUKT NIEDOSTĘPNY"
   },
   "cart": {
     "title": "Koszyk",
@@ -162,7 +165,10 @@
     "freeShippingShort": "DARMOWA WYSYŁKA OD 1 PRODUKTU",
     "promoTitle": "2+1 GRATIS",
     "promoBody": "Wybierz 3 dowolne koszulki. Za trzecią zapłacisz 0 zł.",
-    "units": "szt."
+    "units": "szt.",
+    "purchaseDisabledTitle": "Produkt niedostępny",
+    "purchaseDisabledBody": "Sprzedaż jest chwilowo wstrzymana. Checkout został wyłączony.",
+    "checkoutDisabled": "KASA NIEDOSTĘPNA"
   },
   "search": {
     "dialogAria": "Wyszukiwarka",

@@ -7,6 +7,7 @@ import { useT } from "@/i18n/I18nContext";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
+import { PURCHASES_DISABLED } from "@/lib/store-availability";
 import type { CartLineMerchandise } from "@/lib/shopify/types";
 
 function variantLabel(
@@ -313,7 +314,25 @@ export function CartDrawer() {
                     : "—"}
                 </p>
               </div>
-              {cart?.checkoutUrl ? (
+              {PURCHASES_DISABLED ? (
+                <>
+                  <div className="mt-4 border border-red-200 bg-red-50 px-4 py-3 text-center">
+                    <p className="text-xs font-black uppercase tracking-[0.14em] text-red-700">
+                      {t("cart.purchaseDisabledTitle")}
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-red-700/80">
+                      {t("cart.purchaseDisabledBody")}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    disabled
+                    className="mt-4 flex w-full cursor-not-allowed justify-center bg-neutral-300 py-4 text-center text-sm font-bold uppercase tracking-wide text-neutral-600"
+                  >
+                    {t("cart.checkoutDisabled")}
+                  </button>
+                </>
+              ) : cart?.checkoutUrl ? (
                 <a
                   href={cart.checkoutUrl}
                   onClick={() => {

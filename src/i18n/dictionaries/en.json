@@ -143,7 +143,10 @@
     "promoStepMix": "MIX ANY STYLES",
     "promoStepFree": "THIRD FOR 0",
     "promoFreeLine": "THE THIRD TEE COSTS 0",
-    "unavailableInRegion": "Not available in your region"
+    "unavailableInRegion": "Not available in your region",
+    "purchaseDisabledTitle": "Product unavailable",
+    "purchaseDisabledBody": "Sales are temporarily paused.",
+    "purchaseDisabledButton": "PRODUCT UNAVAILABLE"
   },
   "cart": {
     "title": "Cart",
@@ -162,7 +165,10 @@
     "freeShippingShort": "FREE SHIPPING FROM 1 PRODUCT",
     "promoTitle": "BUY 2, GET 1 FREE",
     "promoBody": "Choose any 3 tees. Pay 0 for the third one.",
-    "units": "pcs"
+    "units": "pcs",
+    "purchaseDisabledTitle": "Product unavailable",
+    "purchaseDisabledBody": "Sales are temporarily paused. Checkout has been disabled.",
+    "checkoutDisabled": "CHECKOUT UNAVAILABLE"
   },
   "search": {
     "dialogAria": "Search",

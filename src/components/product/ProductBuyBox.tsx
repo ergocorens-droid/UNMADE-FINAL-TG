@@ -8,6 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/format";
 import { trackEvent } from "@/lib/meta-pixel";
 import { isTshirtProduct } from "@/lib/product-pricing";
+import { PURCHASES_DISABLED } from "@/lib/store-availability";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
 
 const PAYMENT_METHODS = [
@@ -122,6 +123,7 @@ export function ProductBuyBox({
     qtyAvail < 10;
 
   const canAdd =
+    !PURCHASES_DISABLED &&
     selectedVariant !== null &&
     selectedVariant.availableForSale &&
     !isLoading;
@@ -333,7 +335,16 @@ export function ProductBuyBox({
       ) : null}
 
       <div className="space-y-2">
-        {selectionNotice ? (
+        {PURCHASES_DISABLED ? (
+          <div className="border border-red-200 bg-red-50 px-4 py-3 text-center">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-red-700">
+              {t("product.purchaseDisabledTitle")}
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-red-700/80">
+              {t("product.purchaseDisabledBody")}
+            </p>
+          </div>
+        ) : selectionNotice ? (
           <p className="text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-600">
             Wybierz najpierw rozmiar
           </p>
@@ -345,8 +356,9 @@ export function ProductBuyBox({
 
         <button
           type="button"
-          disabled={isLoading}
+          disabled={PURCHASES_DISABLED || isLoading}
           onClick={() => {
+            if (PURCHASES_DISABLED) return;
             if (needsVariantSelection) {
               setSelectionNotice(true);
               return;
@@ -364,9 +376,15 @@ export function ProductBuyBox({
               openCart();
             })();
           }}
-          className="min-h-12 w-full bg-neutral-950 px-6 py-4 text-sm font-bold uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
+          className={`min-h-12 w-full px-6 py-4 text-sm font-bold uppercase tracking-widest transition disabled:cursor-not-allowed ${
+            PURCHASES_DISABLED
+              ? "bg-neutral-300 text-neutral-600"
+              : "bg-neutral-950 text-white hover:bg-neutral-800 disabled:cursor-wait disabled:opacity-80"
+          }`}
         >
-          {t("product.addToCart")}
+          {PURCHASES_DISABLED
+            ? t("product.purchaseDisabledButton")
+            : t("product.addToCart")}
         </button>
       </div>
 
