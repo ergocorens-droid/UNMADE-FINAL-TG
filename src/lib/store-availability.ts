@@ -1,1 +1,1 @@
-export const PURCHASES_DISABLED = true;
+export const PURCHASES_DISABLED = false;
